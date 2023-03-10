@@ -1,0 +1,187 @@
+.loading-fundo {
+  background-color: rgb(0 0 0 / 20%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1085!important;
+}
+
+.loading-fundo::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  pointer-events: none;
+}
+
+.login-container {
+  width: 500px;
+  height: 400px;
+}
+
+.login-logo {
+  width: 200px;
+  height: 200px;
+}
+
+.login-titulo {
+  font-size: 80px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+@media only screen and (max-width: 500px) {
+  .login-container {
+    width: 100vw;
+    height: 360px;
+  }
+  .login-logo {
+    width: 150px;
+    height:150px;
+  }  
+  .login-titulo {
+    font-size: 60px;
+    font-weight: bold;
+    font-family: sans-serif;
+  }
+}
+
+.btn-outline-orange {
+  border-color: rgb(253 126 20 / 100%)!important;
+  color: rgb(253 126 20 / 100%)!important;
+}
+
+:hover.btn-outline-orange {
+  background-color: rgb(253 126 20 / 100%)!important;
+  color: rgb(0 0 0 / 100%)!important;
+}
+
+.btn-orange {
+  background-color: rgb(253 126 20 / 100%)!important;
+  border-color: rgb(224 110 17 / 100%)!important;
+  color: rgb(0 0 0 / 100%)!important;
+}
+
+:hover.btn-orange {
+  background-color: #e06e11!important;
+  color: rgb(0 0 0 / 100%)!important;
+}
+
+.blurred::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(80px);
+  pointer-events: none;
+}
+
+.blurred {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1!important;
+  background: no-repeat center center;
+  background-image: url("/img/background.png");
+  background-size: cover;
+}
+
+.bd-callout-info {
+  background-color: rgb(13 202 240 / 8%)!important;
+  border-left-color: rgb(13 202 240 / 50%)!important;
+}
+
+.bd-callout-success {
+  background-color: rgb(25 135 84 / 8%)!important;
+  border-left-color: rgb(25 135 84 / 50%)!important;
+}
+
+.bd-callout-warning {
+  background-color: rgb(255 193 7 / 8%)!important;
+  border-left-color: rgb(255 193 7 / 50%)!important;
+}
+
+.bd-callout-danger {
+  background-color: rgb(220 53 69 / 8%)!important;
+  border-left-color: rgb(220 53 69 / 50%)!important;
+}
+
+.bd-callout {
+  padding: 1.25rem;
+  background-color: rgb(248 249 250 / 8%);
+  border-left: 0.25rem solid rgb(222 226 230 / 50%);
+}
+
+.bg-dark-blue-tint {
+  background-color: rgb(9 14 17 / 100%)!important;
+}
+
+.bg-light-smooth {
+  background-color: rgb(230 230 230 / 100%)!important;
+}
+
+.bg-light-grey {
+  background-color: rgb(197 197 197 / 100%)!important;
+}
+
+.shadow-plus {
+  box-shadow: 0 .125rem .5rem rgb(0 0 0 / 100%)!important;
+}
+
+.nav-pointer {
+  cursor: pointer!important;
+}
+
+.accordion-arrow {
+  --bs-accordion-btn-icon: url('/img/chevron-down.svg')!important;
+  --bs-accordion-btn-active-icon: url('/img/chevron-down.svg')!important;
+}
+
+.no-click{
+  pointer-events: none!important;
+}
+
+.start-unset{
+  left: unset!important;
+}
+
+.fixed {
+  position: fixed!important;
+}
+
+.nav-link {
+  color: rgb(248 249 250 / 100%);
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: rgb(248 249 250 / 100%)!important;
+  background-color: rgb(248 249 250 / 25%)!important;
+  border-color: rgb(248 249 250 / 25%)!important;
+}
+
+.nav-tabs .nav-link.disabled, .nav-tabs .nav-link:disabled {
+  color: var(--bs-nav-link-disabled-color)!important;
+  background-color: transparent!important;
+  border-color: transparent!important;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+  border-color: rgb(248 249 250 / 50%);
+}
+
+.nav-link:focus, .nav-link:hover {
+  color: rgb(248 249 250 / 75%)!important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    appearance:textfield;
+}
