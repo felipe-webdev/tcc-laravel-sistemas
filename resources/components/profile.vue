@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div 
+    <div
       ref="profileModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
@@ -9,9 +9,9 @@
     >
       <div class="modal-dialog modal-fullscreen">
         <div class="modal-content text-bg-dark">
-          <div class="modal-header border border-light border-opacity-25">
+          <div class="modal-header border border-light border-opacity-25 py-1">
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img 
+              <img
                 src="/img/nav.png"
                 alt="Logo"
                 width="38"
@@ -21,9 +21,9 @@
               <span class="d-none d-lg-inline">Xpert</span>
             </a>
 
-            <h1 class="modal-title fs-4">Perfil do Funcionário</h1>
+            <h1 class="modal-title fs-3">Perfil do Funcionário</h1>
 
-            <button 
+            <button
               data-bs-dismiss="modal"
               class="btn-close btn-close-white m-0"
               @click="resetProfile"
@@ -32,13 +32,50 @@
 
 
           <div class="modal-body bg-dark-blue-tint p-0">
-            <div class="hstack gap-4 p-4">
-              <img 
-                src="/img/user.png"
+            <div
+              ref="croppImageModal"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              class="modal fade"
+            >
+              <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content bg-dark text-light">
+                  <div class="modal-header border border-info border-opacity-25 py-1">
+                    <a class="navbar-brand d-flex align-items-center" href="#">
+                      <img
+                        src="/img/nav.png"
+                        alt="Logo"
+                        width="38"
+                        height="38"
+                        class="rounded me-2"
+                      >
+                      Xpert
+                    </a>
+                    <h1 class="modal-title fs-3" id="staticBackdropLabel">Definir imagem para {{`${backup.employee == undefined? 'Funcionário': backup.employee.name} ${backup.employee == undefined? '': backup.employee.surname}`}}</h1>
+                    <button
+                      class="btn-close btn-close-white m-0"
+                      data-bs-dismiss="modal"
+                      @click="closeCroppImageModal"
+                    ></button>
+                  </div>
+                  <div class="modal-body vstack p-0">
+                    <div class="bd-callout bd-callout-info">
+                      <cropper v-if="editing.image" @blob="insertImage" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-lg hstack gap-4 p-4">
+              <img
+                :src="imageSrc"
                 class="rounded-circle border border-2 border-light border-opacity-25 shadow-plus"
                 style="width: 200px; height:200px"
               >
-              <div class="vstack justify-content-center">
+              <div class="vstack justify-content-center gap-2">
                 <span class="fs-1">
                   {{`${backup.employee == undefined? 'Funcionário': backup.employee.name} ${backup.employee == undefined? '': backup.employee.surname}`}}
                 </span>
@@ -46,8 +83,8 @@
                   {{`${backup.employee == undefined? 'Departamento': backup.employee.job_depart} / ${backup.employee == undefined? 'Cargo': backup.employee.job_type}`}}
                 </span>
                 <span v-if="backup.employee" class="fs-4 text-muted">
-                  Situação do Funcionário: 
-                  <button 
+                  Situação do Funcionário:
+                  <button
                     ref="setActive"
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="outside"
@@ -59,7 +96,7 @@
                   >
                     {{backup.employee.active==1? 'Ativo': 'Inativo'}}
                   </button>
-                  <ul 
+                  <ul
                     class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
                   >
                     <li v-if="backup.employee.active==0">
@@ -75,31 +112,40 @@
                     <li><span class="dropdown-item-text fw-normal">Deseja continuar?</span></li>
                     <li><hr class="dropdown-divider"></li>
                     <li class="hstack justify-content-end gap-2 px-3">
-                      <button 
+                      <button
                         class="btn btn-info btn-sm"
                         @click="$refs.setActive.click();"
                       >
                         <i class="fa-solid fa-xmark me-1"></i>
                         Não
                       </button>
-                      <button 
+                      <button
                         class="btn btn-orange btn-sm"
-                        @click="$refs.setActive.click(); updateEmployee('active', {'active': !employee.active, 'id_employee': employee.id_employee})"
+                        @click="$refs.setActive.click(); updateEmployee('active', {'active': employee.active == 1? 0: 1, 'id_employee': employee.id_employee})"
                       >
                         <i class="fa-solid fa-check me-1"></i>
                         Sim
                       </button>
                     </li>
                   </ul>
-                </span> 
+                </span>
+                <span>
+                  <button
+                    class="btn btn-warning btn-sm"
+                    @click="openCroppImageModal"
+                  >
+                    <i class="fa-solid fa-circle-user me-1"></i>
+                    Imagem
+                  </button>
+                </span>
               </div>
             </div>
 
 
             <div class="nav nav-tabs justify-content-center border-light border-opacity-25">
-              <button 
+              <button
                 ref="infoTab"
-                class="nav-link active" 
+                class="nav-link active"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-info"
                 type="button"
@@ -107,9 +153,9 @@
                 Funcionário
               </button>
 
-              <button 
+              <button
                 ref="contactsTab"
-                class="nav-link" 
+                class="nav-link"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-contacts"
                 type="button"
@@ -117,9 +163,9 @@
                 Contatos
               </button>
 
-              <button 
+              <button
                 ref="familyTab"
-                class="nav-link" 
+                class="nav-link"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-family"
                 type="button"
@@ -127,9 +173,9 @@
                 Dependentes
               </button>
 
-              <button 
+              <button
                 ref="userTab"
-                class="nav-link" 
+                class="nav-link"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-user"
                 type="button"
@@ -147,7 +193,7 @@
                       <h3 class="hstack text-light fs-6">
                         Dados Pessoais
                         <div v-if="!editing.address && !editing.job" class="ms-auto">
-                          <button 
+                          <button
                             v-if="!editing.personal"
                             class="btn btn-warning btn-sm"
                             @click="editing.personal = true"
@@ -155,7 +201,7 @@
                             <i class="fa-solid fa-pen me-1"></i>
                             Editar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.personal"
                             class="btn btn-info btn-sm"
                             @click="restoreBackup('personal')"
@@ -163,7 +209,7 @@
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.personal"
                             class="btn btn-orange btn-sm"
                             :disabled="!is_personal_ready"
@@ -176,11 +222,11 @@
                       </h3>
 
                       <div class="hstack flex-wrap gap-3 text-dark">
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="employee.name"
                             type="text"
                             placeholder="Nome"
@@ -192,11 +238,11 @@
                           </label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="employee.surname"
                             type="text"
                             placeholder="Sobrenome"
@@ -208,7 +254,7 @@
                           </label>
                         </div>
 
-                        <div 
+                        <div
                           class="input-group flex-fill"
                           style="width: 600px; min-width: 0;"
                         >
@@ -216,11 +262,11 @@
                             Nascimento
                           </span>
 
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 50px; min-width: 0;"
                           >
-                            <input 
+                            <input
                               v-model="employee.birth_d"
                               type="number"
                               placeholder="00"
@@ -230,11 +276,11 @@
                             <label>Dia</label>
                           </div>
 
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 50px; min-width: 0;"
                           >
-                            <input 
+                            <input
                               v-model="employee.birth_m"
                               type="number"
                               placeholder="00"
@@ -244,11 +290,11 @@
                             <label>Mês</label>
                           </div>
 
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 300px; min-width: 0;"
                           >
-                            <input 
+                            <input
                               v-model="employee.birth_y"
                               type="number"
                               placeholder="00"
@@ -259,17 +305,18 @@
                           </div>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <input 
+                          <the-mask
                             v-model="employee.cpf"
+                            :mask="['###.###.###-##']"
                             type="text"
                             placeholder="000.000.000-00"
                             class="form-control bg-light-smooth"
                             :disabled="!editing.personal"
-                          >
+                          />
                           <label>CPF</label>
                         </div>
                       </div>
@@ -279,7 +326,7 @@
                       <h3 class="hstack text-light fs-6">
                         Endereço
                         <div v-if="!editing.personal && !editing.job" class="ms-auto">
-                          <button 
+                          <button
                             v-if="!editing.address"
                             class="btn btn-warning btn-sm"
                             @click="editing.address = true"
@@ -287,7 +334,7 @@
                             <i class="fa-solid fa-pen me-1"></i>
                             Editar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.address"
                             class="btn btn-info btn-sm"
                             @click="restoreBackup('address')"
@@ -295,7 +342,7 @@
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.address"
                             class="btn btn-orange btn-sm"
                             :disabled="!is_address_ready"
@@ -308,11 +355,11 @@
                       </h3>
 
                       <div class="hstack flex-wrap gap-3 text-dark">
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 600px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="address.line"
                             type="text"
                             placeholder="Logradouro"
@@ -324,11 +371,11 @@
                           </label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 120px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="address.number"
                             type="text"
                             placeholder="Número"
@@ -340,11 +387,11 @@
                           </label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="address.number_info"
                             type="text"
                             placeholder="Complemento do número"
@@ -354,11 +401,11 @@
                           <label>Compl. Nº</label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="address.district"
                             type="text"
                             placeholder="Cidade"
@@ -370,11 +417,11 @@
                           </label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="address.city"
                             type="text"
                             placeholder="Cidade"
@@ -386,11 +433,11 @@
                           </label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <select 
+                          <select
                             v-model="address.uf"
                             type="text"
                             class="form-select bg-light-smooth"
@@ -405,17 +452,18 @@
                           <label>UF</label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width:220px; min-width: 0;"
                         >
-                          <input 
+                          <the-mask
                             v-model="address.cep"
+                            :mask="['#####-###']"
                             type="text"
                             placeholder="CEP"
                             class="form-control bg-light-smooth"
                             :disabled="!editing.address"
-                          >
+                          />
                           <label>CEP</label>
                         </div>
                       </div>
@@ -425,7 +473,7 @@
                       <h3 class="hstack text-light fs-6">
                         Trabalho
                         <div v-if="!editing.address && !editing.personal" class="ms-auto">
-                          <button 
+                          <button
                             v-if="!editing.job"
                             class="btn btn-warning btn-sm"
                             @click="editing.job = true"
@@ -433,7 +481,7 @@
                             <i class="fa-solid fa-pen me-1"></i>
                             Editar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.job"
                             class="btn btn-info btn-sm"
                             @click="restoreBackup('job')"
@@ -441,7 +489,7 @@
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.job"
                             class="btn btn-orange btn-sm"
                             :disabled="!is_job_ready"
@@ -454,11 +502,11 @@
                       </h3>
 
                       <div class="hstack flex-fill gap-3 text-dark">
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <select 
+                          <select
                             v-model="employee.id_job_type"
                             type="number"
                             class="form-select bg-light-smooth"
@@ -473,11 +521,11 @@
                           <label>Cargo</label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="employee.job_depart"
                             type="text"
                             placeholder="Departamento"
@@ -486,17 +534,16 @@
                           >
                           <label>Departamento</label>
                         </div>
-                        <div 
+                        <div
                           class="form-floating flex-fill"
-                          style="width: 300px; min-width: 0;"
+                          style="width: 200px; min-width: 0;"
                         >
-                          <input 
+                          <money
                             v-model="employee.salary"
-                            type="text"
                             placeholder="Salário"
                             class="form-control bg-light-smooth"
                             disabled
-                          >
+                          />
                           <label>Salário</label>
                         </div>
                       </div>
@@ -508,13 +555,34 @@
 
               <div class="tab-pane fade" id="nav-contacts">
                 <div class="container-lg vstack flex-wrap gap-4 py-4">
+                  <div class="hstack justify-content-start">
+                    <button
+                      data-bs-toggle="dropdown"
+                      data-bs-auto-close="outside"
+                      class="btn btn-warning btn-sm dropdown-toggle"
+                    >
+                      <i class="fa-solid fa-qrcode me-1"></i>
+                      Ver QR Code
+                    </button>
+                    <ul
+                      v-if="!editing.phones.editing && editing.phones.index == null"
+                      class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
+                    >
+                      <li><span class="dropdown-item-text fw-normal">Escanear o QR Code abaixo para salvar o contato</span></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li class="hstack justify-content-center">
+                        <qrcode-vue :value="vcard" :size="250" renderAs="svg" level="L"/>
+                      </li>
+                    </ul>
+                  </div>
+
                   <h3 class="text-center text-light fs-3 m-0">Celulares</h3>
 
-                  <div 
+                  <div
                     v-if="phones.length"
                     class="vstack gap-3"
                   >
-                    <div 
+                    <div
                       v-for="(phone, index) in phones"
                       :key="phone.id_phone"
                       class="bd-callout rounded vstack flex-fill gap-3"
@@ -522,17 +590,17 @@
                       <h3 class="hstack justify-content-between text-light fs-6">
                         Celular {{index+1}}
                         <div class="ms-auto">
-                          <button 
+                          <button
                             :id="`deletePhone${index}`"
                             v-if="!editing.phones.editing && editing.phones.index == null"
                             data-bs-toggle="dropdown"
                             data-bs-auto-close="outside"
                             class="btn btn-danger btn-sm dropdown-toggle"
                           >
-                            <i class="fa-solid fa-user-minus me-1"></i>
+                            <i class="fa-solid fa-trash-can me-1"></i>
                             Excluir
                           </button>
-                          <ul 
+                          <ul
                             v-if="!editing.phones.editing && editing.phones.index == null"
                             class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
                           >
@@ -540,14 +608,14 @@
                             <li><span class="dropdown-item-text fw-normal">Deseja continuar?</span></li>
                             <li><hr class="dropdown-divider"></li>
                             <li class="hstack justify-content-end gap-2 px-3">
-                              <button 
+                              <button
                                 class="btn btn-info btn-sm"
                                 @click="closeDeletePhoneDropdown(index)"
                               >
                                 <i class="fa-solid fa-xmark me-1"></i>
                                 Não
                               </button>
-                              <button 
+                              <button
                                 class="btn btn-orange btn-sm"
                                 @click="closeDeletePhoneDropdown(index); deletePhone(index)"
                               >
@@ -556,7 +624,7 @@
                               </button>
                             </li>
                           </ul>
-                          <button 
+                          <button
                             v-if="!editing.phones.editing && editing.phones.index == null"
                             class="btn btn-warning btn-sm"
                             @click="editing.phones.editing = true; editing.phones.index = index;"
@@ -564,7 +632,7 @@
                             <i class="fa-solid fa-pen me-1"></i>
                             Editar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.phones.editing && editing.phones.index == index"
                             class="btn btn-info btn-sm"
                             @click="restoreBackup('phones')"
@@ -572,7 +640,7 @@
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.phones.editing && editing.phones.index == index"
                             class="btn btn-orange btn-sm"
                             :disabled="!is_phones_ready"
@@ -585,23 +653,24 @@
                       </h3>
 
                       <div class="text-dark hstack flex-wrap gap-3">
-                        <div 
+                        <div
                           class="input-group"
                           style="width: 400px; min-width: 0;"
                         >
-                          <div 
+                          <div
                             class="form-floating"
                           >
-                            <input 
+                            <the-mask
                               v-model="phone.phone"
+                              :mask="['(##) ####-####', '(##) #####-####']"
                               type="text"
                               placeholder="Número"
                               class="form-control bg-light-smooth"
                               :disabled="!(editing.phones.editing && editing.phones.index == index)"
-                            >
+                            />
                             <label>Número</label>
                           </div>
-                          <button 
+                          <button
                             data-bs-toggle="dropdown"
                             data-bs-auto-close="outside"
                             class="btn btn-orange dropdown-toggle"
@@ -611,10 +680,10 @@
                           <div class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus">
                             <div class="vstack text-dark gap-2 px-3" style="width: 500px;">
                               <div class="form-floating">
-                                <textarea 
+                                <textarea
                                   v-model="whatsapp_inputs[index]"
                                   class="form-control"
-                                  style="height: 250px;"
+                                  style="height: 125px;"
                                   name="body"
                                   placeholder="Mensagem"
                                   @input="whatsapp_texts[index]=encodeURIComponent(whatsapp_inputs[index])"
@@ -624,7 +693,7 @@
                             </div>
                             <hr class="dropdown-divider">
                             <div class="hstack justify-content-end gap-2 px-3">
-                              <a 
+                              <a
                                 :href="`https://wa.me/%2B55${phone.phone}?text=${whatsapp_texts[index]}`"
                                 class="btn btn-orange"
                                 target="_blank"
@@ -635,10 +704,10 @@
                             </div>
                           </div>
                         </div>
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 400px; min-width: 0;"
-                        > 
+                        >
                           <input
                             v-model="phone.obs"
                             type="text"
@@ -652,11 +721,11 @@
                     </div>
                   </div>
 
-                  <div 
+                  <div
                     v-if="newPhone.length"
                     class="vstack gap-3"
                   >
-                    <div 
+                    <div
                       v-for="(phone, index) in newPhone"
                       :key="index"
                       class="bd-callout rounded vstack flex-fill gap-3"
@@ -664,14 +733,14 @@
                       <h3 class="hstack justify-content-between text-warning fs-6">
                         Novo Celular
                         <div class="ms-auto">
-                          <button 
+                          <button
                             class="btn btn-info btn-sm"
                             @click="removePhone(index)"
                           >
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             class="btn btn-orange btn-sm"
                             :disabled="!is_newPhone_ready"
                             @click="insertPhone"
@@ -683,22 +752,23 @@
                       </h3>
 
                       <div class="text-dark hstack flex-wrap gap-3">
-                        <div 
+                        <div
                           class="form-floating"
                           style="width: 400px; min-width: 0;"
                         >
-                          <input 
+                          <the-mask
                             v-model="phone.phone"
+                            :mask="['(##) ####-####', '(##) #####-####']"
                             type="text"
                             placeholder="Número"
                             class="form-control bg-light-smooth"
-                          >
+                          />
                           <label>Número</label>
                         </div>
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 400px; min-width: 0;"
-                        > 
+                        >
                           <input
                             v-model="phone.obs"
                             type="text"
@@ -716,11 +786,11 @@
                       <i class="fa-solid fa-circle-info me-1"></i>
                       Adicione um celular
                       <div class="ms-auto">
-                        <button 
+                        <button
                           class="btn btn-warning btn-sm"
                           @click="addPhone"
                         >
-                          <i class="fa-solid fa-user-plus me-1"></i>
+                          <i class="fa-solid fa-mobile-screen me-1"></i>
                           Adicionar
                         </button>
                       </div>
@@ -730,11 +800,11 @@
 
                   <h3 class="text-center text-light fs-3 m-0">E-mails</h3>
 
-                  <div 
+                  <div
                     v-if="emails.length"
                     class="vstack gap-3"
                   >
-                    <div 
+                    <div
                       v-for="(email, index) in emails"
                       :key="email.id_email"
                       class="bd-callout rounded vstack flex-fill gap-3"
@@ -742,17 +812,17 @@
                       <h3 class="hstack justify-content-between text-light fs-6">
                         E-mail {{index+1}}
                         <div class="ms-auto">
-                          <button 
+                          <button
                             :id="`deleteEmail${index}`"
                             v-if="!editing.emails.editing && editing.emails.index == null"
                             data-bs-toggle="dropdown"
                             data-bs-auto-close="outside"
                             class="btn btn-danger btn-sm dropdown-toggle"
                           >
-                            <i class="fa-solid fa-user-minus me-1"></i>
+                            <i class="fa-solid fa-trash-can me-1"></i>
                             Excluir
                           </button>
-                          <ul 
+                          <ul
                             v-if="!editing.emails.editing && editing.emails.index == null"
                             class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
                           >
@@ -760,14 +830,14 @@
                             <li><span class="dropdown-item-text fw-normal">Deseja continuar?</span></li>
                             <li><hr class="dropdown-divider"></li>
                             <li class="hstack justify-content-end gap-2 px-3">
-                              <button 
+                              <button
                                 class="btn btn-info btn-sm"
                                 @click="closeDeleteEmailDropdown(index)"
                               >
                                 <i class="fa-solid fa-xmark me-1"></i>
                                 Não
                               </button>
-                              <button 
+                              <button
                                 class="btn btn-orange btn-sm"
                                 @click="closeDeleteEmailDropdown(index); deleteEmail(index)"
                               >
@@ -776,7 +846,7 @@
                               </button>
                             </li>
                           </ul>
-                          <button 
+                          <button
                             v-if="!editing.emails.editing && editing.emails.index == null"
                             class="btn btn-warning btn-sm"
                             @click="editing.emails.editing = true; editing.emails.index = index;"
@@ -784,7 +854,7 @@
                             <i class="fa-solid fa-pen me-1"></i>
                             Editar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.emails.editing && editing.emails.index == index"
                             class="btn btn-info btn-sm"
                             @click="restoreBackup('emails')"
@@ -792,7 +862,7 @@
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.emails.editing && editing.emails.index == index"
                             class="btn btn-orange btn-sm"
                             :disabled="!is_emails_ready"
@@ -805,12 +875,12 @@
                       </h3>
 
                       <div class="text-dark hstack gap-3">
-                        <div 
+                        <div
                           class="input-group"
                           style="width: 400px; min-width: 0;"
                         >
                           <div class="form-floating">
-                            <input 
+                            <input
                               v-model="email.email"
                               type="email"
                               placeholder="Número"
@@ -819,7 +889,7 @@
                             >
                             <label>Endereço</label>
                           </div>
-                          <button 
+                          <button
                             data-bs-toggle="dropdown"
                             data-bs-auto-close="outside"
                             class="btn btn-orange dropdown-toggle"
@@ -827,7 +897,7 @@
                             <i class="fa-regular fa-envelope"></i>
                           </button>
                           <div class="dropdown d-inline">
-                            <form 
+                            <form
                               class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
                               :action="`mailto:${email.email}`"
                               method="GET"
@@ -857,7 +927,12 @@
                                   </div>
                                 </div>
                                 <div class="form-floating">
-                                  <textarea class="form-control" style="height: 250px;" name="body" placeholder="Mensagem"></textarea>
+                                  <textarea
+                                    class="form-control"
+                                    style="height: 125px;"
+                                    name="body"
+                                    placeholder="Mensagem"
+                                  ></textarea>
                                   <label>Texto da mensagem</label>
                                 </div>
                               </div>
@@ -871,7 +946,7 @@
                             </form>
                           </div>
                         </div>
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 400px; min-width: 0;"
                         >
@@ -888,11 +963,11 @@
                     </div>
                   </div>
 
-                  <div 
+                  <div
                     v-if="newEmail.length"
                     class="vstack gap-3"
                   >
-                    <div 
+                    <div
                       v-for="(email, index) in newEmail"
                       :key="index"
                       class="bd-callout rounded vstack flex-fill gap-3"
@@ -900,14 +975,14 @@
                       <h3 class="hstack justify-content-between text-warning fs-6">
                         Novo E-mail
                         <div class="ms-auto">
-                          <button 
+                          <button
                             class="btn btn-info btn-sm"
                             @click="removeEmail(index)"
                           >
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             class="btn btn-orange btn-sm"
                             :disabled="!is_newEmail_ready"
                             @click="insertEmail"
@@ -919,11 +994,11 @@
                       </h3>
 
                       <div class="text-dark hstack gap-3">
-                        <div 
+                        <div
                           class="form-floating"
                           style="width: 400px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="email.email"
                             type="email"
                             placeholder="Endereço"
@@ -931,11 +1006,11 @@
                           >
                           <label>Endereço</label>
                         </div>
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 400px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="email.obs"
                             type="text"
                             placeholder="Observação"
@@ -952,11 +1027,11 @@
                       <i class="fa-solid fa-circle-info me-1"></i>
                       Adicione um e-mail
                       <div class="ms-auto">
-                        <button 
+                        <button
                           class="btn btn-warning btn-sm"
                           @click="addEmail"
                         >
-                          <i class="fa-solid fa-user-plus me-1"></i>
+                          <i class="fa-solid fa-at me-1"></i>
                           Adicionar
                         </button>
                       </div>
@@ -968,11 +1043,11 @@
 
               <div class="tab-pane fade" id="nav-family">
                 <div class="container-lg vstack flex-wrap gap-4 py-4">
-                  <div 
+                  <div
                     v-if="family.length"
                     class="vstack gap-3"
                   >
-                    <div 
+                    <div
                       v-for="(person, index) in family"
                       :key="index"
                       class="bd-callout vstack gap-3 rounded"
@@ -980,17 +1055,17 @@
                       <h3 class="hstack justify-content-between text-light fs-6">
                         Dependente {{index+1}}
                         <div class="ms-auto">
-                          <button 
+                          <button
                             :id="`deleteFamily${index}`"
                             v-if="!editing.family.editing && editing.family.index == null"
                             data-bs-toggle="dropdown"
                             data-bs-auto-close="outside"
                             class="btn btn-danger btn-sm dropdown-toggle"
                           >
-                            <i class="fa-solid fa-user-minus me-1"></i>
+                            <i class="fa-solid fa-trash-can me-1"></i>
                             Excluir
                           </button>
-                          <ul 
+                          <ul
                             v-if="!editing.family.editing && editing.family.index == null"
                             class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
                           >
@@ -998,14 +1073,14 @@
                             <li><span class="dropdown-item-text fw-normal">Deseja continuar?</span></li>
                             <li><hr class="dropdown-divider"></li>
                             <li class="hstack justify-content-end gap-2 px-3">
-                              <button 
+                              <button
                                 class="btn btn-info btn-sm"
                                 @click="closeDeleteFamilyDropdown(index)"
                               >
                                 <i class="fa-solid fa-xmark me-1"></i>
                                 Não
                               </button>
-                              <button 
+                              <button
                                 class="btn btn-orange btn-sm"
                                 @click="closeDeleteFamilyDropdown(index); deleteFamily(index)"
                               >
@@ -1014,7 +1089,7 @@
                               </button>
                             </li>
                           </ul>
-                          <button 
+                          <button
                             v-if="!editing.family.editing && editing.family.index == null"
                             class="btn btn-warning btn-sm"
                             @click="editing.family.editing = true; editing.family.index = index;"
@@ -1022,7 +1097,7 @@
                             <i class="fa-solid fa-pen me-1"></i>
                             Editar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.family.editing && editing.family.index == index"
                             class="btn btn-info btn-sm"
                             @click="restoreBackup('family')"
@@ -1030,7 +1105,7 @@
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             v-if="editing.family.editing && editing.family.index == index"
                             class="btn btn-orange btn-sm"
                             :disabled="!is_family_ready"
@@ -1043,15 +1118,15 @@
                       </h3>
 
                       <div class="hstack flex-wrap gap-3 text-dark">
-                        <div 
+                        <div
                           class="hstack flex-wrap flex-fill gap-3"
                           style="width: 600px; min-width: 0;"
                         >
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 220px; min-width: 0;"
                           >
-                            <input 
+                            <input
                               v-model="person.name"
                               type="text"
                               placeholder="Nome"
@@ -1064,11 +1139,11 @@
                             </label>
                           </div>
 
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 220px; min-width: 0;"
                           >
-                            <input 
+                            <input
                               v-model="person.surname"
                               type="text"
                               placeholder="Sobrenome"
@@ -1082,11 +1157,11 @@
                           </div>
                         </div>
 
-                        <div 
+                        <div
                           class="hstack flex-wrap flex-fill gap-3"
                           style="width: 600px; min-width: 0;"
                         >
-                          <div 
+                          <div
                             class="input-group flex-fill"
                             style="width: 220px; min-width: 0;"
                           >
@@ -1095,11 +1170,11 @@
                               <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
                             </span>
 
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 50px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.birth_d"
                                 type="number"
                                 placeholder="00"
@@ -1109,11 +1184,11 @@
                               <label>Dia</label>
                             </div>
 
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 50px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.birth_m"
                                 type="number"
                                 placeholder="00"
@@ -1123,11 +1198,11 @@
                               <label>Mês</label>
                             </div>
 
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 220px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.birth_y"
                                 type="number"
                                 placeholder="00"
@@ -1141,30 +1216,31 @@
                       </div>
 
                       <div class="hstack flex-wrap gap-3 text-dark">
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <input 
+                          <the-mask
                             v-model="person.cpf"
+                            :mask="['###.###.###-##']"
                             type="text"
                             placeholder="000.000.000-00"
                             class="form-control bg-light-smooth"
                             :disabled="!(editing.family.editing && editing.family.index == index)"
-                          >
+                          />
                           <label>CPF</label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <select 
+                          <select
                             v-model="person.id_family_type"
                             class="form-select"
                             :disabled="!(editing.family.editing && editing.family.index == index)"
                           >
-                            <option 
+                            <option
                               v-for="option in system_types.family"
                               :key="option.value"
                               :value="option.value"
@@ -1181,11 +1257,11 @@
                     </div>
                   </div>
 
-                  <div 
+                  <div
                     v-if="newFamily.length"
                     class="vstack gap-3"
                   >
-                    <div 
+                    <div
                       v-for="(person, index) in newFamily"
                       :key="index"
                       class="bd-callout vstack gap-3 rounded"
@@ -1193,14 +1269,14 @@
                       <h3 class="hstack justify-content-between text-warning fs-6">
                         Novo Dependente
                         <div class="ms-auto">
-                          <button 
+                          <button
                             class="btn btn-info btn-sm"
                             @click="removeFamily(index)"
                           >
                             <i class="fa-solid fa-xmark me-1"></i>
                             Cancelar
                           </button>
-                          <button 
+                          <button
                             class="btn btn-orange btn-sm"
                             :disabled="!is_newFamily_ready"
                             @click="insertFamily"
@@ -1212,15 +1288,15 @@
                       </h3>
 
                       <div class="hstack flex-wrap gap-3 text-dark">
-                        <div 
+                        <div
                           class="hstack flex-wrap flex-fill gap-3"
                           style="width: 600px; min-width: 0;"
                         >
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 220px; min-width: 0;"
                           >
-                            <input 
+                            <input
                               v-model="person.name"
                               type="text"
                               placeholder="Nome"
@@ -1232,11 +1308,11 @@
                             </label>
                           </div>
 
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 220px; min-width: 0;"
                           >
-                            <input 
+                            <input
                               v-model="person.surname"
                               type="text"
                               placeholder="Sobrenome"
@@ -1249,11 +1325,11 @@
                           </div>
                         </div>
 
-                        <div 
+                        <div
                           class="hstack flex-wrap flex-fill gap-3"
                           style="width: 600px; min-width: 0;"
                         >
-                          <div 
+                          <div
                             class="input-group flex-fill"
                             style="width: 220px; min-width: 0;"
                           >
@@ -1262,11 +1338,11 @@
                               <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
                             </span>
 
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 50px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.birth_d"
                                 type="number"
                                 placeholder="00"
@@ -1275,11 +1351,11 @@
                               <label>Dia</label>
                             </div>
 
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 50px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.birth_m"
                                 type="number"
                                 placeholder="00"
@@ -1288,11 +1364,11 @@
                               <label>Mês</label>
                             </div>
 
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 220px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.birth_y"
                                 type="number"
                                 placeholder="00"
@@ -1305,28 +1381,29 @@
                       </div>
 
                       <div class="hstack flex-wrap gap-3 text-dark">
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <input 
+                          <the-mask
                             v-model="person.cpf"
+                            :mask="['###.###.###-##']"
                             type="text"
                             placeholder="000.000.000-00"
                             class="form-control bg-light-smooth"
-                          >
+                          />
                           <label>CPF</label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 300px; min-width: 0;"
                         >
-                          <select 
+                          <select
                             v-model="person.id_family_type"
                             class="form-select"
                           >
-                            <option 
+                            <option
                               v-for="option in system_types.family"
                               :key="option.value"
                               :value="option.value"
@@ -1348,7 +1425,7 @@
                       <i class="fa-solid fa-circle-info me-1"></i>
                       Adicione um dependente
                       <div class="ms-auto">
-                        <button 
+                        <button
                           class="btn btn-warning btn-sm"
                           @click="addFamily"
                           :disabled="newFamily.length > 0"
@@ -1365,7 +1442,7 @@
 
               <div class="tab-pane fade" id="nav-user">
                 <div class="container-lg vstack flex-wrap gap-4 py-4">
-                  <div 
+                  <div
                     v-if="user.id_user"
                     class="bd-callout vstack gap-3 rounded"
                   >
@@ -1373,7 +1450,7 @@
                       Usuário
                       <div class="hstack gap-1 ms-auto">
                         <div>
-                          <button 
+                          <button
                             v-if="session_user.id_user == user.id_user"
                             ref="alterPassButton"
                             data-bs-toggle="dropdown"
@@ -1383,19 +1460,19 @@
                             <i class="fa-solid fa-key me-1"></i>
                             Alterar Senha
                           </button>
-                          <div 
+                          <div
                             v-if="session_user.id_user == user.id_user"
                             class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus py-2"
                           >
                             <div class="hstack gap-2 py-2 px-3">
-                              <input 
+                              <input
                                 class="form-control"
                                 type="password"
                                 placeholder="senha atual"
                                 v-model="user_pass.old_pass"
                                 @keyup.enter="alterPass"
                               >
-                              <input 
+                              <input
                                 class="form-control"
                                 type="password"
                                 placeholder="senha nova"
@@ -1405,14 +1482,14 @@
                             </div>
                             <hr class="dropdown-divider">
                             <div class="hstack justify-content-end gap-2 px-3">
-                              <button 
+                              <button
                                 class="btn btn-info btn-sm"
                                 @click="$refs.alterPassButton.click()"
                               >
                                 <i class="fa-solid fa-xmark me-1"></i>
                                 Cancelar
                               </button>
-                              <button 
+                              <button
                                 class="btn btn-orange btn-sm"
                                 :disabled="
                                   (!user_pass.old_pass || !user_pass.new_pass) ||
@@ -1428,7 +1505,7 @@
                         </div>
 
                         <div>
-                          <button 
+                          <button
                             v-if="session_user.id_group <= 4"
                             ref="resetPassButton"
                             data-bs-toggle="dropdown"
@@ -1438,7 +1515,7 @@
                             <i class="fa-solid fa-key me-1"></i>
                             Resetar Senha
                           </button>
-                          <ul 
+                          <ul
                             v-if="session_user.id_group <= 4"
                             class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
                           >
@@ -1446,14 +1523,14 @@
                             <li><span class="dropdown-item-text fw-normal">Deseja continuar?</span></li>
                             <li><hr class="dropdown-divider"></li>
                             <li class="hstack justify-content-end gap-2 px-3">
-                              <button 
+                              <button
                                 class="btn btn-info btn-sm"
                                 @click="$refs.resetPassButton.click()"
                               >
                                 <i class="fa-solid fa-xmark me-1"></i>
                                 Não
                               </button>
-                              <button 
+                              <button
                                 class="btn btn-orange btn-sm"
                                 @click="resetPass"
                               >
@@ -1469,7 +1546,7 @@
                     <div class="hstack flex-wrap gap-3 align-items-stretch text-dark">
                       <div class="input-group flex-fill" style="width: 220px; min-width: 0;">
                         <div class="form-floating">
-                          <input 
+                          <input
                             :value="user.user"
                             type="text"
                             placeholder="Telefone"
@@ -1483,11 +1560,11 @@
                         <span class="input-group-text bg-light-grey">{{user.postfix}}</span>
                       </div>
 
-                      <div 
+                      <div
                         class="form-floating flex-fill"
                         style="width: 220px; min-width: 0;"
                       >
-                        <input 
+                        <input
                           :value="user.user_group"
                           type="text"
                           placeholder="Grupo"
@@ -1501,14 +1578,14 @@
                     </div>
                   </div>
 
-                  <div 
+                  <div
                     v-if="!user.id_user"
                     class="bd-callout vstack gap-3 rounded"
                   >
                     <h3 class="hstack text-light fs-6 m-0">
                       Usuário
                       <div class="ms-auto">
-                        <button 
+                        <button
                           v-if="!user.create"
                           class="btn btn-warning btn-sm"
                           @click="user.create = true"
@@ -1516,7 +1593,7 @@
                           <i class="fa-solid fa-user-plus me-1"></i>
                           Criar
                         </button>
-                        <button 
+                        <button
                           v-if="user.create"
                           class="btn btn-info btn-sm"
                           @click="user.create = false"
@@ -1524,7 +1601,7 @@
                           <i class="fa-solid fa-user-xmark me-1"></i>
                           Cancelar
                         </button>
-                        <button 
+                        <button
                           v-if="user.create"
                           class="btn btn-orange btn-sm"
                           :disabled="!is_user_ready"
@@ -1539,7 +1616,7 @@
                     <div v-if="user.create" class="hstack flex-wrap gap-3 text-dark">
                       <div class="input-group flex-fill" style="width: 220px; min-width: 0;">
                         <div class="form-floating">
-                          <input 
+                          <input
                             v-model="user.user"
                             type="text"
                             placeholder="Telefone"
@@ -1553,7 +1630,7 @@
                             :disabled="!user.create"
                             @input="checkUserAvailability"
                           >
-                          <label 
+                          <label
                             v-if="user_availability.available === false"
                             class="text-danger"
                           >
@@ -1568,11 +1645,11 @@
                         <span class="input-group-text bg-light-grey">{{session_user.postfix}}</span>
                       </div>
 
-                      <div 
+                      <div
                         class="form-floating flex-fill"
                         style="width: 220px; min-width: 0;"
                       >
-                        <input 
+                        <input
                           v-model="user.pass"
                           type="password"
                           placeholder="E-mail"
@@ -1585,16 +1662,16 @@
                         </label>
                       </div>
 
-                      <div 
+                      <div
                         class="form-floating flex-fill"
                         style="width: 220px; min-width: 0;"
                       >
-                        <select 
+                        <select
                           v-model="user.id_user_group"
                           class="form-select"
                           :disabled="!user.create"
                         >
-                          <option 
+                          <option
                             v-for="option in system_types.user_group"
                             :key="option.value"
                             :value="option.value"
@@ -1635,6 +1712,7 @@
       return {
         backup: {},
         editing: {
+          image:    false,
           personal: false,
           address:  false,
           job:      false,
@@ -1652,6 +1730,7 @@
             index:   null,
           },
         },
+        imageSrc: '/img/user.png',
         employee: {
           id_entity:     null,
           id_person:     null,
@@ -1660,7 +1739,7 @@
           job_type:      null,
           id_job_depart: null,
           job_depart:    null,
-          salary:        null,
+          salary:        0,
           name:          null,
           surname:       null,
           birth_d:       null,
@@ -1699,6 +1778,14 @@
     },
 
     computed: {
+      vcard(){
+        var vcard_string = `BEGIN:VCARD\nVERSION:4.0\nN:${this.employee.surname};${this.employee.name};;;\nFN:${this.employee.name} ${this.employee.surname}\n`;
+        this.phones.forEach(e => { vcard_string = vcard_string+`TEL;TYPE=cell:${e.phone}\n`; });
+        this.emails.forEach(e => { vcard_string = vcard_string+`EMAIL:${e.email}\n`; });
+        vcard_string = vcard_string+`END:VCARD`;
+        console.log(vcard_string);
+        return vcard_string;
+      },
       is_personal_ready(){
         if(!this.editing.personal){ return undefined; }
         if(
@@ -1733,8 +1820,8 @@
       is_user_ready(){
         if(!this.user.create){ return undefined; }
         if(
-          this.user.create                 && 
-          this.user_availability.available && 
+          this.user.create                 &&
+          this.user_availability.available &&
           this.user.pass                   &&
           this.user.id_user_group
         ){ return true; } else { return false; }
@@ -1888,6 +1975,16 @@
           });
       },
 
+      openCroppImageModal(){
+        this.editing.image = true;
+        bootstrap.Modal.getOrCreateInstance(this.$refs.croppImageModal).show();
+      },
+
+      closeCroppImageModal(){
+        bootstrap.Modal.getOrCreateInstance(this.$refs.croppImageModal).hide();
+        this.editing.image = false;
+      },
+
       async getEmployee(id_employee){
         api.getEmployee(id_employee)
           .then((response)=>{
@@ -1898,7 +1995,7 @@
               this.family   = response.data.family;
               this.phones   = response.data.phones;
               this.emails   = response.data.emails;
-              response.data.user? 
+              response.data.user?
                 this.user = {
                   create:        response.data.user.create == null? false: true,
                   id_user_group: response.data.user.id_user_group,
@@ -1907,7 +2004,7 @@
                   user:          response.data.user.user.split('@')[0],
                   postfix:       this.session_user.postfix,
                   pass:          null
-                }: 
+                }:
                 this.user = {
                   create:        false,
                   id_user_group: null,
@@ -1917,11 +2014,51 @@
                   postfix:       this.session_user.postfix,
                   pass:          null
                 };
+              this.getImage();
             }
           })
           .catch((error)=>{
             console.log(error);
             this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+          });
+      },
+
+      insertImage(blob){
+        this.$emit('isLoading', true);
+        const formData = new FormData();
+        formData.append('image', blob, 'image.png');
+        formData.append('id_person', this.employee.id_person);
+        api.insertImage(formData)
+          .then((response)=>{
+            if(response.data.success){
+              this.closeCroppImageModal();
+              this.$emit('showAlert', 'success', 'Imagem cadastrada com sucesso.');
+              this.getImage();
+            }
+          })
+          .catch((error)=>{
+            console.log(error);
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+          })
+          .finally(()=>{
+            this.$emit('isLoading', false);
+          });
+      },
+
+      getImage(){
+        api.getImage(this.employee.id_person)
+          .then((response)=>{
+            if(response.headers.success == 'true'){
+              const blob = new Blob([response.data], { type: 'image/png' });
+              this.imageSrc = URL.createObjectURL(blob);
+            }
+          })
+          .catch((error)=>{
+            console.log(error);
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+          })
+          .finally(()=>{
+            this.$emit('isLoading', false);
           });
       },
 
@@ -2226,9 +2363,24 @@
         document.getElementById(`deletePhone${index}`).click();
       },
 
+      replaceEmptyStringsWithNull(obj) {
+        let newObj = JSON.parse(JSON.stringify(obj));
+        function traverse(o) {
+          for (let i in o) {
+            if (o[i] !== null && typeof(o[i])=="object") {
+              traverse(o[i]);
+            } else if (o[i] === '') {
+              o[i] = null;
+            }
+          }
+        }
+        traverse(newObj);
+        return newObj;
+      },
+
       updateEmployee(part, new_data){
         this.$emit('isLoading', true);
-        api.updateEmployee(part, new_data)
+        api.updateEmployee(part, this.replaceEmptyStringsWithNull(new_data))
           .then((response)=>{
             if(response.data.success){
               switch(part){
@@ -2347,6 +2499,7 @@
       resetProfile(){
         this.backup  = {};
         this.editing = {
+          image:      false,
           personal:  false,
           address:   false,
           job:       false,
@@ -2364,6 +2517,7 @@
             index:   null,
           }
         };
+        this.imageSrc = '/img/user.png',
         this.employee = {
           id_entity:     null,
           id_person:     null,
@@ -2372,7 +2526,7 @@
           job_type:      null,
           id_job_depart: null,
           job_depart:    null,
-          salary:        null,
+          salary:        0,
           name:          null,
           surname:       null,
           birth_d:       null,

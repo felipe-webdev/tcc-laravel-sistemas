@@ -5,7 +5,7 @@
 
     <div class="card text-bg-dark border border-light border-opacity-25 shadow-plus">
       <div class="hstack flex-wrap flex-fill justify-content-center gap-0">
-        <div 
+        <div
           class="vstack flex-grow-0 justify-content-center align-items-center gap-4 p-4"
           style="width:200px"
         >
@@ -16,41 +16,32 @@
         <div class="hstack flex-grow-1 flex-wrap justify-content-evenly align-items-stretch gap-4 p-4">
           <div class="flex-fill rounded bd-callout bd-callout-info" style="width:200px">
             <h5 class="card-title">Cadastrados</h5>
-            <div v-if="counts.employee.loading" class="spinner-border" role="status">
+            <div v-if="employee.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.employee.total}}</p>
+            <p class="card-text fs-1">{{employee.total}}</p>
             <p class="card-text">Total de Funcionários cadastrados no sistema.</p>
           </div>
 
           <div class="flex-fill rounded bd-callout bd-callout-success" style="width:200px">
             <h5 class="card-title">Ativos</h5>
-            <div v-if="counts.employee.loading" class="spinner-border" role="status">
+            <div v-if="employee.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.employee.active}}</p>
+            <p class="card-text fs-1">{{employee.active}}</p>
             <p class="card-text">Total de Funcionários com cadastro ativo.</p>
           </div>
 
           <div class="flex-fill rounded bd-callout bd-callout-warning" style="width:200px">
             <h5 class="card-title">Inativos</h5>
-            <div v-if="counts.employee.loading" class="spinner-border" role="status">
+            <div v-if="employee.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.employee.inactive}}</p>
+            <p class="card-text fs-1">{{employee.inactive}}</p>
             <p class="card-text">Total de Funcionários com cadastro inativo.</p>
           </div>
 
-          <div class="flex-fill rounded bd-callout" style="width:200px">
-            <h5 class="card-title">Cadastrar</h5>
-            <p class="card-text">Cadastrar um novo Funcionário.</p>
-            <button
-              class="btn btn-info"
-              @click="$emit('newRegistration', 'employee')"
-            >
-              <i class="fa-solid fa-user-plus me-1"></i>
-              Funcionário
-            </button>
+          <div id="employee-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
           </div>
         </div>
       </div>
@@ -59,7 +50,7 @@
 
     <div class="card text-bg-dark border border-light border-opacity-25 shadow-plus">
       <div class="hstack flex-wrap flex-fill justify-content-center gap-0">
-        <div 
+        <div
           class="vstack flex-grow-0 justify-content-center align-items-center gap-4 p-4"
           style="width:200px"
         >
@@ -70,41 +61,32 @@
         <div class="hstack flex-grow-1 flex-wrap justify-content-evenly align-items-stretch gap-4 p-4">
           <div class="flex-fill rounded bd-callout bd-callout-info" style="width:200px">
             <h5 class="card-title">Cadastrados</h5>
-            <div v-if="counts.family.loading" class="spinner-border" role="status">
+            <div v-if="family.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.family.total}}</p>
+            <p class="card-text fs-1">{{family.total}}</p>
             <p class="card-text">Total de Dependentes cadastrados no sistema.</p>
           </div>
 
           <div class="flex-fill rounded bd-callout bd-callout-success" style="width:200px">
             <h5 class="card-title">Ativos</h5>
-            <div v-if="counts.family.loading" class="spinner-border" role="status">
+            <div v-if="family.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.family.active}}</p>
+            <p class="card-text fs-1">{{family.active}}</p>
             <p class="card-text">Total de Dependentes (de Funcionários com cadastro ativo).</p>
           </div>
 
           <div class="flex-fill rounded bd-callout bd-callout-warning" style="width:200px">
             <h5 class="card-title">Inativos</h5>
-            <div v-if="counts.family.loading" class="spinner-border" role="status">
+            <div v-if="family.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.family.inactive}}</p>
+            <p class="card-text fs-1">{{family.inactive}}</p>
             <p class="card-text">Total de Dependentes (de Funcionários com cadastro inativo).</p>
           </div>
 
-          <div class="flex-fill rounded bd-callout" style="width:200px">
-            <h5 class="card-title">Cadastrar</h5>
-            <p class="card-text">Cadastrar um novo Dependente.</p>
-            <button
-              class="btn btn-info"
-              @click="$emit('newRegistration', 'family')"
-            >
-              <i class="fa-solid fa-user-plus me-1"></i>
-              Dependente
-            </button>
+          <div id="family-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
           </div>
         </div>
       </div>
@@ -113,7 +95,7 @@
 
     <div class="card text-bg-dark border border-light border-opacity-25 shadow-plus">
       <div class="hstack flex-wrap flex-fill justify-content-center gap-0">
-        <div 
+        <div
           class="vstack flex-grow-0 justify-content-center align-items-center gap-4 p-4"
           style="width:200px"
         >
@@ -124,41 +106,32 @@
         <div class="hstack flex-grow-1 flex-wrap justify-content-evenly align-items-stretch gap-4 p-4">
           <div class="flex-fill rounded bd-callout bd-callout-info" style="width:200px">
             <h5 class="card-title">Cadastrados</h5>
-            <div v-if="counts.user.loading" class="spinner-border" role="status">
+            <div v-if="user.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.user.total}}</p>
+            <p class="card-text fs-1">{{user.total}}</p>
             <p class="card-text">Total de Usuários cadastrados no sistema.</p>
           </div>
 
           <div class="flex-fill rounded bd-callout bd-callout-success" style="width:200px">
             <h5 class="card-title">Ativos</h5>
-            <div v-if="counts.user.loading" class="spinner-border" role="status">
+            <div v-if="user.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.user.active}}</p>
+            <p class="card-text fs-1">{{user.active}}</p>
             <p class="card-text">Total de Usuários (de Funcionários com cadastro ativo).</p>
           </div>
 
           <div class="flex-fill rounded bd-callout bd-callout-warning" style="width:200px">
             <h5 class="card-title">Inativos</h5>
-            <div v-if="counts.user.loading" class="spinner-border" role="status">
+            <div v-if="user.loading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="card-text fs-1">{{counts.user.inactive}}</p>
+            <p class="card-text fs-1">{{user.inactive}}</p>
             <p class="card-text">Total de Usuários (de Funcionários com cadastro inativo).</p>
           </div>
 
-          <div class="flex-fill rounded bd-callout" style="width:200px">
-            <h5 class="card-title">Cadastrar</h5>
-            <p class="card-text">Cadastrar um novo Usuário.</p>
-            <button
-              class="btn btn-info"
-              @click="$emit('newRegistration', 'user')"
-            >
-              <i class="fa-solid fa-user-plus me-1"></i>
-              Usuário
-            </button>
+          <div id="user-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
           </div>
         </div>
       </div>
@@ -180,42 +153,172 @@
 
     data(){
       return {
-        counts: {
-          employee: { loading: true },
-          family:   { loading: true },
-          user:     { loading: true },
+        refresh: undefined,
+        employee: {
+          loading:  true,
+          total:    null,
+          active:   null,
+          incative: null,
+        },
+        family: {
+          loading:  true,
+          total:    null,
+          active:   null,
+          incative: null,
+        },
+        user: {
+          loading:  true,
+          total:    null,
+          active:   null,
+          incative: null,
         },
       }
     },
 
     computed: {},
 
-    watch: {},
+    watch: {
+      'employee.total'(){
+        Plotly.newPlot(
+          'employee-chart',
+          [
+            {
+              name: 'Funcionários',
+              values: this.employee.loading? [0, 0]: [this.employee.active, this.employee.inactive],
+              labels: ['Ativos', 'Inativos'],
+              hoverinfo: 'label+value',
+              textinfo: 'percent',
+              textposition: 'auto',
+              type: 'pie',
+              hole: .4,
+              showlegend: false,
+              automargin: true,
+              marker: {
+                colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
+              },
+            },
+          ],
+          {
+            title: '',
+            paper_bgcolor: 'rgba(0, 0, 0, 0)',
+            width:160,
+            height:160,
+            autosize: true,
+            margin: {
+              t:0, b:0, l:0, r:0,
+              autoexpand: true,
+            },
+            showlegend: false,
+          },
+          {
+            displayModeBar: false,
+            responsive: true,
+          }
+        );
+      },
+
+      'family.total'(){
+        Plotly.newPlot(
+          'family-chart',
+          [
+            {
+              name: 'Dependentes',
+              values: this.family.loading? [0, 0]: [this.family.active, this.family.inactive],
+              labels: ['Ativos', 'Inativos'],
+              hoverinfo: 'label+value',
+              textinfo: 'percent',
+              textposition: 'auto',
+              type: 'pie',
+              hole: .4,
+              showlegend: false,
+              automargin: true,
+              marker: {
+                colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
+              },
+            },
+          ],
+          {
+            title: '',
+            paper_bgcolor: 'rgba(0, 0, 0, 0)',
+            width:160,
+            height:160,
+            autosize: true,
+            margin: {
+              t:0, b:0, l:0, r:0,
+              autoexpand: true,
+            },
+            showlegend: false,
+          },
+          {
+            displayModeBar: false,
+            responsive: true,
+          }
+        );
+      },
+
+      'user.total'(){
+        Plotly.newPlot(
+          'user-chart',
+          [
+            {
+              name: 'Usuários',
+              values: this.user.loading? [0, 0]: [this.user.active, this.user.inactive],
+              labels: ['Ativos', 'Inativos'],
+              hoverinfo: 'label+value',
+              textinfo: 'percent',
+              textposition: 'auto',
+              type: 'pie',
+              hole: .4,
+              showlegend: false,
+              automargin: true,
+              marker: {
+                colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
+              },
+            },
+          ],
+          {
+            title: '',
+            paper_bgcolor: 'rgba(0, 0, 0, 0)',
+            width:160,
+            height:160,
+            autosize: true,
+            margin: {
+              t:0, b:0, l:0, r:0,
+              autoexpand: true,
+            },
+            showlegend: false,
+          },
+          {
+            displayModeBar: false,
+            responsive: true,
+          }
+        );
+      },
+    },
 
     created(){
       this.$emit('isLoading', false);
       this.getCounts();
-      setInterval(this.getCounts, 300000);
     },
 
     mounted(){},
 
     updated(){},
 
-    activated(){},
+    activated(){ this.refresh = setInterval(this.getCounts, 10000 /* 300000 */); },
 
-    deactivated(){},
+    deactivated(){ clearInterval(this.refresh); this.refresh = undefined; },
 
     methods: {
       getCounts(){
-        this.counts.employee = {loading: true};
-        this.counts.family   = {loading: true};
-        this.counts.user     = {loading: true};
+        this.employee.loading = true;
+        this.family.loading   = true;
+        this.user.loading     = true;
         api.countRecords()
           .then((response)=>{
-            this.counts.employee = response.data.employee;
-            this.counts.family   = response.data.family;
-            this.counts.user     = response.data.user;
+            this.employee = response.data.employee;
+            this.family   = response.data.family;
+            this.user     = response.data.user;
           })
           .catch((error)=>{
             console.log(error);
@@ -226,4 +329,4 @@
       },
     },
   }
-  </script>
+</script>

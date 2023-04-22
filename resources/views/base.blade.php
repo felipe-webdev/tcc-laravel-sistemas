@@ -11,7 +11,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('css-view')
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    @yield('title-viw')
+    @yield('title-view')
   </head>
 
   <body class="bg-dark-blue-tint">

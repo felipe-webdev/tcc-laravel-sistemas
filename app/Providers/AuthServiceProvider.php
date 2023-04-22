@@ -22,8 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Auth::provider('custom', function ($app, array $config) { // REGISTRA USER PROVIDER CUSTOMIZADO
-            // return new CustomUserProvider($app->make('db')->connection(), $config['table']);
+        Auth::provider('custom', function ($app, array $config) { // REGISTRA USER PROVIDER CUSTOMIZADO PARA SPA
             return new CustomUserProvider();
         });
     }

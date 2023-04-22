@@ -10,7 +10,7 @@
 			loading-fundo
 		"
 	>
-		<div 
+		<div
 			class="spinner-grow"
 			style="
 				height: 50px;
@@ -19,7 +19,7 @@
 				color: darkorange;
 			"
 		></div>
-		<div 
+		<div
 			class="spinner-border text-info fs-1"
 			style="
 				height: 50px;
@@ -48,7 +48,7 @@
     created(){},
 
     mounted(){},
-		
+
     updated(){},
 
     activated(){},

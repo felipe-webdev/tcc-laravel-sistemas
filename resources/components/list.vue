@@ -1,15 +1,15 @@
 <template>
   <div class="container-lg vstack flex-wrap gap-4 py-4">
-    <h1 class="text-center text-light fs-3 m-0"> Listagem </h1>
+    <h1 class="text-center text-light fs-3 m-0"> Funcionários </h1>
     <div class="vstack gap-3">
       <div class="input-group shadow-plus">
-        <div 
+        <div
           class="form-floating flex-fill"
           style="width: 220px; min-width: 0;"
         >
-          <input 
+          <input
             v-model="search.name"
-            type="text"
+            type="search"
             placeholder="Nome"
             class="form-control bg-light-smooth"
             @keyup.enter="getList('enter')"
@@ -17,16 +17,16 @@
           <label>Nome</label>
         </div>
 
-        <div 
+        <div
           class="form-floating flex-fill"
           style="width: 190px; min-width: 0;"
         >
-          <select 
+          <select
             v-model="search.job_type"
             class="form-select bg-light-smooth"
           >
             <option :value="null">Qualquer cargo</option>
-            <option 
+            <option
               v-for="option in system_types.job"
               :key="option.value"
               :value="option.value"
@@ -39,11 +39,11 @@
           </label>
         </div>
 
-        <div 
+        <div
           class="form-floating flex-fill"
           style="width: 130px; min-width: 0;"
         >
-          <select 
+          <select
             v-model="search.active"
             class="form-select bg-light-smooth"
           >
@@ -56,24 +56,24 @@
           </label>
         </div>
 
-        <div 
+        <div
           class="form-floating flex-fill"
           style="width: 130px; min-width: 0;"
         >
-          <select 
+          <select
             v-model="pagination.page_limit"
             class="form-select bg-light-smooth"
           >
-            <option :value="2">20</option>
-            <option :value="4">40</option>
-            <option :value="6">60</option>
+            <option :value="20">20</option>
+            <option :value="40">40</option>
+            <option :value="60">60</option>
           </select>
           <label>
             Resultados por página
           </label>
         </div>
 
-        <button 
+        <button
           class="btn btn-info"
           @click="getList('search')"
         >
@@ -82,52 +82,145 @@
         </button>
       </div>
 
-      <div class="border border-light border-opacity-25 rounded shadow-plus">
+      <div class="border border-light border-opacity-25 shadow-plus">
         <table class="table table-dark table-hover m-0">
           <thead>
-            <tr>
+            <tr class="fw-bold">
               <td>Funcionário</td>
-              <td>Cargo</td>
-              <td>Situação</td>
-              <td>Possui usuário</td>
-              <td>Dependentes</td>
+              <td>Telefone</td>
+              <td>E-mail</td>
               <td>Perfil</td>
             </tr>
           </thead>
 
           <tbody>
             <tr
-              v-for="(employee) in search.result"
+              v-for="(employee, index) in search.result"
               :key="employee.id"
               :class="{
                 'table-active': (search.selected.id == employee.id),
               }"
               @click="selectRow(employee)"
             >
-              <td>{{employee.name}}</td>
-              <td>{{employee.job}}</td>
-              <td>{{employee.active == 1? 'Ativo': 'Inativo'}}</td>
-              <td>
-                <button 
-                  class="btn btn-outline-light me-2"
-                  @click="$emit('profileAction', 'profile', {id_employee:employee.id, tab:'user'})"
-                >
-                  <i class="fa-solid fa-up-right-from-square"></i>
-                </button>
-                {{employee.is_user === 'true'? 'Sim': 'Não'}}
+              <td class="vstack">
+                <div class="hstack justify-content-between">
+                  {{employee.name}}
+                  <span 
+                    class="badge"
+                    :class="{
+                      'bg-success': (employee.active == 1),
+                      'bg-danger':  (employee.active == 0),
+                    }"
+                  >
+                    {{employee.active == 1? 'Ativo': 'Inativo'}}
+                  </span>
+                </div>
+                <small class="text-light text-opacity-50">
+                  {{employee.job}}
+                </small>
               </td>
-              <td>
-                <button 
-                  class="btn btn-outline-light me-2"
-                  @click="$emit('profileAction', 'profile', {id_employee:employee.id, tab:'family'})"
-                >
-                  <i class="fa-solid fa-up-right-from-square"></i>
-                </button>
-                {{employee.family}}
+              <td v-if="employee.phone" class="font-monospace">
+                <div class="dropdown d-inline">
+                  <button
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    class="btn btn-orange dropdown-toggle me-2"
+                  >
+                    <i class="fa-brands fa-whatsapp"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus">
+                    <div class="vstack text-dark gap-2 px-3" style="width: 500px;">
+                      <div class="form-floating">
+                        <textarea
+                          v-model="whatsapp_inputs[index]"
+                          class="form-control"
+                          style="height: 125px;"
+                          name="body"
+                          placeholder="Mensagem"
+                          @input="whatsapp_texts[index]=encodeURIComponent(whatsapp_inputs[index])"
+                        ></textarea>
+                        <label>Texto da mensagem</label>
+                      </div>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <div class="hstack justify-content-end gap-2 px-3">
+                      <a
+                        :href="`https://wa.me/%2B55${employee.phone}?text=${whatsapp_texts[index]}`"
+                        class="btn btn-orange"
+                        target="_blank"
+                      >
+                        <i class="fa-solid fa-up-right-from-square me-1"></i>
+                        WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                {{employee.phone | filter_phone}}
               </td>
+              <td v-if="!employee.phone">Não possui</td>
+              <td v-if="employee.email">
+                <div class="dropdown d-inline">
+                  <button
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    class="btn btn-orange dropdown-toggle me-2"
+                  >
+                    <i class="fa-regular fa-envelope"></i>
+                  </button>
+                  <form
+                    class="dropdown-menu dropdown-menu-dark border border-light border-opacity-25 shadow-plus"
+                    :action="`mailto:${employee.email}`"
+                    method="GET"
+                    enctype="text/plain"
+                    target="_blank"
+                  >
+                    <div class="vstack text-dark gap-2 px-3" style="width: 500px;">
+                      <div class="input-group">
+                        <span class="input-group-text">Assunto</span>
+                        <div class="form-floating">
+                          <input class="form-control" name="subject" placeholder="Assunto" type="text" />
+                          <label>Assunto do E-mail</label>
+                        </div>
+                      </div>
+                      <div class="input-group">
+                        <span class="input-group-text">cc</span>
+                        <div class="form-floating">
+                          <input class="form-control" name="cc" placeholder="Cópia" type="email" />
+                          <label>Enviar cópia para</label>
+                        </div>
+                      </div>
+                      <div class="input-group">
+                        <span class="input-group-text">bcc</span>
+                        <div class="form-floating">
+                          <input class="form-control" name="bcc" placeholder="Cópia oculta" type="email" />
+                          <label>Enviar cópia oculta para</label>
+                        </div>
+                      </div>
+                      <div class="form-floating">
+                        <textarea 
+                          class="form-control"
+                          style="height: 125px;"
+                          name="body"
+                          placeholder="Mensagem"
+                        ></textarea>
+                        <label>Texto da mensagem</label>
+                      </div>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <div class="hstack justify-content-end px-3">
+                      <button class="btn btn-orange" type="submit" value="Preparar E-mail">
+                        <i class="fa-solid fa-up-right-from-square me-1"></i>
+                        E-mail
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                {{employee.email}}
+              </td>
+              <td v-if="!employee.email">Não possui</td>
               <td>
-                <button 
-                  class="btn btn-outline-light"
+                <button
+                  class="btn btn-orange"
                   @click="$emit('profileAction', 'profile', {id_employee:employee.id, tab:'info'})"
                 >
                   <i class="fa-solid fa-up-right-from-square"></i>
@@ -147,12 +240,12 @@
           </span>
         </div>
 
-        <div 
+        <div
           v-if="pagination.pages > 1"
           class="input-group shadow-plus"
           style="width: fit-content;"
         >
-          <button 
+          <button
             class="btn btn-info"
             :disabled="!pagination.page"
             @click="getPage('prev')"
@@ -162,7 +255,7 @@
           <span class="input-group-text bg-light-smooth">
             {{`Pág ${pagination.page+1} de ${pagination.pages}`}}
           </span>
-          <button 
+          <button
             class="btn btn-info"
             :disabled="pagination.page == pagination.pages-1"
             @click="getPage('next')"
@@ -192,7 +285,7 @@
         pagination: {
           page:        null,
           pages:       null,
-          page_limit:  2,
+          page_limit:  20,
           page_offset: null,
           records:     null
         },
@@ -203,26 +296,39 @@
           selected: { id: null },
           result:   []
         },
+        whatsapp_inputs: [],
+        whatsapp_texts:  [],
       }
     },
 
     computed: {
-      job_type(){   return this.search.job_type;       },
-      active(){     return this.search.active;         },
-      page_limit(){ return this.pagination.page_limit; },
+      job_type()     { return this.search.job_type;       },
+      active()       { return this.search.active;         },
+      page_limit()   { return this.pagination.page_limit; },
+      search_result(){ return this.search.result;         },
     },
 
     watch: {
-      job_type(){   if(this.pagination.records){ this.getList('param'); } },
-      active(){     if(this.pagination.records){ this.getList('param'); } },
-      page_limit(){ if(this.pagination.records){ this.getList('param'); } },
+      job_type()     { if(this.pagination.records){ this.getList('param'); } },
+      active()       { if(this.pagination.records){ this.getList('param'); } },
+      page_limit()   { if(this.pagination.records){ this.getList('param'); } },
+      search_result(){
+        var inputs = [];
+        var texts  = [];
+        for(let i = 0; i < this.search_result.length; i++){
+          inputs[i] = '';
+          texts[i]  = '';
+        }
+        this.whatsapp_inputs = JSON.parse(JSON.stringify(inputs));
+        this.whatsapp_texts  = JSON.parse(JSON.stringify(texts));
+      },
     },
 
     created(){
       this.$emit('isLoading', false);
     },
 
-    mounted(){},
+    mounted(){ this.getList(); },
 
     updated(){},
 
@@ -231,7 +337,7 @@
     deactivated(){},
 
     methods: {
-      getList(from){
+      getList(from = undefined){
         this.$emit('isLoading', true);
         if(this.pagination.records && (from == 'search' || from == 'param' || from == 'enter')){
           this.pagination.page        = null;

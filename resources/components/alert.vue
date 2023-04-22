@@ -36,7 +36,7 @@
           let toast = document.createElement("div");
           toast.innerHTML=`
             <div class="toast-header text-bg-dark">
-              <img 
+              <img
                 alt="logotipo do sistema"
                 src="/img/fav.png"
                 class="rounded me-2"
@@ -66,7 +66,7 @@
           let toast = document.createElement("div");
           toast.innerHTML=`
             <div class="toast-header text-bg-dark">
-              <img 
+              <img
                 alt="logotipo do sistema"
                 src="/img/fav.png"
                 class="rounded me-2"
@@ -96,7 +96,7 @@
           let toast = document.createElement("div");
           toast.innerHTML=`
             <div class="toast-header text-bg-dark">
-              <img 
+              <img
                 alt="logotipo do sistema"
                 src="/img/fav.png"
                 class="rounded me-2"
