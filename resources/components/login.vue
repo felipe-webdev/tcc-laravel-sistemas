@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     ref="login"
     class="
       vh-100
@@ -10,15 +10,15 @@
       align-items-center
     "
   >
-    <loading 
+    <loading
       ref="loading"
       :isLoading="isLoading"
     />
-    <alert 
+    <alert
       ref="alert"
     />
     <div class="blurred"></div>
-    <div 
+    <div
       class="
         border
         rounded
@@ -28,7 +28,7 @@
       "
     >
       <div class="mb-3">
-        <div 
+        <div
           class="
             d-flex
             flex-row
@@ -37,7 +37,7 @@
           "
         >
           <div class="login-logo">
-            <img 
+            <img
               alt="logotipo do sistema"
               src="/img/logo.png"
               class="
@@ -47,7 +47,7 @@
               "
             >
           </div>
-          <div 
+          <div
             class="
               m-auto
               login-titulo
@@ -59,7 +59,7 @@
       </div>
 
       <div class="px-3">
-        <input 
+        <input
           class="
             form-control
             mb-3
@@ -70,7 +70,7 @@
           @keyup.enter="login"
           v-model="user"
         />
-        <input 
+        <input
           class="
             form-control
             mb-3
@@ -83,14 +83,14 @@
         />
       </div>
 
-      <div 
+      <div
         class="
           px-3
           d-flex
           justify-content-center
         "
       >
-        <button 
+        <button
           type="button"
           class="
             btn
@@ -99,7 +99,7 @@
           :disabled="(user == '' || pass == '') || disabled"
           @click="login"
         >
-          <span 
+          <span
             v-if="loadingLogin"
             class="
               spinner-border
@@ -138,9 +138,7 @@
 
     created(){
       window.app = this;
-      axios.get('/sanctum/csrf-cookie').then(response => {
-        console.log(response)
-      });
+      axios.get('/sanctum/csrf-cookie')
     },
 
     mounted(){},
@@ -166,6 +164,9 @@
               setTimeout(()=>{window.location.href = `${window.location.origin}/app`}, 1000);
             } else {
               switch (response.data.error) {
+                case 'no match or inactive':
+                  this.$refs.alert.showAlert('error', 'Credenciais inválidas ou cadastro inativo.');
+                  break;
                 case 'user':
                   this.$refs.alert.showAlert('error', 'Usuário inválido.');
                   break;

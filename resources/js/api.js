@@ -449,6 +449,71 @@ const api = {
     });
     return response;
   },
+
+  insertDepart: async function (depart){
+    const reqBody = {
+      "depart": depart
+    };
+    const response = await axios({
+      method: 'POST',
+      url:    `${window.location.origin}/api/insertDepart`,
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Api':          'insertDepart'
+      },
+      data: reqBody
+    });
+    return response;
+  },
+
+  insertJob: async function (job){
+    const reqBody = {
+      "job": job
+    };
+    const response = await axios({
+      method: 'POST',
+      url:    `${window.location.origin}/api/insertJob`,
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Api':          'insertJob'
+      },
+      data: reqBody
+    });
+    return response;
+  },
+
+  insertImage: async function (formData){
+    const response = await axios({
+      method: 'POST',
+      url:    `${window.location.origin}/api/insertImage`,
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'multipart/form-data',
+        'Api':          'insertImage'
+      },
+      data: formData
+    });
+    return response;
+  },
+
+  getImage: async function (id_person){
+    const reqBody = {
+      'id_person': id_person
+    };
+    const response = await axios({
+      method: 'POST',
+      url: `${window.location.origin}/api/getImage`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Api':          'getImage'
+      },
+      data: reqBody,
+      responseType: 'arraybuffer'
+    });
+    return response;
+  },
 };
 
 export { api };

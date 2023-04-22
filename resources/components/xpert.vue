@@ -49,10 +49,12 @@
           :is="activeTab"
           :session_user="session_user"
           :system_types="system_types"
+          :find_type="findType"
           @newRegistration="newRegistration"
           @showAlert="showAlert"
           @isLoading="setIsLoading"
           @profileAction="profileAction"
+          @refreshSystemTypes="getSystemTypes"
         />
       </keep-alive>
     </div>
@@ -107,8 +109,8 @@
           ],
           job:        [],
           job_depart: [],
-          user_group: []
-        }
+          user_group: [],
+        },
       }
     },
 
@@ -122,9 +124,7 @@
 
     created(){
       window.app = this;
-      axios.get('/sanctum/csrf-cookie').then(response => {
-        console.log(response)
-      });
+      axios.get('/sanctum/csrf-cookie')
     },
 
     mounted(){},
@@ -202,6 +202,15 @@
           .finally(()=>{
             this.$emit('isLoading', false);
           });
+      },
+
+      findType(arr, value){
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i].value === value) {
+            return arr[i].label;
+          }
+        }
+        return "vazio";
       },
     },
   }

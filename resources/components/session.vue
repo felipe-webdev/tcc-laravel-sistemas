@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div 
+    <div
       class="modal fade"
       id="staticBackdrop"
       data-bs-backdrop="static"
@@ -10,9 +10,9 @@
     >
       <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
-          <div class="modal-header border border-info border-opacity-25">
+          <div class="modal-header border border-info border-opacity-25 py-1">
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img 
+              <img
                 src="/img/nav.png"
                 alt="Logo"
                 width="38"
@@ -21,22 +21,22 @@
               >
               Xpert
             </a>
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Alterar Senha</h1>
-            <button 
+            <h1 class="modal-title fs-3" id="staticBackdropLabel">Alterar Senha</h1>
+            <button
               class="btn-close btn-close-white m-0"
               data-bs-dismiss="modal"
             ></button>
           </div>
           <div class="modal-body bd-callout bd-callout-info">
             <div class="hstack gap-2">
-              <input 
+              <input
                 class="form-control"
                 type="password"
                 placeholder="senha atual"
                 v-model="old_pass"
                 @keyup.enter="alterPass"
               >
-              <input 
+              <input
                 class="form-control"
                 type="password"
                 placeholder="senha nova"
@@ -45,27 +45,31 @@
               >
             </div>
           </div>
-          <div class="modal-footer border border-info border-opacity-25">
-            <button 
+          <div class="modal-footer border border-info border-opacity-25 py-1">
+            <button
               class="btn btn-info"
               data-bs-dismiss="modal"
             >
+              <i class="fa-solid fa-xmark me-1"></i>
               Cancelar
             </button>
-            <button 
+            <button
               class="btn btn-primary btn-orange"
               :disabled="
                 (old_pass == '' || new_pass == '') ||
                 (old_pass == new_pass)
               "
               @click="alterPass"
-            >Alterar</button>
+            >
+              <i class="fa-solid fa-check me-1"></i>
+              Alterar
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <div 
+    <div
       class="modal fade"
       id="staticBackdrop"
       data-bs-backdrop="static"
@@ -75,9 +79,9 @@
     >
       <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
-          <div class="modal-header border border-warning border-opacity-25">
+          <div class="modal-header border border-warning border-opacity-25 py-1">
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img 
+              <img
                 src="/img/nav.png"
                 alt="Logo"
                 width="38"
@@ -86,8 +90,8 @@
               >
               Xpert
             </a>
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Encerrar sessão</h1>
-            <button 
+            <h1 class="modal-title fs-3" id="staticBackdropLabel">Encerrar sessão</h1>
+            <button
               class="btn-close btn-close-white m-0"
               data-bs-dismiss="modal"
             ></button>
@@ -95,14 +99,18 @@
           <div class="modal-body bd-callout bd-callout-warning">
             Deseja mesmo sair do sistema?
           </div>
-          <div class="modal-footer border border-warning border-opacity-25">
-            <button 
+          <div class="modal-footer border border-warning border-opacity-25 py-1">
+            <button
               class="btn btn-info"
               data-bs-dismiss="modal"
             >
+              <i class="fa-solid fa-xmark me-1"></i>
               Cancelar
             </button>
-            <button class="btn btn-primary btn-orange" @click="logout">Sair</button>
+            <button class="btn btn-primary btn-orange" @click="logout">
+              <i class="fa-solid fa-check me-1"></i>
+              Sair
+            </button>
           </div>
         </div>
       </div>
@@ -132,7 +140,7 @@
 
     created(){
       this.getUser();
-      // setInterval(this.getUser, 5000);//300000
+      setInterval(this.getUser, 300000);
     },
 
     mounted(){},
@@ -149,8 +157,7 @@
           .then((response)=>{
             response.data.session_started?
               this.$emit('setSessionUser', response.data.session_user):
-              console.log(response.data);
-              // window.location.href = `${window.location.origin}/login`;
+              window.location.href = `${window.location.origin}/login`;
           })
           .catch((error)=>{
             console.log(error);

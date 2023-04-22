@@ -1,5 +1,5 @@
 <template>
-    <nav 
+    <nav
       class="
         navbar
         navbar-expand-lg
@@ -48,7 +48,7 @@
               </span>
             </div>
 
-            <div 
+            <div
               class="
                 d-flex
                 justify-content-end
@@ -56,14 +56,14 @@
                 gap-2
               "
             >
-              <button 
+              <button
                 class="btn btn-outline-info flex-grow-1"
                 @click="$emit('sessionAction', 'alterPass')"
               >
                 Alterar Senha
                 <i class="fa-solid fa-key ms-2"></i>
               </button>
-              <button 
+              <button
                 class="btn btn-outline-danger btn-outline-orange flex-grow-1"
                 @click="$emit('sessionAction', 'logout')"
               >
@@ -77,7 +77,7 @@
 
 
       <div class="container-fluid border-bottom border-light border-opacity-25">
-        <button 
+        <button
           class="navbar-toggler"
           data-bs-toggle="offcanvas"
           data-bs-target="#navbarContent"
@@ -85,7 +85,7 @@
           <i class="fa-sharp fa-solid fa-bars"></i>
         </button>
         <a class="navbar-brand d-flex align-items-center" href="#">
-          <img 
+          <img
             src="/img/nav.png"
             alt="Logo"
             width="38"
@@ -98,7 +98,7 @@
         <div class="offcanvas offcanvas-start text-bg-dark" id="navbarContent">
           <div class="offcanvas-header">
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img 
+              <img
                 src="/img/nav.png"
                 alt="Logo"
                 width="38"
@@ -107,7 +107,7 @@
               >
               Xpert
             </a>
-            <button 
+            <button
               class="btn-close btn-close-white"
               data-bs-dismiss="offcanvas"
             ></button>
@@ -122,7 +122,7 @@
                   :class="{'disabled': activeTab == 'dashboard'}"
                   @click="changeTab('dashboard')"
                 >
-                  Cadastros
+                  Dashboard
                 </a>
               </li>
               <li class="nav-item">
@@ -132,17 +132,7 @@
                   :class="{'disabled': activeTab == 'list'}"
                   @click="changeTab('list')"
                 >
-                  Listagem
-                </a>
-              </li>
-              <li class="nav-item">
-                <a
-                  data-bs-dismiss="offcanvas"
-                  class="nav-link nav-pointer"
-                  :class="{'disabled': activeTab == 'contact'}"
-                  @click="changeTab('contact')"
-                >
-                  Contatos
+                  Funcionários
                 </a>
               </li>
               <li class="nav-item">
@@ -155,8 +145,18 @@
                   Trabalho
                 </a>
               </li>
+              <!-- <li class="nav-item">
+                <a
+                  data-bs-dismiss="offcanvas"
+                  class="nav-link nav-pointer"
+                  :class="{'disabled': activeTab == 'cropper'}"
+                  @click="changeTab('cropper')"
+                >
+                  Teste cropper
+                </a>
+              </li> -->
               <li class="nav-item dropdown">
-                <a 
+                <a
                   class="nav-link dropdown-toggle nav-pointer"
                   data-bs-toggle="dropdown"
                 >
@@ -164,7 +164,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   <li>
-                    <a 
+                    <a
                       data-bs-dismiss="offcanvas"
                       class="dropdown-item nav-pointer"
                       @click="$emit('newRegistration', 'employee')"
@@ -173,7 +173,7 @@
                     </a>
                   </li>
                   <li>
-                    <a 
+                    <a
                       data-bs-dismiss="offcanvas"
                       class="dropdown-item nav-pointer"
                       @click="$emit('newRegistration', 'family')"
@@ -182,7 +182,7 @@
                     </a>
                   </li>
                   <li>
-                    <a 
+                    <a
                       data-bs-dismiss="offcanvas"
                       class="dropdown-item nav-pointer"
                       @click="$emit('newRegistration', 'user')"
@@ -190,22 +190,22 @@
                       Cadastrar Usuário
                     </a>
                   </li>
-                  <li><hr class="dropdown-divider"></li>
+                  <!-- <li><hr class="dropdown-divider"></li>
                   <li>
-                    <a 
+                    <a
                       data-bs-dismiss="offcanvas"
                       class="dropdown-item nav-pointer disabled"
                     >
                       Em Breve
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
               </li>
             </ul>
           </div>
         </div>
 
-        <button 
+        <button
           class="btn btn-outline-light"
           data-bs-toggle="collapse"
           data-bs-target="#userInfo"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div 
+    <div
       ref="newEmployeeModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
@@ -9,9 +9,9 @@
     >
       <div class="modal-dialog modal-fullscreen">
         <div class="modal-content text-bg-dark">
-          <div class="modal-header border border-light border-opacity-25">
+          <div class="modal-header border border-light border-opacity-25 py-1">
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img  
+              <img
                 src="/img/nav.png"
                 alt="Logo"
                 width="38"
@@ -21,9 +21,9 @@
               <span class="d-none d-lg-inline">Xpert</span>
             </a>
 
-            <h1 class="modal-title fs-4">Cadastrar Funcionário</h1>
+            <h1 class="modal-title fs-3">Cadastrar Funcionário</h1>
 
-            <button 
+            <button
               data-bs-dismiss="modal"
               class="btn-close btn-close-white m-0"
               @click="resetEmployee"
@@ -31,664 +31,598 @@
           </div>
 
           <div class="modal-body bg-dark-blue-tint p-0">
-            <div class="accordion accordion-flush accordion-arrow">
-              <div class="accordion-item bg-dark-blue-tint border-0">
-                <h2 class="accordion-header border border-light border-opacity-25">
-                  <button
-                    data-bs-toggle="collapse"
-                    data-bs-target="#employee-collapse-1"
-                    class="
-                      accordion-button
-                      fs-5
-                      text-light
-                      bg-light
-                      bg-opacity-10
-                      shadow-none
-                    "
-                  >
-                    Dados do funcionário
-                  </button>
-                </h2>
+            <div class="container-lg vstack gap-3 py-3 px-0">
+              <h2 class="fs-3">
+                Dados do funcionário
+              </h2>
 
+              <span class="text-muted fs-6 ms-3">
+                <i class="fa-solid fa-star-of-life text-danger"></i>
+                Campo obrigatório
+              </span>
+
+              <div class="bd-callout vstack gap-3 rounded text-dark">
+                <h3 class="text-light fs-6">Dados básicos</h3>
+                <div class="hstack flex-wrap gap-3">
+                  <div
+                    class="hstack flex-wrap flex-fill gap-3"
+                    style="width: 600px; min-width: 0;"
+                  >
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px; min-width: 0;"
+                    >
+                      <input
+                        v-model="employee.name"
+                        type="text"
+                        placeholder="Nome"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>
+                        Nome
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px; min-width: 0;"
+                    >
+                      <input
+                        v-model="employee.surname"
+                        type="text"
+                        placeholder="Sobrenome"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>
+                        Sobrenome
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div
+                    class="hstack flex-wrap flex-fill gap-3"
+                    style="width: 600px; min-width: 0;"
+                  >
+                    <div
+                      class="input-group flex-fill"
+                      style="width: 220px; min-width: 0;"
+                    >
+                      <span class="input-group-text bg-light-grey">
+                        Nascimento
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </span>
+
+                      <div
+                        class="form-floating flex-fill"
+                        style="width: 50px; min-width: 0;"
+                      >
+                        <input
+                          v-model="employee.birth_d"
+                          type="number"
+                          placeholder="00"
+                          class="form-control bg-light-smooth"
+                        >
+                        <label>Dia</label>
+                      </div>
+
+                      <div
+                        class="form-floating flex-fill"
+                        style="width: 50px; min-width: 0;"
+                      >
+                        <input
+                          v-model="employee.birth_m"
+                          type="number"
+                          placeholder="00"
+                          class="form-control bg-light-smooth"
+                        >
+                        <label>Mês</label>
+                      </div>
+
+                      <div
+                        class="form-floating flex-fill"
+                        style="width: 220px; min-width: 0;"
+                      >
+                        <input
+                          v-model="employee.birth_y"
+                          type="number"
+                          placeholder="00"
+                          class="form-control bg-light-smooth"
+                        >
+                        <label>Ano</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hstack flex-wrap gap-3">
+                  <div
+                    class="form-floating flex-fill"
+                    style="width: 300px; min-width: 0;"
+                  >
+                    <the-mask
+                      v-model="employee.cpf"
+                      :mask="['###.###.###-##']"
+                      type="text"
+                      placeholder="000.000.000-00"
+                      class="form-control bg-light-smooth"
+                    />
+                    <label>CPF</label>
+                  </div>
+
+                  <div
+                    class="form-floating flex-fill"
+                    style="width: 300px; min-width: 0;"
+                  >
+                    <select
+                      v-model="employee.job_type"
+                      class="form-select bg-light-smooth"
+                    >
+                      <option
+                        v-for="option in system_types.job"
+                        :key="option.value"
+                        :value="option.value"
+                      >
+                        {{option.label}}
+                      </option>
+                    </select>
+                    <label>
+                      Cargo
+                      <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hstack gap-3 flex-wrap align-items-stretch">
                 <div
-                  id="employee-collapse-1"
-                  class="accordion-collapse collapse show"
+                  class="bd-callout vstack flex-fill gap-3 rounded text-dark"
+                  style="width: 600px; min-width: 0;"
                 >
-                  <div class="container-lg vstack gap-3 py-3 px-0">
-                    <span class="text-muted fs-6 ms-3">
-                      <i class="fa-solid fa-star-of-life text-danger"></i>
-                      = Obrigatório
-                    </span>
-                    <div class="bd-callout vstack gap-3 rounded">
-                      <h3 class="text-light fs-6">Dados básicos</h3>
-                      <div class="hstack flex-wrap gap-3">
-                        <div 
-                          class="hstack flex-wrap flex-fill gap-3"
-                          style="width: 600px; min-width: 0;"
+                  <h3 class="text-light fs-6">Endereço</h3>
+
+                  <div class="hstack flex-wrap gap-3">
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 600px; min-width: 0;"
+                    >
+                      <input
+                        v-model="employee.address.line"
+                        type="text"
+                        placeholder="Logradouro"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>
+                        Logradouro
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 120px; min-width: 0;"
+                    >
+                      <input
+                        v-model="employee.address.number"
+                        type="text"
+                        placeholder="Número"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>
+                        Nº
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px; min-width: 0;"
+                    >
+                      <input
+                        v-model="employee.address.number_info"
+                        type="text"
+                        placeholder="Complemento do número"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>Compl. Nº</label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px; min-width: 0;"
+                    >
+                      <input
+                        v-model="employee.address.district"
+                        type="text"
+                        placeholder="Cidade"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>
+                        Bairro
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px; min-width: 0;"
+                    >
+                      <input
+                        v-model="employee.address.city"
+                        type="text"
+                        placeholder="Cidade"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>
+                        Cidade
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px; min-width: 0;"
+                    >
+                      <select
+                        v-model="employee.address.uf"
+                        type="text"
+                        class="form-select bg-light-smooth"
+                      >
+                        <option
+                          v-for="option in system_types.uf"
+                          :key="option.value"
+                          :value="option.value"
+                        >{{option.label}}</option>
+                      </select>
+                      <label>UF<i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i></label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width:220px; min-width: 0;"
+                    >
+                      <the-mask
+                        v-model="employee.address.cep"
+                        :mask="['#####-###']"
+                        type="text"
+                        placeholder="CEP"
+                        class="form-control bg-light-smooth"
+                      />
+                      <label>CEP</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bd-callout vstack gap-3 flex-fill rounded text-dark" style="width: 600px;">
+                  <h3 class="text-light fs-6">Contato</h3>
+
+                  <div class="hstack flex-wrap gap-3">
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px;"
+                    >
+                      <the-mask
+                        v-model="employee.phone"
+                        :mask="['(##) ####-####', '(##) #####-####']"
+                        type="text"
+                        placeholder="Telefone"
+                        class="form-control bg-light-smooth"
+                      />
+                      <label>Telefone</label>
+                    </div>
+
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 220px;"
+                    >
+                      <input
+                        v-model="employee.email"
+                        type="text"
+                        placeholder="E-mail"
+                        class="form-control bg-light-smooth"
+                      >
+                      <label>E-mail</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-lg vstack gap-3 py-3 px-0">
+              <h2 class="fs-3">
+                Dados de dependentes
+              </h2>
+
+              <div v-if="employee.family.length > 0" class="vstack gap-3">
+                <div
+                  v-for="(person, index) in employee.family"
+                  :key="index"
+                  class="bd-callout vstack gap-3 rounded text-dark"
+                >
+                  <h3 class="hstack justify-content-between text-light fs-6">
+                    Dependente {{index+1}}
+                    <button class="btn btn-info btn-sm"
+                      @click="removeFamily(index)"
+                    >
+                      <i class="fa-solid fa-user-minus me-1"></i>
+                      Remover
+                    </button>
+                  </h3>
+
+                  <div class="hstack flex-wrap gap-3">
+                    <div
+                      class="hstack flex-wrap flex-fill gap-3"
+                      style="width: 600px; min-width: 0;"
+                    >
+                      <div
+                        class="form-floating flex-fill"
+                        style="width: 220px; min-width: 0;"
+                      >
+                        <input
+                          v-model="person.name"
+                          type="text"
+                          placeholder="Nome"
+                          class="form-control bg-light-smooth"
                         >
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px; min-width: 0;"
-                          >
-                            <input 
-                              v-model="employee.name"
-                              type="text"
-                              placeholder="Nome"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>
-                              Nome
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
-
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px; min-width: 0;"
-                          >
-                            <input 
-                              v-model="employee.surname"
-                              type="text"
-                              placeholder="Sobrenome"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>
-                              Sobrenome
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
-                        </div>
-
-                        <div 
-                          class="hstack flex-wrap flex-fill gap-3"
-                          style="width: 600px; min-width: 0;"
-                        >
-                          <div 
-                            class="input-group flex-fill"
-                            style="width: 220px; min-width: 0;"
-                          >
-                            <span class="input-group-text bg-light-grey">
-                              Nascimento
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </span>
-
-                            <div 
-                              class="form-floating flex-fill"
-                              style="width: 50px; min-width: 0;"
-                            >
-                              <input 
-                                v-model="employee.birth_d"
-                                type="number"
-                                placeholder="00"
-                                class="form-control bg-light-smooth"
-                              >
-                              <label>Dia</label>
-                            </div>
-
-                            <div 
-                              class="form-floating flex-fill"
-                              style="width: 50px; min-width: 0;"
-                            >
-                              <input 
-                                v-model="employee.birth_m"
-                                type="number"
-                                placeholder="00"
-                                class="form-control bg-light-smooth"
-                              >
-                              <label>Mês</label>
-                            </div>
-
-                            <div 
-                              class="form-floating flex-fill"
-                              style="width: 220px; min-width: 0;"
-                            >
-                              <input 
-                                v-model="employee.birth_y"
-                                type="number"
-                                placeholder="00"
-                                class="form-control bg-light-smooth"
-                              >
-                              <label>Ano</label>
-                            </div>
-                          </div>
-                        </div>
+                        <label>
+                          Nome
+                          <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                        </label>
                       </div>
 
-                      <div class="hstack flex-wrap gap-3">
-                        <div 
-                          class="form-floating flex-fill"
-                          style="width: 300px; min-width: 0;"
+                      <div
+                        class="form-floating flex-fill"
+                        style="width: 220px; min-width: 0;"
+                      >
+                        <input
+                          v-model="person.surname"
+                          type="text"
+                          class="form-control bg-light-smooth"
+                          placeholder="Sobrenome"
                         >
-                          <input 
-                            v-model="employee.cpf"
-                            type="text"
-                            placeholder="000.000.000-00"
-                            class="form-control bg-light-smooth"
-                          >
-                          <label>CPF</label>
-                        </div>
-
-                        <div 
-                          class="form-floating flex-fill"
-                          style="width: 300px; min-width: 0;"
-                        >
-                          <select 
-                            v-model="employee.job_type"
-                            class="form-select bg-light-smooth"
-                          >
-                            <option 
-                              v-for="option in system_types.job"
-                              :key="option.value"
-                              :value="option.value"
-                            >
-                              {{option.label}}
-                            </option>
-                          </select>
-                          <label>
-                            Cargo
-                            <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                          </label>
-                        </div>
+                        <label>
+                          Sobrenome
+                          <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                        </label>
                       </div>
                     </div>
 
-                    <div class="hstack gap-3 flex-wrap align-items-stretch">
-                      <div 
-                        class="bd-callout vstack gap-3 flex-fill rounded"
-                        style="width: 600px; min-width: 0;"
+                    <div
+                      class="hstack flex-wrap flex-fill gap-3"
+                      style="width: 600px; min-width: 0;"
+                    >
+                      <div
+                        class="input-group flex-fill"
+                        style="width: 220px; min-width: 0;"
                       >
-                        <h3 class="text-light fs-6">Endereço</h3>
+                        <span class="input-group-text bg-light-grey">
+                          Nascimento
+                          <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                        </span>
 
-                        <div class="hstack flex-wrap gap-3">
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 600px; min-width: 0;"
+                        <div
+                          class="form-floating flex-fill"
+                          style="width: 50px; min-width: 0;"
+                        >
+                          <input
+                            v-model="person.birth_d"
+                            type="number"
+                            placeholder="00"
+                            class="form-control bg-light-smooth"
                           >
-                            <input 
-                              v-model="employee.address.line"
-                              type="text"
-                              placeholder="Logradouro"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>
-                              Logradouro
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
+                          <label>Dia</label>
+                        </div>
 
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 120px; min-width: 0;"
+                        <div
+                          class="form-floating flex-fill"
+                          style="width: 50px; min-width: 0;"
+                        >
+                          <input
+                            v-model="person.birth_m"
+                            type="number"
+                            placeholder="00"
+                            class="form-control bg-light-smooth"
                           >
-                            <input 
-                              v-model="employee.address.number"
-                              type="text"
-                              placeholder="Número"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>
-                              Nº
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
+                          <label>Mês</label>
+                        </div>
 
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px; min-width: 0;"
+                        <div
+                          class="form-floating flex-fill"
+                          style="width: 220px; min-width: 0;"
+                        >
+                          <input
+                            v-model="person.birth_y"
+                            type="number"
+                            placeholder="00"
+                            class="form-control bg-light-smooth"
                           >
-                            <input 
-                              v-model="employee.address.number_info"
-                              type="text"
-                              placeholder="Complemento do número"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>Compl. Nº</label>
-                          </div>
-
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px; min-width: 0;"
-                          >
-                            <input 
-                              v-model="employee.address.district"
-                              type="text"
-                              placeholder="Cidade"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>
-                              Bairro
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
-
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px; min-width: 0;"
-                          >
-                            <input 
-                              v-model="employee.address.city"
-                              type="text"
-                              placeholder="Cidade"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>
-                              Cidade
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
-
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px; min-width: 0;"
-                          >
-                            <select 
-                              v-model="employee.address.uf"
-                              type="text"
-                              class="form-select bg-light-smooth"
-                            >
-                              <option
-                                v-for="option in system_types.uf"
-                                :key="option.value"
-                                :value="option.value"
-                              >{{option.label}}</option>
-                            </select>
-                            <label>UF<i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i></label>
-                          </div>
-
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width:220px; min-width: 0;"
-                          >
-                            <input 
-                              v-model="employee.address.cep"
-                              type="text"
-                              placeholder="CEP"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>CEP</label>
-                          </div>
+                          <label>Ano</label>
                         </div>
                       </div>
+                    </div>
+                  </div>
 
-                      <div class="bd-callout vstack gap-3 flex-fill rounded" style="width: 600px;">
-                        <h3 class="text-light fs-6">Contato</h3>
+                  <div class="hstack flex-wrap gap-3">
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 300px; min-width: 0;"
+                    >
+                      <the-mask
+                        v-model="person.cpf"
+                        :mask="['###.###.###-##']"
+                        type="text"
+                        placeholder="000.000.000-00"
+                        class="form-control bg-light-smooth"
+                      />
+                      <label>CPF</label>
+                    </div>
 
-                        <div class="hstack flex-wrap gap-3">
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px;"
-                          >
-                            <input 
-                              v-model="employee.phone"
-                              type="text"
-                              placeholder="Telefone"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>Telefone</label>
-                          </div>
-
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 220px;"
-                          >
-                            <input 
-                              v-model="employee.email"
-                              type="text"
-                              placeholder="E-mail"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>E-mail</label>
-                          </div>
-                        </div>
-                      </div>
+                    <div
+                      class="form-floating flex-fill"
+                      style="width: 300px; min-width: 0;"
+                    >
+                      <select
+                        v-model="person.id_family_type"
+                        class="form-select"
+                      >
+                        <option
+                          v-for="option in system_types.family"
+                          :key="option.value"
+                          :value="option.value"
+                        >
+                          {{option.label}}
+                        </option>
+                      </select>
+                      <label>
+                        Selecione um tipo
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="accordion-item bg-dark-blue-tint border-0">
-                <h2 class="accordion-header border border-light border-opacity-25">
-                  <button 
-                    data-bs-toggle="collapse"
-                    data-bs-target="#employee-collapse-2"
-                    class="
-                      accordion-button
-                      fs-5
-                      text-light
-                      bg-light
-                      bg-opacity-10
-                      shadow-none
-                    "
-                  >
-                    Dados de dependentes
-                  </button>
-                </h2>
-
-                <div 
-                  id="employee-collapse-2"
-                  class="accordion-collapse collapse show"
-                >
-                  <div class="container-lg vstack gap-3 py-3 px-0">
-                    <span class="text-muted fs-6 ms-3">
-                      <i class="fa-solid fa-star-of-life text-danger"></i>
-                      = Obrigatório
-                    </span>
-
-                    <div v-if="employee.family.length > 0" class="vstack gap-3">
-                      <div 
-                        v-for="(person, index) in employee.family"
-                        :key="index"
-                        class="bd-callout vstack gap-3 rounded"
-                      >
-                        <h3 class="hstack justify-content-between text-light fs-6">
-                          Dependente {{index+1}}
-                          <button class="btn btn-info btn-sm"
-                            @click="removeFamily(index)"
-                          >
-                            <i class="fa-solid fa-user-minus me-1"></i>
-                            Remover
-                          </button>
-                        </h3>
-
-                        <div class="hstack flex-wrap gap-3">
-                          <div 
-                            class="hstack flex-wrap flex-fill gap-3"
-                            style="width: 600px; min-width: 0;"
-                          >
-                            <div 
-                              class="form-floating flex-fill"
-                              style="width: 220px; min-width: 0;"
-                            >
-                              <input 
-                                v-model="person.name"
-                                type="text"
-                                placeholder="Nome"
-                                class="form-control bg-light-smooth"
-                              >
-                              <label>
-                                Nome
-                                <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                              </label>
-                            </div>
-
-                            <div 
-                              class="form-floating flex-fill"
-                              style="width: 220px; min-width: 0;"
-                            >
-                              <input 
-                                v-model="person.surname"
-                                type="text"
-                                class="form-control bg-light-smooth"
-                                placeholder="Sobrenome"
-                              >
-                              <label>
-                                Sobrenome
-                                <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                              </label>
-                            </div>
-                          </div>
-
-                          <div 
-                            class="hstack flex-wrap flex-fill gap-3"
-                            style="width: 600px; min-width: 0;"
-                          >
-                            <div 
-                              class="input-group flex-fill"
-                              style="width: 220px; min-width: 0;"
-                            >
-                              <span class="input-group-text bg-light-grey">
-                                Nascimento
-                                <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                              </span>
-
-                              <div 
-                                class="form-floating flex-fill"
-                                style="width: 50px; min-width: 0;"
-                              >
-                                <input 
-                                  v-model="person.birth_d"
-                                  type="number"
-                                  placeholder="00"
-                                  class="form-control bg-light-smooth"
-                                >
-                                <label>Dia</label>
-                              </div>
-
-                              <div 
-                                class="form-floating flex-fill"
-                                style="width: 50px; min-width: 0;"
-                              >
-                                <input 
-                                  v-model="person.birth_m"
-                                  type="number"
-                                  placeholder="00"
-                                  class="form-control bg-light-smooth"
-                                >
-                                <label>Mês</label>
-                              </div>
-
-                              <div 
-                                class="form-floating flex-fill"
-                                style="width: 220px; min-width: 0;"
-                              >
-                                <input 
-                                  v-model="person.birth_y"
-                                  type="number"
-                                  placeholder="00"
-                                  class="form-control bg-light-smooth"
-                                >
-                                <label>Ano</label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="hstack flex-wrap gap-3">
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 300px; min-width: 0;"
-                          >
-                            <input 
-                              v-model="person.cpf"
-                              type="text"
-                              placeholder="000.000.000-00"
-                              class="form-control bg-light-smooth"
-                            >
-                            <label>CPF</label>
-                          </div>
-
-                          <div 
-                            class="form-floating flex-fill"
-                            style="width: 300px; min-width: 0;"
-                          >
-                            <select 
-                              v-model="person.id_family_type"
-                              class="form-select"
-                            >
-                              <option 
-                                v-for="option in system_types.family"
-                                :key="option.value"
-                                :value="option.value"
-                              >
-                                {{option.label}}
-                              </option>
-                            </select>
-                            <label>
-                              Selecione um tipo
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="bd-callout vstack gap-3 rounded">
-                      <h3 class="hstack text-warning fs-6 m-0">
-                        <i class="fa-solid fa-circle-info me-1"></i>
-                        Adicione um dependente
-                        <div class="ms-auto">
-                          <button 
-                            class="btn btn-warning btn-sm"
-                            @click="addFamily"
-                          >
-                            <i class="fa-solid fa-user-plus me-1"></i>
-                            Adicionar
-                          </button>
-                        </div>
-                      </h3>
-                    </div>
+              <div class="bd-callout vstack gap-3 rounded text-dark">
+                <h3 class="hstack text-warning fs-6 m-0">
+                  <i class="fa-solid fa-circle-info me-1"></i>
+                  Adicione um dependente
+                  <div class="ms-auto">
+                    <button
+                      class="btn btn-warning btn-sm"
+                      @click="addFamily"
+                    >
+                      <i class="fa-solid fa-user-plus me-1"></i>
+                      Adicionar
+                    </button>
                   </div>
-                </div>
+                </h3>
               </div>
+            </div>
 
-              <div class="accordion-item bg-dark-blue-tint border-0">
-                <h2 class="accordion-header border border-light border-opacity-25">
-                  <button 
-                    data-bs-toggle="collapse"
-                    data-bs-target="#employee-collapse-3"
-                    class="
-                      accordion-button
-                      fs-5
-                      text-light
-                      bg-light
-                      bg-opacity-10
-                      shadow-none
-                    "
+            <div class="container-lg vstack gap-3 py-3 px-0">
+              <h2 class="fs-3">
+                Dados de usuário
+              </h2>
+
+              <div class="bd-callout vstack gap-3 rounded text-dark">
+                <h3 class="hstack text-warning fs-6 m-0">
+                  <i class="fa-solid fa-circle-info me-1"></i>
+                  Criar usuário
+                  <div class="ms-auto">
+                    <button
+                      v-if="!employee.user.create"
+                      class="btn btn-warning btn-sm"
+                      @click="employee.user.create = true"
+                    >
+                      <i class="fa-solid fa-user-plus me-1"></i>
+                      Criar
+                    </button>
+                    <button
+                      v-if="employee.user.create"
+                      class="btn btn-info btn-sm"
+                      @click="employee.user.create = false"
+                    >
+                      <i class="fa-solid fa-user-xmark me-1"></i>
+                      Cancelar
+                    </button>
+                  </div>
+                </h3>
+
+                <div v-if="employee.user.create" class="hstack flex-wrap gap-3">
+                  <div
+                    class="input-group flex-fill"
+                    style="width: 220px; min-width: 0;"
                   >
-                    Dados de usuário
-                  </button>
-                </h2>
-
-                <div 
-                  id="employee-collapse-3"
-                  class="accordion-collapse collapse show"
-                >
-                  <div class="container-lg vstack gap-3 py-3 px-0">
-                    <span class="text-muted fs-6 ms-3">
-                      <i class="fa-solid fa-star-of-life text-danger"></i>
-                      = Obrigatório
-                    </span>
-
-                    <div class="bd-callout vstack gap-3 rounded">
-                      <h3 class="hstack text-warning fs-6 m-0">
-                        <i class="fa-solid fa-circle-info me-1"></i>
-                        Criar usuário
-                        <div class="ms-auto">
-                          <button 
-                            v-if="!employee.user.create"
-                            class="btn btn-warning btn-sm"
-                            @click="employee.user.create = true"
-                          >
-                            <i class="fa-solid fa-user-plus me-1"></i>
-                            Criar
-                          </button>
-                          <button 
-                            v-if="employee.user.create"
-                            class="btn btn-info btn-sm"
-                            @click="employee.user.create = false"
-                          >
-                            <i class="fa-solid fa-user-xmark me-1"></i>
-                            Cancelar
-                          </button>
-                        </div>
-                      </h3>
-
-                      <div v-if="employee.user.create" class="hstack flex-wrap gap-3">
-                        <div 
-                          class="input-group flex-fill"
-                          style="width: 220px; min-width: 0;"
-                        >
-                          <div class="form-floating">
-                            <input 
-                              v-model="employee.user.user"
-                              type="text"
-                              placeholder="Telefone"
-                              class="form-control bg-light-smooth"
-                              :class="{
-                                'is-invalid': (
-                                  employee.user.create &&
-                                  !user_availability.available &&
-                                  user_availability.available != undefined
-                                )
-                              }"
-                              :disabled="!employee.user.create"
-                              @input="checkUserAvailability"
-                            >
-                            <label 
-                              v-if="user_availability.available === false"
-                              class="text-danger"
-                            >
-                              Usuário indisponível
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                            <label v-if="user_availability.available != false">
-                              Usuário
-                              <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                            </label>
-                          </div>
-
-                          <span class="input-group-text bg-light-grey">
-                            {{session_user.postfix}}
-                          </span>
-                        </div>
-
-                        <div 
-                          class="form-floating flex-fill"
-                          style="width: 220px; min-width: 0;"
-                        >
-                          <input 
-                            v-model="employee.user.pass"
-                            type="password"
-                            placeholder="E-mail"
-                            class="form-control bg-light-smooth"
-                            :disabled="!employee.user.create"
-                          >
-                          <label>
-                            Senha
-                            <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                          </label>
-                        </div>
-
-                        <div 
-                          class="form-floating flex-fill"
-                          style="width: 220px; min-width: 0;"
-                        >
-                          <select 
-                            v-model="employee.user.id_user_group"
-                            class="form-select"
-                            :disabled="!employee.user.create"
-                          >
-                            <option 
-                              v-for="option in system_types.user_group"
-                              :key="option.value"
-                              :value="option.value"
-                            >
-                              {{option.label}}
-                            </option>
-                          </select>
-                          <label>
-                            Selecione um grupo
-                            <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
-                          </label>
-                        </div>
-                      </div>
+                    <div class="form-floating">
+                      <input
+                        v-model="employee.user.user"
+                        type="text"
+                        placeholder="Telefone"
+                        class="form-control bg-light-smooth"
+                        :class="{
+                          'is-invalid': (
+                            employee.user.create &&
+                            !user_availability.available &&
+                            user_availability.available != undefined
+                          )
+                        }"
+                        :disabled="!employee.user.create"
+                        @input="checkUserAvailability"
+                      >
+                      <label
+                        v-if="user_availability.available === false"
+                        class="text-danger"
+                      >
+                        Usuário indisponível
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
+                      <label v-if="user_availability.available != false">
+                        Usuário
+                        <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                      </label>
                     </div>
+
+                    <span class="input-group-text bg-light-grey">
+                      {{session_user.postfix}}
+                    </span>
+                  </div>
+
+                  <div
+                    class="form-floating flex-fill"
+                    style="width: 220px; min-width: 0;"
+                  >
+                    <input
+                      v-model="employee.user.pass"
+                      type="password"
+                      placeholder="E-mail"
+                      class="form-control bg-light-smooth"
+                      :disabled="!employee.user.create"
+                    >
+                    <label>
+                      Senha
+                      <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                    </label>
+                  </div>
+
+                  <div
+                    class="form-floating flex-fill"
+                    style="width: 220px; min-width: 0;"
+                  >
+                    <select
+                      v-model="employee.user.id_user_group"
+                      class="form-select"
+                      :disabled="!employee.user.create"
+                    >
+                      <option
+                        v-for="option in system_types.user_group"
+                        :key="option.value"
+                        :value="option.value"
+                      >
+                        {{option.label}}
+                      </option>
+                    </select>
+                    <label>
+                      Selecione um grupo
+                      <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
+                    </label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="modal-footer border border-light border-opacity-25">
-            <button 
+          <div class="modal-footer border border-light border-opacity-25 py-1">
+            <button
               data-bs-dismiss="modal"
               class="btn btn-info"
               @click="resetEmployee"
             >
+              <i class="fa-solid fa-xmark me-1"></i>
               Cancelar
             </button>
 
-            <button 
+            <button
               class="btn btn-primary btn-orange"
               :disabled="(
                 !is_employee_ready || (
@@ -701,6 +635,7 @@
               )"
               @click="insertEmployee"
             >
+              <i class="fa-solid fa-check me-1"></i>
               Cadastrar
             </button>
           </div>
@@ -709,7 +644,7 @@
     </div>
 
 
-    <div 
+    <div
       ref="newFamilyModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
@@ -718,9 +653,9 @@
     >
       <div class="modal-dialog modal-fullscreen">
         <div class="modal-content text-bg-dark">
-          <div class="modal-header border border-light border-opacity-25">
+          <div class="modal-header border border-light border-opacity-25 py-1">
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img 
+              <img
                 src="/img/nav.png"
                 alt="Logo"
                 width="38"
@@ -730,9 +665,9 @@
               <span class="d-none d-lg-inline">Xpert</span>
             </a>
 
-            <h1 class="modal-title fs-4">Cadastrar Dependente</h1>
+            <h1 class="modal-title fs-3">Cadastrar Dependente</h1>
 
-            <button 
+            <button
               class="btn-close btn-close-white m-0"
               data-bs-dismiss="modal"
               @click="resetFamily"
@@ -740,12 +675,12 @@
           </div>
 
           <div class="modal-body bg-dark-blue-tint p-0">
-            <div 
+            <div
               class="accordion accordion-flush accordion-arrow"
             >
               <div class="accordion-item bg-dark-blue-tint border-0">
                 <h2 class="accordion-header border border-light border-opacity-25">
-                  <button 
+                  <button
                     data-bs-toggle="collapse"
                     data-bs-target="#family-collapse-1"
                     class="
@@ -761,7 +696,7 @@
                   </button>
                 </h2>
 
-                <div 
+                <div
                   id="family-collapse-1"
                   class="accordion-collapse collapse show"
                 >
@@ -772,13 +707,13 @@
                     </span>
                     <div class="hstack flex-wrap gap-3">
                       <div class="input-group">
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
                           <input
                             v-model="employees_id_search.search"
-                            type="text"
+                            type="search"
                             placeholder="Nome"
                             class="form-control bg-light-smooth"
                             @keyup.enter="getEmployeeId"
@@ -788,16 +723,16 @@
                             <i class="fa-solid fa-star-of-life text-danger"></i>
                           </label>
                         </div>
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <select 
+                          <select
                             v-model="employees_id_search.job_type"
                             class="form-select bg-light-smooth"
                           >
                             <option :value="null">Qualquer cargo</option>
-                            <option 
+                            <option
                               v-for="option in system_types.job"
                               :key="option.value"
                               :value="option.value"
@@ -820,13 +755,13 @@
                       </div>
                     </div>
 
-                    <div 
-                      class="table-responsive border border-light border-opacity-25 rounded"
+                    <div
+                      class="table-responsive border border-light border-opacity-25"
                       style="max-height: 40vh;"
                     >
                       <table class="table table-dark table-hover m-0">
                         <thead class="sticky-top">
-                          <tr>
+                          <tr class="fw-bold">
                             <td>Funcionário</td>
                             <td>Cargo</td>
                             <td>Dependentes</td>
@@ -855,7 +790,7 @@
 
               <div class="accordion-item bg-dark-blue-tint border-0">
                 <h2 class="accordion-header border border-light border-opacity-25">
-                  <button 
+                  <button
                     data-bs-toggle="collapse"
                     data-bs-target="#family-collapse-2"
                     class="
@@ -871,21 +806,21 @@
                   </button>
                 </h2>
 
-                <div 
+                <div
                   id="family-collapse-2"
                   class="accordion-collapse collapse show"
                 >
                   <div class="container-lg vstack gap-3 py-3 px-0">
                     <span class="text-muted fs-6 ms-3">
                       <i class="fa-solid fa-star-of-life text-danger"></i>
-                      = Obrigatório
+                      Campo obrigatório
                     </span>
 
                     <div v-if="employee.family.length > 0" class="vstack gap-3">
-                      <div 
+                      <div
                         v-for="(person, index) in employee.family"
                         :key="index"
-                        class="bd-callout vstack gap-3 rounded"
+                        class="bd-callout vstack gap-3 rounded text-dark"
                       >
                         <h3 class="hstack justify-content-between text-light fs-6">
                           Dependente {{index+1}}
@@ -898,15 +833,15 @@
                         </h3>
 
                         <div class="hstack flex-wrap gap-3">
-                          <div 
+                          <div
                             class="hstack flex-wrap flex-fill gap-3"
                             style="width: 600px; min-width: 0;"
                           >
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 220px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.name"
                                 type="text"
                                 placeholder="Nome"
@@ -918,11 +853,11 @@
                               </label>
                             </div>
 
-                            <div 
+                            <div
                               class="form-floating flex-fill"
                               style="width: 220px; min-width: 0;"
                             >
-                              <input 
+                              <input
                                 v-model="person.surname"
                                 type="text"
                                 class="form-control bg-light-smooth"
@@ -935,11 +870,11 @@
                             </div>
                           </div>
 
-                          <div 
+                          <div
                             class="hstack flex-wrap flex-fill gap-3"
                             style="width: 600px; min-width: 0;"
                           >
-                            <div 
+                            <div
                               class="input-group flex-fill"
                               style="width: 220px; min-width: 0;"
                             >
@@ -948,11 +883,11 @@
                                 <i class="fa-solid fa-star-of-life text-danger text-opacity-75 ms-2"></i>
                               </span>
 
-                              <div 
+                              <div
                                 class="form-floating flex-fill"
                                 style="width: 50px; min-width: 0;"
                               >
-                                <input 
+                                <input
                                   v-model="person.birth_d"
                                   type="number"
                                   class="form-control bg-light-smooth"
@@ -961,11 +896,11 @@
                                 <label>Dia</label>
                               </div>
 
-                              <div 
+                              <div
                                 class="form-floating flex-fill"
                                 style="width: 50px; min-width: 0;"
                               >
-                                <input 
+                                <input
                                   v-model="person.birth_m"
                                   type="number"
                                   class="form-control bg-light-smooth"
@@ -974,11 +909,11 @@
                                 <label>Mês</label>
                               </div>
 
-                              <div 
+                              <div
                                 class="form-floating flex-fill"
                                 style="width: 220px; min-width: 0;"
                               >
-                                <input 
+                                <input
                                   v-model="person.birth_y"
                                   type="number"
                                   class="form-control bg-light-smooth"
@@ -991,28 +926,29 @@
                         </div>
 
                         <div class="hstack flex-wrap gap-3">
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 300px; min-width: 0;"
                           >
-                            <input 
+                            <the-mask
                               v-model="person.cpf"
+                              :mask="['###.###.###-##']"
                               type="text"
                               class="form-control bg-light-smooth"
                               placeholder="000.000.000-00"
-                            >
+                            />
                             <label>CPF</label>
                           </div>
 
-                          <div 
+                          <div
                             class="form-floating flex-fill"
                             style="width: 300px; min-width: 0;"
                           >
-                            <select 
+                            <select
                               v-model="person.id_family_type"
                               class="form-select"
                             >
-                              <option 
+                              <option
                                 v-for="option in system_types.family"
                                 :key="option.value"
                                 :value="option.value"
@@ -1029,9 +965,9 @@
                       </div>
                     </div>
 
-                    <div 
+                    <div
                       v-if="employees_id_search.selected.id === null"
-                      class="bd-callout vstack gap-3 rounded"
+                      class="bd-callout vstack gap-3 rounded text-dark"
                     >
                       <h3 class="hstack text-danger fs-6 m-0">
                         <i class="fa-solid fa-circle-info me-1"></i>
@@ -1039,15 +975,15 @@
                       </h3>
                     </div>
 
-                    <div 
+                    <div
                       v-if="employees_id_search.selected.id != null"
-                      class="bd-callout vstack gap-3 rounded"
+                      class="bd-callout vstack gap-3 rounded text-dark"
                     >
                       <h3 class="hstack text-warning fs-6 m-0">
                         <i class="fa-solid fa-circle-info me-1"></i>
                         Adicione um dependente para: <b class="ms-1">{{employees_id_search.selected.name}}</b>
                         <div class="ms-auto">
-                          <button 
+                          <button
                             class="btn btn-warning btn-sm"
                             @click="addFamily"
                             :disabled="(employees_id_search.selected.id === null)"
@@ -1064,20 +1000,22 @@
             </div>
           </div>
 
-          <div class="modal-footer border border-light border-opacity-25">
-            <button 
+          <div class="modal-footer border border-light border-opacity-25 py-1">
+            <button
               class="btn btn-info"
               data-bs-dismiss="modal"
               @click="resetFamily"
             >
+              <i class="fa-solid fa-xmark me-1"></i>
               Cancelar
             </button>
 
-            <button 
+            <button
               class="btn btn-primary btn-orange"
               :disabled="(!is_family_ready)"
               @click="insertFamily"
             >
+              <i class="fa-solid fa-check me-1"></i>
               Cadastrar
             </button>
           </div>
@@ -1086,7 +1024,7 @@
     </div>
 
 
-    <div 
+    <div
       ref="newUserModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
@@ -1095,9 +1033,9 @@
     >
       <div class="modal-dialog modal-fullscreen">
         <div class="modal-content text-bg-dark">
-          <div class="modal-header border border-light border-opacity-25">
+          <div class="modal-header border border-light border-opacity-25 py-1">
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img 
+              <img
                 src="/img/nav.png"
                 alt="Logo"
                 width="38"
@@ -1107,9 +1045,9 @@
               <span class="d-none d-lg-inline">Xpert</span>
             </a>
 
-            <h1 class="modal-title fs-4">Cadastrar Usuário</h1>
+            <h1 class="modal-title fs-3">Cadastrar Usuário</h1>
 
-            <button 
+            <button
               data-bs-dismiss="modal"
               class="btn-close btn-close-white m-0"
               @click="resetUser"
@@ -1117,12 +1055,12 @@
           </div>
 
           <div class="modal-body bg-dark-blue-tint p-0">
-            <div 
+            <div
               class="accordion accordion-flush accordion-arrow"
             >
               <div class="accordion-item bg-dark-blue-tint border-0">
                 <h2 class="accordion-header border border-light border-opacity-25">
-                  <button 
+                  <button
                     data-bs-toggle="collapse"
                     data-bs-target="#user-collapse-1"
                     class="
@@ -1132,13 +1070,13 @@
                       bg-light
                       bg-opacity-10
                       shadow-none
-                    " 
+                    "
                   >
                     Selecionar funcionário
                   </button>
                 </h2>
 
-                <div 
+                <div
                   id="user-collapse-1"
                   class="accordion-collapse collapse show"
                 >
@@ -1153,13 +1091,13 @@
                     </span>
                     <div class="hstack flex-wrap gap-3">
                       <div class="input-group">
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="employees_id_search.search"
-                            type="text"
+                            type="search"
                             placeholder="Nome"
                             class="form-control bg-light-smooth"
                             @keyup.enter="getEmployeeId"
@@ -1169,16 +1107,16 @@
                             <i class="fa-solid fa-star-of-life text-danger"></i>
                           </label>
                         </div>
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <select 
+                          <select
                             v-model="employees_id_search.job_type"
                             class="form-select bg-light-smooth"
                           >
                             <option :value="null">Qualquer cargo</option>
-                            <option 
+                            <option
                               v-for="option in system_types.job"
                               :key="option.value"
                               :value="option.value"
@@ -1190,7 +1128,7 @@
                             Cargo
                           </label>
                         </div>
-                        <button 
+                        <button
                           class="btn btn-info"
                           @click="getEmployeeId"
                           :disabled="!employees_id_search.search"
@@ -1201,13 +1139,13 @@
                       </div>
                     </div>
 
-                    <div 
-                      class="table-responsive border border-light border-opacity-25 rounded"
+                    <div
+                      class="table-responsive border border-light border-opacity-25"
                       style="max-height: 40vh;"
                     >
                       <table class="table table-dark table-hover m-0">
                         <thead class="sticky-top">
-                          <tr>
+                          <tr class="fw-bold">
                             <td>Funcionário</td>
                             <td>Cargo</td>
                             <td>Possui usuário</td>
@@ -1237,7 +1175,7 @@
 
               <div class="accordion-item bg-dark-blue-tint border-0">
                 <h2 class="accordion-header border border-light border-opacity-25">
-                  <button 
+                  <button
                     data-bs-toggle="collapse"
                     data-bs-target="#user-collapse-2"
                     class="
@@ -1252,25 +1190,25 @@
                     Dados de usuário
                   </button>
                 </h2>
-                <div 
+                <div
                   id="user-collapse-2"
                   class="accordion-collapse collapse show"
                 >
                   <div class="container-lg vstack gap-3 py-3 px-0">
                     <span class="text-muted fs-6 ms-3">
                       <i class="fa-solid fa-star-of-life text-danger"></i>
-                      = Obrigatório
+                      Campo obrigatório
                     </span>
 
-                    <div class="bd-callout vstack gap-3 rounded">
-                      <h3 
+                    <div class="bd-callout vstack gap-3 rounded text-dark">
+                      <h3
                         v-if="employees_id_search.selected.id === null"
                         class="text-danger fs-6 m-0"
                       >
                         <i class="fa-solid fa-circle-info"></i>
                         Primeiro selecione um funcionário
                       </h3>
-                      <h3 
+                      <h3
                         v-if="employees_id_search.selected.id"
                         class="text-warning fs-6 m-0"
                       >
@@ -1281,7 +1219,7 @@
                       <div v-if="employee.user.create" class="hstack flex-wrap gap-3">
                         <div class="input-group flex-fill" style="width: 220px; min-width: 0;">
                           <div class="form-floating">
-                            <input 
+                            <input
                               v-model="employee.user.user"
                               type="text"
                               placeholder="Telefone"
@@ -1295,7 +1233,7 @@
                               :disabled="employees_id_search.selected.id === null"
                               @input="checkUserAvailability"
                             >
-                            <label 
+                            <label
                               v-if="user_availability.available === false"
                               class="text-danger"
                             >
@@ -1311,11 +1249,11 @@
                           <span class="input-group-text bg-light-grey">{{session_user.postfix}}</span>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <input 
+                          <input
                             v-model="employee.user.pass"
                             type="password"
                             placeholder="E-mail"
@@ -1328,16 +1266,16 @@
                           </label>
                         </div>
 
-                        <div 
+                        <div
                           class="form-floating flex-fill"
                           style="width: 220px; min-width: 0;"
                         >
-                          <select 
+                          <select
                             v-model="employee.user.id_user_group"
                             class="form-select"
                             :disabled="employees_id_search.selected.id === null"
                           >
-                            <option 
+                            <option
                               v-for="option in system_types.user_group"
                               :key="option.value"
                               :value="option.value"
@@ -1358,19 +1296,21 @@
             </div>
           </div>
 
-          <div class="modal-footer border border-light border-opacity-25">
-            <button 
+          <div class="modal-footer border border-light border-opacity-25 py-1">
+            <button
               data-bs-dismiss="modal"
               class="btn btn-info"
               @click="resetUser"
             >
+              <i class="fa-solid fa-xmark me-1"></i>
               Cancelar
             </button>
-            <button 
+            <button
               class="btn btn-primary btn-orange"
               :disabled="!is_user_ready"
               @click="insertUser"
             >
+              <i class="fa-solid fa-check me-1"></i>
               Cadastrar
             </button>
           </div>

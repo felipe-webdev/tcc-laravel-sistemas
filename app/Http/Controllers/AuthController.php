@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
+// use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PDOException;
@@ -25,7 +25,7 @@ class AuthController extends Controller
 
     if (Auth::attempt(['email'=>$user, 'password'=>$pass])) {
       $request->session()->regenerate();
-      $sql3 = "SELECT 
+      $sql3 = "SELECT
       u.id                       AS id_user,
       u.usuario                  AS user,
       u.id_funcionario           AS id_employee,
@@ -78,7 +78,8 @@ class AuthController extends Controller
     }
 
     return response()->json([
-        'session_started' => false
+        'session_started' => false,
+        'error' => 'no match or inactive'
       ]);
 
     // return back()->withErrors([
@@ -93,27 +94,13 @@ class AuthController extends Controller
 
     if(session()->has('id_user') && session('id_user') == $id_user)
     {
-      Auth::logout();
-      $request->session()->forget([
-        'authenticated',
-        'id_user',
-        'user',
-        'id_employee',
-        'id_group',
-        'group',
-        'id_person',
-        'name_user',
-        'surname_user',
-        'id_entity',
-        'entity',
-        'postfix',
-      ]);
-      $request->session()->regenerate();
+      Auth::guard('web')->logout();
+      $request->session()->invalidate();
       return response()->json([
         'session_ended' => true
       ]);
-    } 
-    else 
+    }
+    else
     {
       return response()->json([
         'session_ended' => false
