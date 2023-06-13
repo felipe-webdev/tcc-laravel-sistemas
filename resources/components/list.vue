@@ -302,33 +302,33 @@
     },
 
     computed: {
-      job_type()     { return this.search.job_type;       },
-      active()       { return this.search.active;         },
-      page_limit()   { return this.pagination.page_limit; },
-      search_result(){ return this.search.result;         },
+      job_type()     { return this.search.job_type       },
+      active()       { return this.search.active         },
+      page_limit()   { return this.pagination.page_limit },
+      search_result(){ return this.search.result         },
     },
 
     watch: {
-      job_type()     { if(this.pagination.records){ this.getList('param'); } },
-      active()       { if(this.pagination.records){ this.getList('param'); } },
-      page_limit()   { if(this.pagination.records){ this.getList('param'); } },
+      job_type()     { if(this.pagination.records){ this.getList('param') } },
+      active()       { if(this.pagination.records){ this.getList('param') } },
+      page_limit()   { if(this.pagination.records){ this.getList('param') } },
       search_result(){
-        var inputs = [];
-        var texts  = [];
-        for(let i = 0; i < this.search_result.length; i++){
-          inputs[i] = '';
-          texts[i]  = '';
+        var inputs = []
+        var texts  = []
+        for( let i = 0; i < this.search_result.length; i++ ){
+          inputs[i] = ''
+          texts[i]  = ''
         }
-        this.whatsapp_inputs = JSON.parse(JSON.stringify(inputs));
-        this.whatsapp_texts  = JSON.parse(JSON.stringify(texts));
+        this.whatsapp_inputs = JSON.parse(JSON.stringify(inputs))
+        this.whatsapp_texts  = JSON.parse(JSON.stringify(texts))
       },
     },
 
     created(){
-      this.$emit('isLoading', false);
+      this.$emit('isLoading', false)
     },
 
-    mounted(){ this.getList(); },
+    mounted(){ this.getList() },
 
     updated(){},
 
@@ -338,14 +338,14 @@
 
     methods: {
       getList(from = undefined){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         if(this.pagination.records && (from == 'search' || from == 'param' || from == 'enter')){
-          this.pagination.page        = null;
-          this.pagination.pages       = null;
-          this.pagination.page_offset = null;
-          this.pagination.records     = null;
-          this.search.result          = [];
-          this.search.selected        = { id: null };
+          this.pagination.page        = null
+          this.pagination.pages       = null
+          this.pagination.page_offset = null
+          this.pagination.records     = null
+          this.search.result          = []
+          this.search.selected        = { id: null }
         }
         api.listEmployees(
           this.search.name,
@@ -356,44 +356,44 @@
         )
           .then((response)=>{
             if(response.data.success){
-              this.search.result          = response.data.result;
-              this.pagination.page        = response.data.page;
-              this.pagination.pages       = response.data.pages;
-              this.pagination.page_limit  = response.data.page_limit;
-              this.pagination.page_offset = response.data.page_offset;
-              this.pagination.records     = response.data.records;
+              this.search.result          = response.data.result
+              this.pagination.page        = response.data.page
+              this.pagination.pages       = response.data.pages
+              this.pagination.page_limit  = response.data.page_limit
+              this.pagination.page_offset = response.data.page_offset
+              this.pagination.records     = response.data.records
             } else {
               switch(response.data.error){
                 case 'sql':
-                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.');
-                  break;
+                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.')
+                  break
                 case 'empty':
-                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.');
-                  break;
+                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.')
+                  break
               }
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       selectRow(employee){
-        this.search.selected = employee;
+        this.search.selected = employee
       },
 
       getPage(direction){
         if(direction == 'next'){
-          this.pagination.page++;
+          this.pagination.page++
         }
         if(direction == 'prev'){
-          this.pagination.page--;
+          this.pagination.page--
         }
-        this.getList('pagination');
+        this.getList('pagination')
       },
     },
   }

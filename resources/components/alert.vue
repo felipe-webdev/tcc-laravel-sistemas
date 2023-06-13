@@ -29,11 +29,11 @@
 
     methods: {
       showAlert(type, msg){
-        const toasts      = this.$refs.toasts;
-        const toastOption = { animation: true, autohide: true, delay: 7000 };
+        const toasts      = this.$refs.toasts
+        const toastOption = { animation: true, autohide: true, delay: 7000 }
 
         if (type === 'error') {
-          let toast = document.createElement("div");
+          let toast = document.createElement("div")
           toast.innerHTML=`
             <div class="toast-header text-bg-dark">
               <img
@@ -53,17 +53,17 @@
               <i class="fa-solid fa-circle-xmark me-2 fs-4"></i>
               ${msg}
             </div>
-          `;
-          toast.setAttribute('class', 'toast bg-dark border border-danger border-opacity-25 shadow-plus');
+          `
+          toast.setAttribute('class', 'toast bg-dark border border-danger border-opacity-25 shadow-plus')
           toast.addEventListener('hidden.bs.toast', () => {
-            toast.remove();
-          });
-          toasts.append(toast);
-          new bootstrap.Toast(toast, toastOption).show();
+            toast.remove()
+          })
+          toasts.append(toast)
+          new bootstrap.Toast(toast, toastOption).show()
         }
 
         if (type === 'success') {
-          let toast = document.createElement("div");
+          let toast = document.createElement("div")
           toast.innerHTML=`
             <div class="toast-header text-bg-dark">
               <img
@@ -83,17 +83,17 @@
               <i class="fa-solid fa-circle-check me-2 fs-4"></i>
               ${msg}
             </div>
-          `;
-          toast.setAttribute('class', 'toast bg-dark border border-success border-opacity-25 shadow-plus');
+          `
+          toast.setAttribute('class', 'toast bg-dark border border-success border-opacity-25 shadow-plus')
           toast.addEventListener('hidden.bs.toast', () => {
-            toast.remove();
-          });
-          toasts.append(toast);
-          new bootstrap.Toast(toast, toastOption).show();
+            toast.remove()
+          })
+          toasts.append(toast)
+          new bootstrap.Toast(toast, toastOption).show()
         }
 
         if (type === 'warning') {
-          let toast = document.createElement("div");
+          let toast = document.createElement("div")
           toast.innerHTML=`
             <div class="toast-header text-bg-dark">
               <img
@@ -113,13 +113,13 @@
               <i class="fa-solid fa-circle-exclamation me-2 fs-4"></i>
               ${msg}
             </div>
-          `;
-          toast.setAttribute('class', 'toast bg-dark border border-warning border-opacity-25 shadow-plus');
+          `
+          toast.setAttribute('class', 'toast bg-dark border border-warning border-opacity-25 shadow-plus')
           toast.addEventListener('hidden.bs.toast', () => {
-            toast.remove();
-          });
-          toasts.append(toast);
-          new bootstrap.Toast(toast, toastOption).show();
+            toast.remove()
+          })
+          toasts.append(toast)
+          new bootstrap.Toast(toast, toastOption).show()
         }
       },
     },

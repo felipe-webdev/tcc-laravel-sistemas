@@ -644,7 +644,7 @@
 
     computed: {
       is_job_ready(){
-        if(!this.editing.jobs.editing){ return undefined; }
+        if(!this.editing.jobs.editing){ return undefined }
         if(
           this.editing.jobs.editing && (
             (
@@ -663,11 +663,11 @@
                   this.jobs.search.result[this.editing.jobs.index].salary
             )
           )
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_depart_ready(){
-        if(!this.editing.departs.editing){ return undefined; }
+        if(!this.editing.departs.editing){ return undefined }
         if(
           this.editing.departs.editing && (
             (
@@ -681,56 +681,56 @@
                   this.departs.search.result[this.editing.departs.index].obs
             )
           )
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_newJob_ready(){
-        if(!this.job.new){ return undefined; }
+        if(!this.job.new){ return undefined }
         if(
           this.job.new && (
             this.job.job_type && this.job.id_job_depart && this.job.salary
           )
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_newDepart_ready(){
-        if(!this.depart.new){ return undefined; }
+        if(!this.depart.new){ return undefined }
         if(
           this.depart.new && (
             this.depart.job_depart && this.depart.obs
           )
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
-      search_job_depart_param(){  return this.jobs.search.id_job_depart;  },
+      search_job_depart_param(){  return this.jobs.search.id_job_depart  },
 
-      search_job_page_param(){    return this.jobs.pagination.page_limit; },
+      search_job_page_param(){    return this.jobs.pagination.page_limit },
 
-      search_depart_page_param(){ return this.departs.pagination.page_limit; },
+      search_depart_page_param(){ return this.departs.pagination.page_limit },
     },
 
     watch: {
-      search_job_depart_param(){  if(this.jobs.pagination.records){ this.getJobsList('param'); } },
+      search_job_depart_param(){  if(this.jobs.pagination.records){ this.getJobsList('param') } },
 
-      search_job_page_param(){    if(this.jobs.pagination.records){ this.getJobsList('param'); } },
+      search_job_page_param(){    if(this.jobs.pagination.records){ this.getJobsList('param') } },
 
-      search_depart_page_param(){ if(this.departs.pagination.records){ this.getDepartsList('param'); } },
+      search_depart_page_param(){ if(this.departs.pagination.records){ this.getDepartsList('param') } },
     },
 
     created(){
-      this.$emit('isLoading', false);
+      this.$emit('isLoading', false)
     },
 
     mounted(){
-      this.getDepartsList();
-      this.getJobsList();
+      this.getDepartsList()
+      this.getJobsList()
       this.tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-      [...this.tooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+      [...this.tooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     },
 
     updated(){
       this.tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-      [...this.tooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+      [...this.tooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     },
 
     activated(){},
@@ -739,13 +739,13 @@
 
     methods: {
       async getJobsList(from = undefined){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         if(this.jobs.pagination.records && (from == 'search' || from == 'param' || from == 'enter')){
-          this.jobs.pagination.page        = null;
-          this.jobs.pagination.pages       = null;
-          this.jobs.pagination.page_offset = null;
-          this.jobs.pagination.records     = null;
-          this.jobs.search.result          = [];
+          this.jobs.pagination.page        = null
+          this.jobs.pagination.pages       = null
+          this.jobs.pagination.page_offset = null
+          this.jobs.pagination.records     = null
+          this.jobs.search.result          = []
         }
         api.listJobs(
           this.jobs.search.name,
@@ -755,41 +755,41 @@
         )
           .then((response)=>{
             if(response.data.success){
-              this.jobs.backup                 = JSON.parse(JSON.stringify(response.data.result));
-              this.jobs.search.result          = response.data.result;
-              this.jobs.pagination.page        = response.data.page;
-              this.jobs.pagination.pages       = response.data.pages;
-              this.jobs.pagination.page_limit  = response.data.page_limit;
-              this.jobs.pagination.page_offset = response.data.page_offset;
-              this.jobs.pagination.records     = response.data.records;
+              this.jobs.backup                 = JSON.parse(JSON.stringify(response.data.result))
+              this.jobs.search.result          = response.data.result
+              this.jobs.pagination.page        = response.data.page
+              this.jobs.pagination.pages       = response.data.pages
+              this.jobs.pagination.page_limit  = response.data.page_limit
+              this.jobs.pagination.page_offset = response.data.page_offset
+              this.jobs.pagination.records     = response.data.records
             } else {
               switch(response.data.error){
                 case 'sql':
-                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.');
-                  break;
+                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.')
+                  break
                 case 'empty':
-                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.');
-                  break;
+                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.')
+                  break
               }
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       async getDepartsList(from = undefined){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         if(this.departs.pagination.records && (from == 'search' || from == 'param' || from == 'enter')){
-          this.departs.pagination.page        = null;
-          this.departs.pagination.pages       = null;
-          this.departs.pagination.page_offset = null;
-          this.departs.pagination.records     = null;
-          this.departs.search.result          = [];
+          this.departs.pagination.page        = null
+          this.departs.pagination.pages       = null
+          this.departs.pagination.page_offset = null
+          this.departs.pagination.records     = null
+          this.departs.search.result          = []
         }
         api.listDeparts(
           this.departs.search.name,
@@ -798,119 +798,119 @@
         )
           .then((response)=>{
             if(response.data.success){
-              this.departs.backup                 = JSON.parse(JSON.stringify(response.data.result));
-              this.departs.search.result          = response.data.result;
-              this.departs.pagination.page        = response.data.page;
-              this.departs.pagination.pages       = response.data.pages;
-              this.departs.pagination.page_limit  = response.data.page_limit;
-              this.departs.pagination.page_offset = response.data.page_offset;
-              this.departs.pagination.records     = response.data.records;
+              this.departs.backup                 = JSON.parse(JSON.stringify(response.data.result))
+              this.departs.search.result          = response.data.result
+              this.departs.pagination.page        = response.data.page
+              this.departs.pagination.pages       = response.data.pages
+              this.departs.pagination.page_limit  = response.data.page_limit
+              this.departs.pagination.page_offset = response.data.page_offset
+              this.departs.pagination.records     = response.data.records
             } else {
               switch(response.data.error){
                 case 'sql':
-                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.');
-                  break;
+                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.')
+                  break
                 case 'empty':
-                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.');
-                  break;
+                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.')
+                  break
               }
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       insertJob(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertJob(
           this.job
         )
           .then((response)=>{
             if(response.data.success){
-              this.resetJob();
-              this.$emit('refreshSystemTypes');
-              this.$emit('showAlert', 'success', 'Cargo cadastrado com sucesso.');
+              this.resetJob()
+              this.$emit('refreshSystemTypes')
+              this.$emit('showAlert', 'success', 'Cargo cadastrado com sucesso.')
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       insertDepart(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertDepart(
           this.depart
         )
           .then((response)=>{
             if(response.data.success){
-              this.resetDepart();
-              this.$emit('refreshSystemTypes');
-              this.$emit('showAlert', 'success', 'Departamento cadastrado com sucesso.');
+              this.resetDepart()
+              this.$emit('refreshSystemTypes')
+              this.$emit('showAlert', 'success', 'Departamento cadastrado com sucesso.')
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       updateJob(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.updateJob(this.jobs.search.result[index])
           .then((response)=>{
             if(response.data.success){
               this.editing.jobs = {
                 editing: false,
                 index:   null,
-              };
+              }
               this.getJobsList('update')
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Cargo atualizado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'Cargo atualizado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       updateDepart(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.updateDepart(this.departs.search.result[index])
           .then((response)=>{
             if(response.data.success){
               this.editing.departs = {
                 editing: false,
                 index:   null,
-              };
+              }
               this.getDepartsList('update')
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Departamento atualizado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'Departamento atualizado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       resetJob(){
@@ -919,7 +919,7 @@
           id_job_depart: null,
           job_type:      null,
           salary:        0,
-        };
+        }
       },
 
       resetDepart(){
@@ -927,7 +927,7 @@
           new:        false,
           job_depart: null,
           obs:        null,
-        };
+        }
       },
 
       restoreBackup(type){
@@ -936,16 +936,16 @@
             this.editing.jobs = {
               editing: false,
               index:   null,
-            };
-            this.jobs.search.result = JSON.parse(JSON.stringify(this.jobs.backup));
-            break;
+            }
+            this.jobs.search.result = JSON.parse(JSON.stringify(this.jobs.backup))
+            break
           case 'departs':
             this.editing.departs = {
               editing: false,
               index:   null,
-            };
-            this.departs.search.result = JSON.parse(JSON.stringify(this.departs.backup));
-            break;
+            }
+            this.departs.search.result = JSON.parse(JSON.stringify(this.departs.backup))
+            break
         }
       },
 
@@ -953,26 +953,26 @@
         switch(type){
           case 'jobs':
             if(direction == 'next'){
-              this.jobs.pagination.page++;
+              this.jobs.pagination.page++
             }
             if(direction == 'prev'){
-              this.jobs.pagination.page--;
+              this.jobs.pagination.page--
             }
-            this.getJobsList('pagination');
+            this.getJobsList('pagination')
           case 'departs':
             if(direction == 'next'){
-              this.departs.pagination.page++;
+              this.departs.pagination.page++
             }
             if(direction == 'prev'){
-              this.departs.pagination.page--;
+              this.departs.pagination.page--
             }
-            this.getDepartsList('pagination');
+            this.getDepartsList('pagination')
         }
       },
 
       hideTooltips(){
-        this.tooltips.forEach(el => bootstrap.Tooltip.getOrCreateInstance(el).hide());
+        this.tooltips.forEach(el => bootstrap.Tooltip.getOrCreateInstance(el).hide())
       },
     },
   }
-  </script>
+</script>

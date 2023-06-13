@@ -1392,13 +1392,13 @@
           !this.employee.address.district ||
           !this.employee.address.city     ||
           !this.employee.address.uf
-        ){ return false; } else { return true; }
+        ){ return false } else { return true }
       },
 
       is_family_ready(){
-        if(this.employee.family.length == 0){ return undefined; }
+        if(this.employee.family.length == 0){ return undefined }
         if(this.employee.family.length > 0){
-          var ready;
+          var ready
           for( let i = 0; i < this.employee.family.length; i++ ){
             if(
               !this.employee.family[i].id_family_type ||
@@ -1408,17 +1408,17 @@
               !this.employee.family[i].birth_m        ||
               !this.employee.family[i].birth_y
             ){
-              ready = false;
-              break;
+              ready = false
+              break
             }
           }
-          if(ready === false){ return false; } else { return true; }
+          if(ready === false){ return false } else { return true }
         }
       },
 
       is_user_ready(){
-        if(!this.employee.user.create){ return undefined; }
-        if(this.employee.user.create && !this.user_availability.available){ return false; }
+        if(!this.employee.user.create){ return undefined }
+        if(this.employee.user.create && !this.user_availability.available){ return false }
         if(
           this.employee.user.create && (
             !this.employee.user.id_user_group                     ||
@@ -1427,32 +1427,32 @@
             this.employee.user.user == this.employee.user.postfix ||
             this.employee.user.user.includes('@')
           )
-        ){ return false; }
-        return true;
+        ){ return false }
+        return true
       },
 
-      user_create(){ return this.employee.user.create; },
+      user_create(){ return this.employee.user.create },
     },
 
     watch: {
       user_create(){
         if (!this.employee.user.create){
-          this.user_availability.available = undefined;
-          this.employee.user.id_user_group = null;
-          this.employee.user.user          = null;
-          this.employee.user.pass          = null;
+          this.user_availability.available = undefined
+          this.employee.user.id_user_group = null
+          this.employee.user.user          = null
+          this.employee.user.pass          = null
         }
       },
 
       session_user(){
-        this.employee.id_entity    = this.session_user.id_entity;
-        this.employee.user.postfix = this.session_user.postfix;
+        this.employee.id_entity    = this.session_user.id_entity
+        this.employee.user.postfix = this.session_user.postfix
       }
     },
 
     created(){
-      this.employee.id_entity    = this.session_user.id_entity;
-      this.employee.user.postfix = this.session_user.postfix;
+      this.employee.id_entity    = this.session_user.id_entity
+      this.employee.user.postfix = this.session_user.postfix
     },
 
     mounted(){},
@@ -1465,37 +1465,38 @@
 
     methods: {
       openNewEmployeeModal(){
-        bootstrap.Modal.getOrCreateInstance(this.$refs.newEmployeeModal).show();
+        bootstrap.Modal.getOrCreateInstance(this.$refs.newEmployeeModal).show()
       },
 
       openNewFamilyModal(){
-        bootstrap.Modal.getOrCreateInstance(this.$refs.newFamilyModal).show();
+        bootstrap.Modal.getOrCreateInstance(this.$refs.newFamilyModal).show()
       },
 
       openNewUserModal(){
-        bootstrap.Modal.getOrCreateInstance(this.$refs.newUserModal).show();
+        bootstrap.Modal.getOrCreateInstance(this.$refs.newUserModal).show()
       },
 
       insertEmployee(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertEmployee(this.employee)
           .then((response)=>{
             if(response.data.success){
-              bootstrap.Modal.getOrCreateInstance(this.$refs.newEmployeeModal).hide();
-              this.resetEmployee();
-              this.$emit('showAlert', 'success', 'Funcionário cadastrado com sucesso.');
+              bootstrap.Modal.getOrCreateInstance(this.$refs.newEmployeeModal).hide()
+              this.resetEmployee()
+              this.$emit('profileAction', 'profile', {id_employee:response.data.id_employee, tab:'info'})
+              this.$emit('showAlert', 'success', 'Funcionário cadastrado com sucesso.')
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       insertFamily(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertFamily(
           this.employee.id_entity,
           this.employees_id_search.selected.id,
@@ -1503,43 +1504,43 @@
         )
           .then((response)=>{
             if(response.data.success){
-              bootstrap.Modal.getOrCreateInstance(this.$refs.newFamilyModal).hide();
-              this.resetFamily();
-              this.$emit('showAlert', 'success', 'Dependente cadastrado com sucesso.');
+              bootstrap.Modal.getOrCreateInstance(this.$refs.newFamilyModal).hide()
+              this.resetFamily()
+              this.$emit('showAlert', 'success', 'Dependente cadastrado com sucesso.')
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       insertUser(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertUser(this.employees_id_search.selected.id, this.employee.user)
           .then((response)=>{
             if(response.data.success){
-              bootstrap.Modal.getOrCreateInstance(this.$refs.newUserModal).hide();
-              this.resetUser();
-              this.$emit('showAlert', 'success', 'Usuário cadastrado com sucesso.');
+              bootstrap.Modal.getOrCreateInstance(this.$refs.newUserModal).hide()
+              this.resetUser()
+              this.$emit('showAlert', 'success', 'Usuário cadastrado com sucesso.')
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       getEmployeeId(){
         if(!this.employees_id_search.search){
-          this.$emit('showAlert', 'warning', 'O campo de pesquisa "Nome" deve ser preenchido.');
-          return;
+          this.$emit('showAlert', 'warning', 'O campo de pesquisa "Nome" deve ser preenchido.')
+          return
         }
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.listEmployees(
           this.employees_id_search.search,
           this.employees_id_search.job_type,
@@ -1549,29 +1550,29 @@
         )
           .then((response)=>{
             if(response.data.success){
-              this.employees_id_search.result = response.data.result;
+              this.employees_id_search.result = response.data.result
             } else {
               switch(response.data.error){
                 case 'sql':
-                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.');
-                  break;
+                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.')
+                  break
                 case 'empty':
-                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.');
-                  break;
+                  this.$emit('showAlert', 'warning', 'Nenhum resultado encontrado.')
+                  break
               }
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       selectEmployeeId(employee){
-        this.employees_id_search.selected = employee;
-        this.employee.user.create         = true;
+        this.employees_id_search.selected = employee
+        this.employee.user.create         = true
       },
 
       addFamily(){
@@ -1583,34 +1584,34 @@
           birth_d:        null,
           birth_m:        null,
           birth_y:        null,
-        });
+        })
       },
 
       removeFamily(index){
-        this.employee.family.splice(index, 1);
+        this.employee.family.splice(index, 1)
       },
 
       checkUserAvailability(){
-        clearTimeout(this.user_availability.timer);
+        clearTimeout(this.user_availability.timer)
         this.user_availability.timer = setTimeout(() => {
           api.isUserAvailable(`${this.employee.user.user}${this.employee.user.postfix}`)
             .then((response)=>{
-              this.user_availability.available = response.data.available;
+              this.user_availability.available = response.data.available
             })
             .catch((error)=>{
-              console.log(error);
+              console.log(error)
             })
-        }, 600);
+        }, 600)
       },
 
       resetFamily(){
-        this.employee.family     = [];
+        this.employee.family     = []
         this.employees_id_search = {
           search:   null,
           job_type: null,
           selected: { id: null },
           result:   [],
-        };
+        }
       },
 
       resetUser(){
@@ -1620,17 +1621,17 @@
           user:          null,
           postfix:       this.session_user.postfix,
           pass:          null,
-        };
+        }
         this.user_availability = {
           available: undefined,
           timer:     undefined,
-        };
+        }
         this.employees_id_search = {
           search:   null,
           job_type: null,
           selected: { id: null },
           result:   [],
-        };
+        }
       },
 
       resetEmployee(){
@@ -1664,7 +1665,7 @@
             postfix:       this.session_user.postfix,
             pass:          null,
           },
-        };
+        }
       },
     },
   }

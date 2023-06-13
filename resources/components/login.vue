@@ -137,7 +137,7 @@
     watch: {},
 
     created(){
-      window.app = this;
+      window.app = this
       axios.get('/sanctum/csrf-cookie')
     },
 
@@ -152,45 +152,45 @@
     methods: {
       login(){
         if (this.user == '' || this.pass == ''){
-          return this.$refs.alert.showAlert('warning', 'Usuário e Senha devem ser preenchidos.');
+          return this.$refs.alert.showAlert('warning', 'Usuário e Senha devem ser preenchidos.')
         }
-        this.isLoading    = true;
-        this.disabled     = true;
-        this.loadingLogin = true;
+        this.isLoading    = true
+        this.disabled     = true
+        this.loadingLogin = true
         api.login(this.user, this.pass)
           .then((response)=>{
             if (response.data.session_started){
-              this.$refs.alert.showAlert('success', 'Sessão iniciada com sucesso.');
-              setTimeout(()=>{window.location.href = `${window.location.origin}/app`}, 1000);
+              this.$refs.alert.showAlert('success', 'Sessão iniciada com sucesso.')
+              setTimeout(()=>{window.location.href = `${window.location.origin}/app`}, 1000)
             } else {
               switch (response.data.error) {
                 case 'no match or inactive':
-                  this.$refs.alert.showAlert('error', 'Credenciais inválidas ou cadastro inativo.');
-                  break;
+                  this.$refs.alert.showAlert('error', 'Credenciais inválidas ou cadastro inativo.')
+                  break
                 case 'user':
-                  this.$refs.alert.showAlert('error', 'Usuário inválido.');
-                  break;
+                  this.$refs.alert.showAlert('error', 'Usuário inválido.')
+                  break
                 case 'pass':
-                  this.$refs.alert.showAlert('error', 'Senha inválida.');
-                  break;
+                  this.$refs.alert.showAlert('error', 'Senha inválida.')
+                  break
                 case 'active':
-                  this.$refs.alert.showAlert('error', 'Seu cadastro encontra-se inativo.');
-                  break;
+                  this.$refs.alert.showAlert('error', 'Seu cadastro encontra-se inativo.')
+                  break
                 case 'sql':
-                  this.$refs.alert.showAlert('error', 'SQL inválido, informe o suporte.');
-                  break;
+                  this.$refs.alert.showAlert('error', 'SQL inválido, informe o suporte.')
+                  break
               }
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$refs.alert.showAlert('error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$refs.alert.showAlert('error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.isLoading    = false;
-            this.disabled     = false;
-            this.loadingLogin = false;
-          });
+            this.isLoading    = false
+            this.disabled     = false
+            this.loadingLogin = false
+          })
       },
     },
   }

@@ -41,8 +41,20 @@
             <p class="card-text">Total de Funcionários com cadastro inativo.</p>
           </div>
 
-          <div id="employee-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
+          <div class="flex-fill rounded bd-callout" style="width:200px">
+            <h5 class="card-title">Cadastrar</h5>
+            <p class="card-text">Cadastrar um novo Funcionário.</p>
+            <button
+              class="btn btn-info"
+              @click="$emit('newRegistration', 'employee')"
+            >
+              <i class="fa-solid fa-user-plus me-1"></i>
+              Funcionário
+            </button>
           </div>
+
+          <!-- <div id="employee-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
+          </div> -->
         </div>
       </div>
     </div>
@@ -86,8 +98,20 @@
             <p class="card-text">Total de Dependentes (de Funcionários com cadastro inativo).</p>
           </div>
 
-          <div id="family-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
+          <div class="flex-fill rounded bd-callout" style="width:200px">
+            <h5 class="card-title">Cadastrar</h5>
+            <p class="card-text">Cadastrar um novo Dependente.</p>
+            <button
+              class="btn btn-info"
+              @click="$emit('newRegistration', 'family')"
+            >
+              <i class="fa-solid fa-user-plus me-1"></i>
+              Dependente
+            </button>
           </div>
+
+          <!-- <div id="family-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
+          </div> -->
         </div>
       </div>
     </div>
@@ -131,8 +155,20 @@
             <p class="card-text">Total de Usuários (de Funcionários com cadastro inativo).</p>
           </div>
 
-          <div id="user-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
+          <div class="flex-fill rounded bd-callout" style="width:200px">
+            <h5 class="card-title">Cadastrar</h5>
+            <p class="card-text">Cadastrar um novo Usuário.</p>
+            <button
+              class="btn btn-info"
+              @click="$emit('newRegistration', 'user')"
+            >
+              <i class="fa-solid fa-user-plus me-1"></i>
+              Usuário
+            </button>
           </div>
+
+          <!-- <div id="user-chart" class="flex-fill rounded bd-callout hstack justify-content-center" style="width:200px">
+          </div> -->
         </div>
       </div>
     </div>
@@ -178,154 +214,154 @@
     computed: {},
 
     watch: {
-      'employee.total'(){
-        Plotly.newPlot(
-          'employee-chart',
-          [
-            {
-              name: 'Funcionários',
-              values: this.employee.loading? [0, 0]: [this.employee.active, this.employee.inactive],
-              labels: ['Ativos', 'Inativos'],
-              hoverinfo: 'label+value',
-              textinfo: 'percent',
-              textposition: 'auto',
-              type: 'pie',
-              hole: .4,
-              showlegend: false,
-              automargin: true,
-              marker: {
-                colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
-              },
-            },
-          ],
-          {
-            title: '',
-            paper_bgcolor: 'rgba(0, 0, 0, 0)',
-            width:160,
-            height:160,
-            autosize: true,
-            margin: {
-              t:0, b:0, l:0, r:0,
-              autoexpand: true,
-            },
-            showlegend: false,
-          },
-          {
-            displayModeBar: false,
-            responsive: true,
-          }
-        );
-      },
+      // 'employee.total'(){
+      //   Plotly.newPlot(
+      //     'employee-chart',
+      //     [
+      //       {
+      //         name: 'Funcionários',
+      //         values: this.employee.loading? [0, 0]: [this.employee.active, this.employee.inactive],
+      //         labels: ['Ativos', 'Inativos'],
+      //         hoverinfo: 'label+value',
+      //         textinfo: 'percent',
+      //         textposition: 'auto',
+      //         type: 'pie',
+      //         hole: .4,
+      //         showlegend: false,
+      //         automargin: true,
+      //         marker: {
+      //           colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
+      //         },
+      //       },
+      //     ],
+      //     {
+      //       title: '',
+      //       paper_bgcolor: 'rgba(0, 0, 0, 0)',
+      //       width:160,
+      //       height:160,
+      //       autosize: true,
+      //       margin: {
+      //         t:0, b:0, l:0, r:0,
+      //         autoexpand: true,
+      //       },
+      //       showlegend: false,
+      //     },
+      //     {
+      //       displayModeBar: false,
+      //       responsive: true,
+      //     }
+      //   )
+      // },
 
-      'family.total'(){
-        Plotly.newPlot(
-          'family-chart',
-          [
-            {
-              name: 'Dependentes',
-              values: this.family.loading? [0, 0]: [this.family.active, this.family.inactive],
-              labels: ['Ativos', 'Inativos'],
-              hoverinfo: 'label+value',
-              textinfo: 'percent',
-              textposition: 'auto',
-              type: 'pie',
-              hole: .4,
-              showlegend: false,
-              automargin: true,
-              marker: {
-                colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
-              },
-            },
-          ],
-          {
-            title: '',
-            paper_bgcolor: 'rgba(0, 0, 0, 0)',
-            width:160,
-            height:160,
-            autosize: true,
-            margin: {
-              t:0, b:0, l:0, r:0,
-              autoexpand: true,
-            },
-            showlegend: false,
-          },
-          {
-            displayModeBar: false,
-            responsive: true,
-          }
-        );
-      },
+      // 'family.total'(){
+      //   Plotly.newPlot(
+      //     'family-chart',
+      //     [
+      //       {
+      //         name: 'Dependentes',
+      //         values: this.family.loading? [0, 0]: [this.family.active, this.family.inactive],
+      //         labels: ['Ativos', 'Inativos'],
+      //         hoverinfo: 'label+value',
+      //         textinfo: 'percent',
+      //         textposition: 'auto',
+      //         type: 'pie',
+      //         hole: .4,
+      //         showlegend: false,
+      //         automargin: true,
+      //         marker: {
+      //           colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
+      //         },
+      //       },
+      //     ],
+      //     {
+      //       title: '',
+      //       paper_bgcolor: 'rgba(0, 0, 0, 0)',
+      //       width:160,
+      //       height:160,
+      //       autosize: true,
+      //       margin: {
+      //         t:0, b:0, l:0, r:0,
+      //         autoexpand: true,
+      //       },
+      //       showlegend: false,
+      //     },
+      //     {
+      //       displayModeBar: false,
+      //       responsive: true,
+      //     }
+      //   )
+      // },
 
-      'user.total'(){
-        Plotly.newPlot(
-          'user-chart',
-          [
-            {
-              name: 'Usuários',
-              values: this.user.loading? [0, 0]: [this.user.active, this.user.inactive],
-              labels: ['Ativos', 'Inativos'],
-              hoverinfo: 'label+value',
-              textinfo: 'percent',
-              textposition: 'auto',
-              type: 'pie',
-              hole: .4,
-              showlegend: false,
-              automargin: true,
-              marker: {
-                colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
-              },
-            },
-          ],
-          {
-            title: '',
-            paper_bgcolor: 'rgba(0, 0, 0, 0)',
-            width:160,
-            height:160,
-            autosize: true,
-            margin: {
-              t:0, b:0, l:0, r:0,
-              autoexpand: true,
-            },
-            showlegend: false,
-          },
-          {
-            displayModeBar: false,
-            responsive: true,
-          }
-        );
-      },
+      // 'user.total'(){
+      //   Plotly.newPlot(
+      //     'user-chart',
+      //     [
+      //       {
+      //         name: 'Usuários',
+      //         values: this.user.loading? [0, 0]: [this.user.active, this.user.inactive],
+      //         labels: ['Ativos', 'Inativos'],
+      //         hoverinfo: 'label+value',
+      //         textinfo: 'percent',
+      //         textposition: 'auto',
+      //         type: 'pie',
+      //         hole: .4,
+      //         showlegend: false,
+      //         automargin: true,
+      //         marker: {
+      //           colors: ['rgb(29, 181, 116)', 'rgb(255, 193, 7)'],
+      //         },
+      //       },
+      //     ],
+      //     {
+      //       title: '',
+      //       paper_bgcolor: 'rgba(0, 0, 0, 0)',
+      //       width:160,
+      //       height:160,
+      //       autosize: true,
+      //       margin: {
+      //         t:0, b:0, l:0, r:0,
+      //         autoexpand: true,
+      //       },
+      //       showlegend: false,
+      //     },
+      //     {
+      //       displayModeBar: false,
+      //       responsive: true,
+      //     }
+      //   )
+      // },
     },
 
     created(){
-      this.$emit('isLoading', false);
-      this.getCounts();
+      this.$emit('isLoading', false)
+      this.getCounts()
     },
 
     mounted(){},
 
     updated(){},
 
-    activated(){ this.refresh = setInterval(this.getCounts, 10000 /* 300000 */); },
+    activated(){ this.refresh = setInterval(this.getCounts, 10000 /* 300000 */) },
 
-    deactivated(){ clearInterval(this.refresh); this.refresh = undefined; },
+    deactivated(){ clearInterval(this.refresh); this.refresh = undefined },
 
     methods: {
       getCounts(){
-        this.employee.loading = true;
-        this.family.loading   = true;
-        this.user.loading     = true;
+        this.employee.loading = true
+        this.family.loading   = true
+        this.user.loading     = true
         api.countRecords()
           .then((response)=>{
-            this.employee = response.data.employee;
-            this.family   = response.data.family;
-            this.user     = response.data.user;
+            this.employee = response.data.employee
+            this.family   = response.data.family
+            this.user     = response.data.user
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-          });
+          })
       },
     },
   }
