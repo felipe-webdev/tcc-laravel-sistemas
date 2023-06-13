@@ -1,28 +1,28 @@
 const api = {
   login: async function (user, pass){
-    // const delay = ms => new Promise(res => setTimeout(res, ms));
-    // await delay(1000);
+    // const delay = ms => new Promise(res => setTimeout(res, ms))
+    // await delay(1000)
     const reqBody = {
       "user": user,
       "pass": pass
-    };
+    }
     const response = await axios({
       method: 'POST',
-      url:    `${window.location.origin}/login`, // /api/login
+      url:    `${window.location.origin}/login`,
       headers: {
         'Accept':       'application/json',
         'Content-Type': 'application/json; charset=UTF-8',
         'Api':          'login'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   logout: async function (id_user){
     const reqBody = {
       "id_user": id_user
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/logout`,
@@ -32,8 +32,8 @@ const api = {
         'Api':          'logout'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   getSessionUser: async function (){
@@ -45,8 +45,8 @@ const api = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Api':          'getSessionUser'
       }
-    });
-    return response;
+    })
+    return response
   },
 
   alterPass: async function (id_user, old_pass, new_pass){
@@ -54,7 +54,7 @@ const api = {
       "id_user":  id_user,
       "old_pass": old_pass,
       "new_pass": new_pass
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/alterPass`,
@@ -64,14 +64,14 @@ const api = {
         'Api':          'alterPass'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   resetPass: async function (id_user){
     const reqBody = {
       "id_user": id_user
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/resetPass`,
@@ -81,8 +81,8 @@ const api = {
         'Api':          'resetPass'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   getSystemTypes: async function (){
@@ -94,8 +94,8 @@ const api = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Api':          'getSystemTypes'
       }
-    });
-    return response;
+    })
+    return response
   },
 
   countRecords: async function (){
@@ -107,14 +107,14 @@ const api = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Api':          'countRecords'
       }
-    });
-    return response;
+    })
+    return response
   },
 
   insertEmployee: async function (employee){
     const reqBody = {
       "employee": employee
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/insertEmployee`,
@@ -124,8 +124,8 @@ const api = {
         'Api':          'insertEmployee'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   insertFamily: async function (id_entity, id_employee, family){
@@ -133,7 +133,7 @@ const api = {
       "id_entity":   id_entity,
       "id_employee": id_employee,
       "family":      family
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/insertFamily`,
@@ -143,14 +143,14 @@ const api = {
         'Api':          'insertFamily'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   updateFamily: async function (family){
     const reqBody = {
       "family": family
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/updateFamily`,
@@ -160,15 +160,15 @@ const api = {
         'Api':          'updateFamily'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   deleteFamily: async function (id_family, id_person){
     const reqBody = {
       "id_family": id_family,
       "id_person": id_person
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/deleteFamily`,
@@ -178,15 +178,15 @@ const api = {
         'Api':          'deleteFamily'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   insertUser: async function (id_employee, user){
     const reqBody = {
       "id_employee": id_employee,
       "user":        user
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/insertUser`,
@@ -196,14 +196,14 @@ const api = {
         'Api':          'insertUser'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   isUserAvailable: async function (user){
     const reqBody = {
       "user": user
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/isUserAvailable`,
@@ -213,8 +213,8 @@ const api = {
         'Api':          'isUserAvailable'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   listEmployees: async function (name, job_type, active, page, page_limit){
@@ -224,7 +224,7 @@ const api = {
       "active":     active == null? -1: active,
       "page":       !page?          0:  page,
       "page_limit": !page_limit?    0:  page_limit
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/listEmployees`,
@@ -234,14 +234,14 @@ const api = {
         'Api':          'listEmployees'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   getEmployee: async function (id_employee){
     const reqBody = {
       "id_employee": id_employee
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/getEmployee`,
@@ -251,15 +251,15 @@ const api = {
         'Api':          'getEmployee'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   insertEmail: async function (id_person, emails){
     const reqBody = {
       "id_person": id_person,
       "emails":    emails
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/insertEmail`,
@@ -269,15 +269,15 @@ const api = {
         'Api':          'insertEmail'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   insertPhone: async function (id_person, phones){
     const reqBody = {
       "id_person": id_person,
       "phones":    phones
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/insertPhone`,
@@ -287,14 +287,14 @@ const api = {
         'Api':          'insertPhone'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   deleteEmail: async function (id_email){
     const reqBody = {
       "id_email": id_email,
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/deleteEmail`,
@@ -304,14 +304,14 @@ const api = {
         'Api':          'deleteEmail'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   deletePhone: async function (id_phone){
     const reqBody = {
       "id_phone": id_phone,
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/deletePhone`,
@@ -321,14 +321,14 @@ const api = {
         'Api':          'deletePhone'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   updateEmail: async function (email){
     const reqBody = {
       "email": email
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/updateEmail`,
@@ -338,14 +338,14 @@ const api = {
         'Api':          'updateEmail'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   updatePhone: async function (phone){
     const reqBody = {
       "phone": phone
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/updatePhone`,
@@ -355,15 +355,15 @@ const api = {
         'Api':          'updatePhone'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   updateEmployee: async function (part, new_data){
     const reqBody = {
       "part":     part,
       "new_data": new_data
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/updateEmployee`,
@@ -373,8 +373,8 @@ const api = {
         'Api':          'updateEmployee'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   listJobs: async function (name, id_job_depart,  page, page_limit){
@@ -383,7 +383,7 @@ const api = {
       "id_job_depart": !id_job_depart? 0:  id_job_depart,
       "page":          !page?          0:  page,
       "page_limit":    !page_limit?    0:  page_limit
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/listJobs`,
@@ -393,8 +393,8 @@ const api = {
         'Api':          'listJobs'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   listDeparts: async function (name, page, page_limit){
@@ -402,7 +402,7 @@ const api = {
       "name":       !name?          '': name,
       "page":       !page?          0:  page,
       "page_limit": !page_limit?    0:  page_limit
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/listDeparts`,
@@ -412,14 +412,14 @@ const api = {
         'Api':          'listDeparts'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   updateDepart: async function (depart){
     const reqBody = {
       "depart": depart
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/updateDepart`,
@@ -429,14 +429,14 @@ const api = {
         'Api':          'updateDepart'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   updateJob: async function (job){
     const reqBody = {
       "job": job
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/updateJob`,
@@ -446,14 +446,14 @@ const api = {
         'Api':          'updateJob'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   insertDepart: async function (depart){
     const reqBody = {
       "depart": depart
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/insertDepart`,
@@ -463,14 +463,14 @@ const api = {
         'Api':          'insertDepart'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   insertJob: async function (job){
     const reqBody = {
       "job": job
-    };
+    }
     const response = await axios({
       method: 'POST',
       url:    `${window.location.origin}/api/insertJob`,
@@ -480,8 +480,8 @@ const api = {
         'Api':          'insertJob'
       },
       data: reqBody
-    });
-    return response;
+    })
+    return response
   },
 
   insertImage: async function (formData){
@@ -494,14 +494,14 @@ const api = {
         'Api':          'insertImage'
       },
       data: formData
-    });
-    return response;
+    })
+    return response
   },
 
   getImage: async function (id_person){
     const reqBody = {
       'id_person': id_person
-    };
+    }
     const response = await axios({
       method: 'POST',
       url: `${window.location.origin}/api/getImage`,
@@ -511,9 +511,9 @@ const api = {
       },
       data: reqBody,
       responseType: 'arraybuffer'
-    });
-    return response;
+    })
+    return response
   },
-};
+}
 
-export { api };
+export { api }

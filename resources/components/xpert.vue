@@ -1,63 +1,64 @@
 <template>
-    <div>
-      <div :class="{'d-none': !isLoading}">
-        <i class="fa-brands fa-whatsapp"></i>
-        <i class="fa-solid fa-font-awesome"></i>
-        <i class="fa-regular fa-font-awesome"></i>
-      </div>
-      <loading
-        ref="loading"
-        :isLoading="isLoading"
-      />
-      <alert
-        ref="alert"
-      />
-      <session
-        ref="session"
-        :session_user="session_user"
-        @setSessionUser="setSessionUser"
-        @showAlert="showAlert"
-        @isLoading="setIsLoading"
-      />
-      <registration
-        ref="registration"
+  <div>
+    <div :class="{'d-none': !isLoading}">
+      <i class="fa-brands fa-whatsapp"></i>
+      <i class="fa-solid fa-font-awesome"></i>
+      <i class="fa-regular fa-font-awesome"></i>
+    </div>
+    <loading
+      ref="loading"
+      :isLoading="isLoading"
+    />
+    <alert
+      ref="alert"
+    />
+    <session
+      ref="session"
+      :session_user="session_user"
+      @setSessionUser="setSessionUser"
+      @showAlert="showAlert"
+      @isLoading="setIsLoading"
+    />
+    <registration
+      ref="registration"
+      :session_user="session_user"
+      :system_types="system_types"
+      @showAlert="showAlert"
+      @isLoading="setIsLoading"
+      @profileAction="profileAction"
+    />
+    <profile
+      ref="profile"
+      :session_user="session_user"
+      :system_types="system_types"
+      @showAlert="showAlert"
+      @isLoading="setIsLoading"
+    />
+    <navbar
+      ref="navbar"
+      :session_user="session_user"
+      :activeTab="activeTab"
+      @changeTab="setActiveTab"
+      @sessionAction="sessionAction"
+      @newRegistration="newRegistration"
+      @showAlert="showAlert"
+      @isLoading="setIsLoading"
+    />
+    <keep-alive>
+      <component
+        ref="activeComp"
+        :is="activeTab"
         :session_user="session_user"
         :system_types="system_types"
-        @showAlert="showAlert"
-        @isLoading="setIsLoading"
-      />
-      <profile
-        ref="profile"
-        :session_user="session_user"
-        :system_types="system_types"
-        @showAlert="showAlert"
-        @isLoading="setIsLoading"
-      />
-      <navbar
-        ref="navbar"
-        :session_user="session_user"
-        :activeTab="activeTab"
-        @changeTab="setActiveTab"
-        @sessionAction="sessionAction"
+        :find_type="findType"
         @newRegistration="newRegistration"
         @showAlert="showAlert"
         @isLoading="setIsLoading"
+        @profileAction="profileAction"
+        @refreshSystemTypes="getSystemTypes"
       />
-      <keep-alive>
-        <component
-          ref="activeComp"
-          :is="activeTab"
-          :session_user="session_user"
-          :system_types="system_types"
-          :find_type="findType"
-          @newRegistration="newRegistration"
-          @showAlert="showAlert"
-          @isLoading="setIsLoading"
-          @profileAction="profileAction"
-          @refreshSystemTypes="getSystemTypes"
-        />
-      </keep-alive>
-    </div>
+    </keep-alive>
+  </div>
 </template>
 
 <script>
@@ -118,12 +119,12 @@
 
     watch: {
       session_user(){
-        this.getSystemTypes();
+        this.getSystemTypes()
       }
     },
 
     created(){
-      window.app = this;
+      window.app = this
       axios.get('/sanctum/csrf-cookie')
     },
 
@@ -133,84 +134,84 @@
 
     methods: {
       showAlert(type, msg){
-        this.$refs.alert.showAlert(type, msg);
+        this.$refs.alert.showAlert(type, msg)
       },
 
       setIsLoading(value){
-        this.isLoading = value;
+        this.isLoading = value
       },
 
       setActiveTab(value){
-        this.activeTab = value;
+        this.activeTab = value
       },
 
       setSessionUser(value){
-        this.session_user = value;
+        this.session_user = value
       },
 
       sessionAction(action){
         switch(action){
           case 'logout':
-            this.$refs.session.openLogoutModal();
-            break;
+            this.$refs.session.openLogoutModal()
+            break
           case 'alterPass':
-            this.$refs.session.openAlterPassModal();
-            break;
+            this.$refs.session.openAlterPassModal()
+            break
         }
       },
 
       profileAction(action, args){
         switch(action){
           case 'profile':
-            this.$refs.profile.openProfileModal(args);
-            break;
+            this.$refs.profile.openProfileModal(args)
+            break
         }
       },
 
       newRegistration(type){
         switch(type){
           case 'employee':
-            this.$refs.registration.openNewEmployeeModal();
-            break;
+            this.$refs.registration.openNewEmployeeModal()
+            break
           case 'family':
-            this.$refs.registration.openNewFamilyModal();
-            break;
+            this.$refs.registration.openNewFamilyModal()
+            break
           case 'user':
-            this.$refs.registration.openNewUserModal();
-            break;
+            this.$refs.registration.openNewUserModal()
+            break
         }
       },
 
       getSystemTypes(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.getSystemTypes()
           .then((response)=>{
-            this.system_types.person     = response.data.person;
-            this.system_types.family     = response.data.family;
-            this.system_types.contact    = response.data.contact;
-            this.system_types.address    = response.data.address;
-            this.system_types.job        = response.data.job;
-            this.system_types.job_depart = response.data.job_depart;
+            this.system_types.person     = response.data.person
+            this.system_types.family     = response.data.family
+            this.system_types.contact    = response.data.contact
+            this.system_types.address    = response.data.address
+            this.system_types.job        = response.data.job
+            this.system_types.job_depart = response.data.job_depart
             this.system_types.user_group = response.data.user_group.filter((group)=>{
-              return group.value >= this.session_user.id_group;
-            });
+              return group.value >= this.session_user.id_group
+            })
           })
           .catch((error)=>{
-            console.log(error);
-            this.showAlert('error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.showAlert('error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       findType(arr, value){
-        for (let i = 0; i < arr.length; i++) {
+        for ( let i = 0; i < arr.length; i++ ) {
           if (arr[i].value === value) {
-            return arr[i].label;
+            return arr[i].label
           }
         }
-        return "vazio";
+        return "vazio"
       },
     },
   }

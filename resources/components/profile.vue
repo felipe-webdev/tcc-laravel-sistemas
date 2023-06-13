@@ -1779,15 +1779,15 @@
 
     computed: {
       vcard(){
-        var vcard_string = `BEGIN:VCARD\nVERSION:4.0\nN:${this.employee.surname};${this.employee.name};;;\nFN:${this.employee.name} ${this.employee.surname}\n`;
-        this.phones.forEach(e => { vcard_string = vcard_string+`TEL;TYPE=cell:${e.phone}\n`; });
-        this.emails.forEach(e => { vcard_string = vcard_string+`EMAIL:${e.email}\n`; });
-        vcard_string = vcard_string+`END:VCARD`;
-        console.log(vcard_string);
-        return vcard_string;
+        var vcard_string = `BEGIN:VCARD\nVERSION:4.0\nN:${this.employee.surname};${this.employee.name};;;\nFN:${this.employee.name} ${this.employee.surname}\n`
+        this.phones.forEach(e => { vcard_string = vcard_string+`TEL;TYPE=cell:${e.phone}\n` })
+        this.emails.forEach(e => { vcard_string = vcard_string+`EMAIL:${e.email}\n` })
+        vcard_string = vcard_string+`END:VCARD`
+        return vcard_string
       },
+
       is_personal_ready(){
-        if(!this.editing.personal){ return undefined; }
+        if(!this.editing.personal){ return undefined }
         if(
           (this.employee.name    != this.backup.employee.name    && this.employee.name   ) ||
           (this.employee.surname != this.backup.employee.surname && this.employee.surname) ||
@@ -1795,11 +1795,11 @@
           (this.employee.birth_m != this.backup.employee.birth_m && this.employee.birth_m) ||
           (this.employee.birth_y != this.backup.employee.birth_y && this.employee.birth_y) ||
           (this.employee.cpf     != this.backup.employee.cpf)
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_address_ready(){
-        if(!this.editing.address){ return undefined; }
+        if(!this.editing.address){ return undefined }
         if(
           (this.address.line        != this.backup.address.line     && this.address.line    ) ||
           (this.address.number      != this.backup.address.number   && this.address.number  ) ||
@@ -1808,75 +1808,75 @@
           (this.address.uf          != this.backup.address.uf       && this.address.uf      ) ||
           (this.address.number_info != this.backup.address.number_info)                       ||
           (this.address.cep         != this.backup.address.cep)
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_job_ready(){
-        if(!this.editing.job){ return undefined; }
+        if(!this.editing.job){ return undefined }
         if(this.employee.id_job_type != this.backup.employee.id_job_type && this.employee.id_job_type)
-        { return true; } else { return false; }
+        { return true } else { return false }
       },
 
       is_user_ready(){
-        if(!this.user.create){ return undefined; }
+        if(!this.user.create){ return undefined }
         if(
           this.user.create                 &&
           this.user_availability.available &&
           this.user.pass                   &&
           this.user.id_user_group
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_phones_ready(){
-        if(!this.editing.phones.editing){ return undefined; }
+        if(!this.editing.phones.editing){ return undefined }
         if(
           this.editing.phones.editing && (
             (this.phones[this.editing.phones.index].phone != this.backup.phones[this.editing.phones.index].phone && this.phones[this.editing.phones.index].phone) ||
             (this.phones[this.editing.phones.index].obs  != this.backup.phones[this.editing.phones.index].obs)
           )
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_newPhone_ready(){
-        if(!this.newPhone.length){ return undefined; }
+        if(!this.newPhone.length){ return undefined }
         if(this.newPhone.length){
-          var ready;
+          var ready
           for( let i = 0; i < this.newPhone.length; i++ ){
             if(!this.newPhone[i].phone){
-              ready = false;
-              break;
+              ready = false
+              break
             }
           }
-          if(ready === false){ return false; } else { return true; }
+          if(ready === false){ return false } else { return true }
         }
       },
 
       is_emails_ready(){
-        if(!this.editing.emails.editing){ return undefined; }
+        if(!this.editing.emails.editing){ return undefined }
         if(
           this.editing.emails.editing && (
             (this.emails[this.editing.emails.index].email != this.backup.emails[this.editing.emails.index].email && this.emails[this.editing.emails.index].email) ||
             (this.emails[this.editing.emails.index].obs   != this.backup.emails[this.editing.emails.index].obs)
           )
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_newEmail_ready(){
-        if(!this.newEmail.length){ return undefined; }
+        if(!this.newEmail.length){ return undefined }
         if(this.newEmail.length){
-          var ready;
+          var ready
           for( let i = 0; i < this.newEmail.length; i++ ){
             if(!this.newEmail[i].email){
-              ready = false;
-              break;
+              ready = false
+              break
             }
           }
-          if(ready === false){ return false; } else { return true; }
+          if(ready === false){ return false } else { return true }
         }
       },
 
       is_family_ready(){
-        if(!this.editing.family.editing){ return undefined; }
+        if(!this.editing.family.editing){ return undefined }
         if(
           this.editing.family.editing && (
             (this.family[this.editing.family.index].name           != this.backup.family[this.editing.family.index].name           && this.family[this.editing.family.index].name          ) ||
@@ -1887,13 +1887,13 @@
             (this.family[this.editing.family.index].id_family_type != this.backup.family[this.editing.family.index].id_family_type && this.family[this.editing.family.index].id_family_type) ||
             (this.family[this.editing.family.index].cpf            != this.backup.family[this.editing.family.index].cpf)
           )
-        ){ return true; } else { return false; }
+        ){ return true } else { return false }
       },
 
       is_newFamily_ready(){
-        if(!this.newFamily.length){ return undefined; }
+        if(!this.newFamily.length){ return undefined }
         if(this.newFamily.length){
-          var ready;
+          var ready
           for( let i = 0; i < this.newFamily.length; i++ ){
             if(
               !this.newFamily[i].id_family_type ||
@@ -1903,35 +1903,36 @@
               !this.newFamily[i].birth_m        ||
               !this.newFamily[i].birth_y
             ){
-              ready = false;
-              break;
+              ready = false
+              break
             }
           }
-          if(ready === false){ return false; } else { return true; }
+          if(ready === false){ return false } else { return true }
         }
       },
 
-      user_create(){ return this.user.create; },
+      user_create(){ return this.user.create },
     },
 
     watch: {
       user_create(){
         if (!this.user.create){
-          this.user_availability.available = undefined;
-          this.user.id_user_group          = null;
-          this.user.user                   = null;
-          this.user.pass                   = null;
+          this.user_availability.available = undefined
+          this.user.id_user_group          = null
+          this.user.user                   = null
+          this.user.pass                   = null
         }
       },
+
       phones(){
-        var inputs = [];
-        var texts  = [];
-        for(let i = 0; i < this.phones.length; i++){
-          inputs[i] = '';
-          texts[i]  = '';
+        var inputs = []
+        var texts  = []
+        for( let i = 0; i < this.phones.length; i++ ){
+          inputs[i] = ''
+          texts[i]  = ''
         }
-        this.whatsapp_inputs = JSON.parse(JSON.stringify(inputs));
-        this.whatsapp_texts  = JSON.parse(JSON.stringify(texts));
+        this.whatsapp_inputs = JSON.parse(JSON.stringify(inputs))
+        this.whatsapp_texts  = JSON.parse(JSON.stringify(texts))
       },
     },
 
@@ -1947,54 +1948,54 @@
 
     methods: {
       openProfileModal(args){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         this.getEmployee(args.id_employee)
           .then(()=>{
             switch(args.tab){
               case 'info':
-                this.$refs.infoTab.click();
-                break;
+                this.$refs.infoTab.click()
+                break
               case 'contacts':
-                this.$refs.contactsTab.click();
-                break;
+                this.$refs.contactsTab.click()
+                break
               case 'family':
-                this.$refs.familyTab.click();
-                break;
+                this.$refs.familyTab.click()
+                break
               case 'user':
-                this.$refs.userTab.click();
-                break;
+                this.$refs.userTab.click()
+                break
             }
-            bootstrap.Modal.getOrCreateInstance(this.$refs.profileModal).show();
+            bootstrap.Modal.getOrCreateInstance(this.$refs.profileModal).show()
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       openCroppImageModal(){
-        this.editing.image = true;
-        bootstrap.Modal.getOrCreateInstance(this.$refs.croppImageModal).show();
+        this.editing.image = true
+        bootstrap.Modal.getOrCreateInstance(this.$refs.croppImageModal).show()
       },
 
       closeCroppImageModal(){
-        bootstrap.Modal.getOrCreateInstance(this.$refs.croppImageModal).hide();
-        this.editing.image = false;
+        bootstrap.Modal.getOrCreateInstance(this.$refs.croppImageModal).hide()
+        this.editing.image = false
       },
 
       async getEmployee(id_employee){
         api.getEmployee(id_employee)
           .then((response)=>{
             if(response.data.success){
-              this.backup   = JSON.parse(JSON.stringify(response.data));
-              this.employee = response.data.employee;
-              this.address  = response.data.address;
-              this.family   = response.data.family;
-              this.phones   = response.data.phones;
-              this.emails   = response.data.emails;
+              this.backup   = JSON.parse(JSON.stringify(response.data))
+              this.employee = response.data.employee
+              this.address  = response.data.address
+              this.family   = response.data.family
+              this.phones   = response.data.phones
+              this.emails   = response.data.emails
               response.data.user?
                 this.user = {
                   create:        response.data.user.create == null? false: true,
@@ -2013,150 +2014,150 @@
                   user:          null,
                   postfix:       this.session_user.postfix,
                   pass:          null
-                };
-              this.getImage();
+                }
+              this.getImage()
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
-          });
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
+          })
       },
 
       insertImage(blob){
-        this.$emit('isLoading', true);
-        const formData = new FormData();
-        formData.append('image', blob, 'image.png');
-        formData.append('id_person', this.employee.id_person);
+        this.$emit('isLoading', true)
+        const formData = new FormData()
+        formData.append('image', blob, 'image.png')
+        formData.append('id_person', this.employee.id_person)
         api.insertImage(formData)
           .then((response)=>{
             if(response.data.success){
-              this.closeCroppImageModal();
-              this.$emit('showAlert', 'success', 'Imagem cadastrada com sucesso.');
-              this.getImage();
+              this.closeCroppImageModal()
+              this.$emit('showAlert', 'success', 'Imagem cadastrada com sucesso.')
+              this.getImage()
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       getImage(){
         api.getImage(this.employee.id_person)
           .then((response)=>{
             if(response.headers.success == 'true'){
-              const blob = new Blob([response.data], { type: 'image/png' });
-              this.imageSrc = URL.createObjectURL(blob);
+              const blob = new Blob([response.data], { type: 'image/png' })
+              this.imageSrc = URL.createObjectURL(blob)
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       checkUserAvailability(){
-        clearTimeout(this.user_availability.timer);
+        clearTimeout(this.user_availability.timer)
         this.user_availability.timer = setTimeout(() => {
           api.isUserAvailable(`${this.user.user}${this.user.postfix}`)
             .then((response)=>{
-              this.user_availability.available = response.data.available;
+              this.user_availability.available = response.data.available
             })
             .catch((error)=>{
-              console.log(error);
-              this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+              console.log(error)
+              this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
             })
-        }, 600);
+        }, 600)
       },
 
       insertUser(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertUser(this.employee.id_employee, this.user)
           .then((response)=>{
             if(response.data.success){
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Usuário cadastrado com sucesso.');
+                  this.$emit('showAlert', 'success', 'Usuário cadastrado com sucesso.')
                 })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       resetPass(){
-        this.$emit('isLoading', true);
-        this.$refs.resetPassButton.click();
+        this.$emit('isLoading', true)
+        this.$refs.resetPassButton.click()
         api.resetPass(this.user.id_user)
           .then((response)=>{
             if(response.data.success){
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Senha resetada com sucesso.');
+                  this.$emit('showAlert', 'success', 'Senha resetada com sucesso.')
                 })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       alterPass(){
         if(!this.user_pass.old_pass || !this.user_pass.new_pass){
-          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova devem ser preenchidas.');
+          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova devem ser preenchidas.')
         }
         if(this.user_pass.old_pass == this.user_pass.new_pass){
-          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova não podem ser iguais.');
+          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova não podem ser iguais.')
         }
-        this.$emit('isLoading', true);
-        this.$refs.alterPassButton.click();
+        this.$emit('isLoading', true)
+        this.$refs.alterPassButton.click()
         api.alterPass(this.user.id_user, this.user_pass.old_pass, this.user_pass.new_pass)
           .then((response)=>{
             if(response.data.success){
-              this.$emit('showAlert', 'success', 'Senha alterada com sucesso.');
+              this.$emit('showAlert', 'success', 'Senha alterada com sucesso.')
             } else {
               switch(response.data.error){
                 case 'old_pass':
-                  this.$emit('showAlert', 'error', 'Senha atual inválida.');
-                  break;
+                  this.$emit('showAlert', 'error', 'Senha atual inválida.')
+                  break
                 case 'new_pass':
-                  this.$emit('showAlert', 'error', 'Senha nova é igual a senha atual.');
-                  break;
+                  this.$emit('showAlert', 'error', 'Senha nova é igual a senha atual.')
+                  break
                 case 'sql':
-                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.');
-                  break;
-              };
+                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.')
+                  break
+              }
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.user_pass.old_pass = null;
-            this.user_pass.new_pass = null;
-            this.$emit('isLoading', false);
-          });
+            this.user_pass.old_pass = null
+            this.user_pass.new_pass = null
+            this.$emit('isLoading', false)
+          })
       },
 
       insertFamily(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertFamily(
           this.employee.id_entity,
           this.employee.id_employee,
@@ -2164,249 +2165,249 @@
         )
           .then((response)=>{
             if(response.data.success){
-              this.newFamily = [];
+              this.newFamily = []
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Dependente cadastrado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'Dependente cadastrado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       updateFamily(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.updateFamily(this.family[index])
           .then((response)=>{
             if(response.data.success){
-              this.editing.family.editing = false;
-              this.editing.family.index   = null;
+              this.editing.family.editing = false
+              this.editing.family.index   = null
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Dependente atualizado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'Dependente atualizado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       deleteFamily(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.deleteFamily(this.family[index].id_family, this.family[index].id_person)
           .then((response)=>{
             if(response.data.success){
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Dependente excluído com sucesso.');
+                  this.$emit('showAlert', 'success', 'Dependente excluído com sucesso.')
                 })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       insertEmail(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertEmail(
           this.employee.id_person,
           this.newEmail
         )
           .then((response)=>{
             if(response.data.success){
-              this.newEmail = [];
+              this.newEmail = []
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'E-mail cadastrado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'E-mail cadastrado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       updateEmail(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.updateEmail(this.emails[index])
           .then((response)=>{
             if(response.data.success){
-              this.editing.emails.editing = false;
-              this.editing.emails.index   = null;
+              this.editing.emails.editing = false
+              this.editing.emails.index   = null
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'E-mail atualizado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'E-mail atualizado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       deleteEmail(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.deleteEmail(this.emails[index].id_email)
           .then((response)=>{
             if(response.data.success){
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'E-mail excluído com sucesso.');
+                  this.$emit('showAlert', 'success', 'E-mail excluído com sucesso.')
                 })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       insertPhone(){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.insertPhone(
           this.employee.id_person,
           this.newPhone
         )
           .then((response)=>{
             if(response.data.success){
-              this.newPhone = [];
+              this.newPhone = []
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Celular cadastrado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'Celular cadastrado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       updatePhone(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.updatePhone(this.phones[index])
           .then((response)=>{
             if(response.data.success){
-              this.editing.phones.editing = false;
-              this.editing.phones.index   = null;
+              this.editing.phones.editing = false
+              this.editing.phones.index   = null
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Celular atualizado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'Celular atualizado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       deletePhone(index){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.deletePhone(this.phones[index].id_phone)
           .then((response)=>{
             if(response.data.success){
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Celular excluído com sucesso.');
+                  this.$emit('showAlert', 'success', 'Celular excluído com sucesso.')
                 })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       closeDeleteFamilyDropdown(index){
-        document.getElementById(`deleteFamily${index}`).click();
+        document.getElementById(`deleteFamily${index}`).click()
       },
 
       closeDeleteEmailDropdown(index){
-        document.getElementById(`deleteEmail${index}`).click();
+        document.getElementById(`deleteEmail${index}`).click()
       },
 
       closeDeletePhoneDropdown(index){
-        document.getElementById(`deletePhone${index}`).click();
+        document.getElementById(`deletePhone${index}`).click()
       },
 
       replaceEmptyStringsWithNull(obj) {
-        let newObj = JSON.parse(JSON.stringify(obj));
+        let newObj = JSON.parse(JSON.stringify(obj))
         function traverse(o) {
           for (let i in o) {
             if (o[i] !== null && typeof(o[i])=="object") {
-              traverse(o[i]);
+              traverse(o[i])
             } else if (o[i] === '') {
-              o[i] = null;
+              o[i] = null
             }
           }
         }
-        traverse(newObj);
-        return newObj;
+        traverse(newObj)
+        return newObj
       },
 
       updateEmployee(part, new_data){
-        this.$emit('isLoading', true);
+        this.$emit('isLoading', true)
         api.updateEmployee(part, this.replaceEmptyStringsWithNull(new_data))
           .then((response)=>{
             if(response.data.success){
               switch(part){
                 case 'personal':
-                  this.editing.personal = false;
-                  break;
+                  this.editing.personal = false
+                  break
                 case 'address':
-                  this.editing.address  = false;
-                  break;
+                  this.editing.address  = false
+                  break
                 case 'job':
-                  this.editing.job      = false;
-                  break;
+                  this.editing.job      = false
+                  break
               }
               this.getEmployee(this.employee.id_employee)
                 .then(()=>{
-                  this.$emit('showAlert', 'success', 'Funcionário atualizado com sucesso.');
-                });
+                  this.$emit('showAlert', 'success', 'Funcionário atualizado com sucesso.')
+                })
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       addFamily(){
@@ -2418,11 +2419,11 @@
           birth_d:        null,
           birth_m:        null,
           birth_y:        null,
-        });
+        })
       },
 
       removeFamily(index){
-        this.newFamily.splice(index, 1);
+        this.newFamily.splice(index, 1)
       },
 
       addPhone(){
@@ -2430,11 +2431,11 @@
           id_contact_type: 1,
           phone:           null,
           obs:             null,
-        });
+        })
       },
 
       removePhone(index){
-        this.newPhone.splice(index, 1);
+        this.newPhone.splice(index, 1)
       },
 
       addEmail(){
@@ -2442,62 +2443,62 @@
           id_contact_type: 2,
           email:           null,
           obs:             null,
-        });
+        })
       },
 
       removeEmail(index){
-        this.newEmail.splice(index, 1);
+        this.newEmail.splice(index, 1)
       },
 
       restoreBackup(type){
         switch(type){
           case 'personal':
-            this.editing.personal = false;
-            this.employee.name    = this.backup.employee.name;
-            this.employee.surname = this.backup.employee.surname;
-            this.employee.birth_d = this.backup.employee.birth_d;
-            this.employee.birth_m = this.backup.employee.birth_m;
-            this.employee.birth_y = this.backup.employee.birth_y;
-            this.employee.cpf     = this.backup.employee.cpf;
-            break;
+            this.editing.personal = false
+            this.employee.name    = this.backup.employee.name
+            this.employee.surname = this.backup.employee.surname
+            this.employee.birth_d = this.backup.employee.birth_d
+            this.employee.birth_m = this.backup.employee.birth_m
+            this.employee.birth_y = this.backup.employee.birth_y
+            this.employee.cpf     = this.backup.employee.cpf
+            break
           case 'address':
-            this.editing.address = false;
-            this.address         = JSON.parse(JSON.stringify(this.backup.address));
-            break;
+            this.editing.address = false
+            this.address         = JSON.parse(JSON.stringify(this.backup.address))
+            break
           case 'job':
-            this.editing.job          = false;
-            this.employee.id_job_type = this.backup.employee.id_job_type;
-            break;
+            this.editing.job          = false
+            this.employee.id_job_type = this.backup.employee.id_job_type
+            break
           case 'user':
-            this.editing.user = false;
-            this.user         = JSON.parse(JSON.stringify(this.backup.user));
-            break;
+            this.editing.user = false
+            this.user         = JSON.parse(JSON.stringify(this.backup.user))
+            break
           case 'phones':
             this.editing.phones = {
               editing: false,
               index:   null,
-            };
-            this.phones         = JSON.parse(JSON.stringify(this.backup.phones));
-            break;
+            }
+            this.phones         = JSON.parse(JSON.stringify(this.backup.phones))
+            break
           case 'emails':
             this.editing.emails = {
               editing: false,
               index:   null,
-            };
-            this.emails         = JSON.parse(JSON.stringify(this.backup.emails));
-            break;
+            }
+            this.emails         = JSON.parse(JSON.stringify(this.backup.emails))
+            break
           case 'family':
             this.editing.family = {
               editing: false,
               index:   null,
-            };
-            this.family         = JSON.parse(JSON.stringify(this.backup.family));
-            break;
+            }
+            this.family         = JSON.parse(JSON.stringify(this.backup.family))
+            break
         }
       },
 
       resetProfile(){
-        this.backup  = {};
+        this.backup  = {}
         this.editing = {
           image:      false,
           personal:  false,
@@ -2516,7 +2517,7 @@
             editing: false,
             index:   null,
           }
-        };
+        }
         this.imageSrc = '/img/user.png',
         this.employee = {
           id_entity:     null,
@@ -2534,16 +2535,16 @@
           birth_y:       null,
           cpf:           null,
           active:        null,
-        };
-        this.address         = {};
-        this.phones          = [];
-        this.newPhone        = [];
-        this.whatsapp_inputs = [];
-        this.whatsapp_texts  = [];
-        this.emails          = [];
-        this.newEmail        = [];
-        this.family          = [];
-        this.newFamily       = [];
+        }
+        this.address         = {}
+        this.phones          = []
+        this.newPhone        = []
+        this.whatsapp_inputs = []
+        this.whatsapp_texts  = []
+        this.emails          = []
+        this.newEmail        = []
+        this.family          = []
+        this.newFamily       = []
         this.user = {
           create:        false,
           id_user_group: null,
@@ -2552,15 +2553,15 @@
           user:          null,
           postfix:       null,
           pass:          null,
-        };
+        }
         this.user_availability = {
           available: undefined,
           timer:     undefined,
-        };
+        }
         this.user_pass = {
           old_pass: null,
           new_pass: null,
-        };
+        }
       },
     },
   }

@@ -1,153 +1,165 @@
 <template>
-<div class="container-lg hstack gap-3">
-  <!-- <div
-    class="model"
-    v-show="model"
-    @click="model = false"
-  >
-    <div class="model-show">
-      <img :src="modelSrc" alt="">
-    </div>
-  </div> -->
-
-  <div>
-    <div style="width: 500px; height: 500px;">
-      <vue-cropper
-        ref="cropper"
-        :img="option.img"
-        :mode="option.mode"
-        :max-img-size="option.maxImgSize"
-        :info="option.info"
-        :info-true="option.infoTrue"
-        :original="option.original"
-        :output-type="option.outputType"
-        :output-size="option.outputSize"
-        :full="option.full"
-        :high="option.high"
-        :can-scale="option.canScale"
-        :can-move="option.canMove"
-        :can-move-box="option.canMoveBox"
-        :center-box="option.centerBox"
-        :fixed-box="option.fixedBox"
-        :fixed="option.fixed"
-        :fixed-number="option.fixedNumber"
-        :limit-min-size="option.limitMinSize"
-        :auto-crop="option.autoCrop"
-        :auto-crop-width="option.autoCropWidth"
-        :auto-crop-height="option.autoCropHeight"
-      />
-        <!-- @real-time="realTime" -->
-        <!-- @img-load="imgLoad" -->
-        <!-- @crop-moving="cropMoving" -->
-    </div>
-
-    <div class="hstack justify-content-center gap-3 mt-3">
-      <label class="btn btn-info btn-sm" for="uploads">
-        <i class="fa-solid fa-folder-open"></i>
-        Selecionar arquivo
-      </label>
-      <input
-        type="file"
-        id="uploads"
-        style="position:absolute;clip:rect(0 0 0 0);"
-        accept="image/png, image/jpeg, image/gif, image/jpg"
-        @change="uploadImg($event, 1)"
-      />
-
-      <button
-        class="btn btn-info btn-sm"
-        @click="rotateLeft"
-      >
-        <i class="fa-solid fa-rotate-left"></i>
-        Girar
-      </button>
-
-      <button
-        class="btn btn-info btn-sm"
-        @click="rotateRight"
-      >
-        <i class="fa-solid fa-rotate-right"></i>
-        Girar
-      </button>
-
-      <button
-        class="btn btn-orange btn-sm"
-        @click="finish('blob')"
-      >
-        <i class="fa-solid fa-check"></i>
-        Confirmar
-      </button>
-    </div>
-  </div>
-
-  <div class="vstack justify-content-center text-light">
-    <h1 class="fs-3">Instruções:</h1>
-    <p>A imagem final será o conteúdo da área iluminada.</p>
-    <p>Centralize o rosto na área iluminada.</p>
-    <p>Utilize o zoom com a roda do mouse.</p>
-    <p>Clique e arraste para mover a imagem.</p>
-
+  <div class="container-lg hstack gap-3">
     <!-- <div
-      class="show-preview"
-      :style="{
-        'width': previews.w + 'px',
-        'height': previews.h + 'px',
-        'overflow': 'hidden',
-        'margin': '5px'
-      }"
+      class="model"
+      v-show="model"
+      @click="model = false"
     >
-      <div :style="previews.div">
-        <img :src="previews.url" :style="previews.img">
+      <div class="model-show">
+        <img :src="modelSrc" alt="">
       </div>
     </div> -->
+
+    <div>
+      <div style="width: 500px; height: 500px;">
+        <vue-cropper
+          ref="cropper"
+          :img="option.img"
+          :mode="option.mode"
+          :max-img-size="option.maxImgSize"
+          :info="option.info"
+          :info-true="option.infoTrue"
+          :original="option.original"
+          :output-type="option.outputType"
+          :output-size="option.outputSize"
+          :full="option.full"
+          :high="option.high"
+          :can-scale="option.canScale"
+          :can-move="option.canMove"
+          :can-move-box="option.canMoveBox"
+          :center-box="option.centerBox"
+          :fixed-box="option.fixedBox"
+          :fixed="option.fixed"
+          :fixed-number="option.fixedNumber"
+          :limit-min-size="option.limitMinSize"
+          :auto-crop="option.autoCrop"
+          :auto-crop-width="option.autoCropWidth"
+          :auto-crop-height="option.autoCropHeight"
+        />
+          <!-- @real-time="realTime" -->
+          <!-- @img-load="imgLoad" -->
+          <!-- @crop-moving="cropMoving" -->
+      </div>
+
+      <div class="hstack justify-content-center gap-3 mt-3">
+        <label class="btn btn-info btn-sm" for="uploads">
+          <i class="fa-solid fa-folder-open"></i>
+          Selecionar arquivo
+        </label>
+        <input
+          type="file"
+          id="uploads"
+          style="position:absolute;clip:rect(0 0 0 0);"
+          accept="image/png, image/jpeg, image/gif, image/jpg"
+          @change="uploadImg($event, 1)"
+        />
+
+        <button
+          class="btn btn-info btn-sm"
+          @click="rotateLeft"
+        >
+          <i class="fa-solid fa-rotate-left"></i>
+          Girar
+        </button>
+
+        <button
+          class="btn btn-info btn-sm"
+          @click="rotateRight"
+        >
+          <i class="fa-solid fa-rotate-right"></i>
+          Girar
+        </button>
+
+        <button
+          class="btn btn-orange btn-sm"
+          @click="finish('blob')"
+        >
+          <i class="fa-solid fa-check"></i>
+          Confirmar
+        </button>
+      </div>
+    </div>
+
+    <div class="vstack justify-content-center text-light">
+      <h1 class="fs-3">Instruções:</h1>
+      <p>A imagem final será o conteúdo da área iluminada.</p>
+      <p>Centralize o rosto na área iluminada.</p>
+      <p>Utilize o zoom com a roda do mouse.</p>
+      <p>Clique e arraste para mover a imagem.</p>
+
+      <!-- <div
+        class="show-preview"
+        :style="{
+          'width': previews.w + 'px',
+          'height': previews.h + 'px',
+          'overflow': 'hidden',
+          'margin': '5px'
+        }"
+      >
+        <div :style="previews.div">
+          <img :src="previews.url" :style="previews.img">
+        </div>
+      </div> -->
+    </div>
   </div>
-</div>
 </template>
+
 
 <script>
   export default {
     components: {},
+
     directives: {},
+
     props: [],
+
     data() {
       return {
-        model: false,
         modelSrc: '',
-        crap: false,
+        model:    false,
+        crap:     false,
+        show:     true,
         previews: {},
         option: {
-          img: '',
-          mode: 'cover',
-          maxImgSize: 2000,
-          info: false,
-          infoTrue: true,
-          original: false,
-          outputType: 'png',
-          outputSize: 1,
-          full: false,
-          high: false,
-          canScale: true,
-          canMove: true,
-          canMoveBox: false,
-          centerBox: true,
-          fixedBox: true,
-          fixed: true,
-          fixedNumber: [1, 1],
-          limitMinSize: [400, 400],
-          autoCrop: true,
-          autoCropWidth: 400,
+          img:            '',
+          mode:           'cover',
+          maxImgSize:     2000,
+          info:           false,
+          infoTrue:       true,
+          original:       false,
+          outputType:     'png',
+          outputSize:     1,
+          full:           false,
+          high:           false,
+          canScale:       true,
+          canMove:        true,
+          canMoveBox:     false,
+          centerBox:      true,
+          fixedBox:       true,
+          fixed:          true,
+          fixedNumber:    [1, 1],
+          limitMinSize:   [400, 400],
+          autoCrop:       true,
+          autoCropWidth:  400,
           autoCropHeight: 400,
         },
-        show: true,
       }
     },
+
     computed: {},
+
     watch: {},
+
     created(){},
+
     mounted(){},
+
     updated(){},
+
     activated(){},
+
     deactivated(){},
+
     methods: {
       // startCrop() {
       //   // start
@@ -226,7 +238,7 @@
         // UPLOAD IMAGE
         var file = e.target.files[0]
         if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/.test(e.target.value)) {
-          alert('The image type must be one of .gif, .jpeg, .jpg, .png, or .bmp')
+          alert('O formato da imagem deve ser um dos seguintes: .gif, .jpeg, .jpg, .png, or .bmp')
           return false
         }
         var reader = new FileReader()

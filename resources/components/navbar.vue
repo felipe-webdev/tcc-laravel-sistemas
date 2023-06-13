@@ -247,7 +247,7 @@
 
     methods: {
       changeTab(tab){
-        this.$emit('changeTab', tab);
+        this.$emit('changeTab', tab)
       },
     },
   }

@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::post('/insertPhone',    'CreateController@insertPhone');
     Route::post('/insertDepart',   'CreateController@insertDepart');
     Route::post('/insertJob',      'CreateController@insertJob');
-    Route::post('/insertImage',      'CreateController@insertImage');
+    Route::post('/insertImage',    'CreateController@insertImage');
 
     Route::get('/getSessionUser',   'ReadController@getSessionUser');
     Route::get('/getSystemTypes',   'ReadController@getSystemTypes');
@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::post('/listJobs',        'ReadController@listJobs');
     Route::post('/listDeparts',     'ReadController@listDeparts');
     Route::post('/getEmployee',     'ReadController@getEmployee');
-    Route::post('/getImage',         'ReadController@getImage');
+    Route::post('/getImage',        'ReadController@getImage');
 
     Route::post('/alterPass',      'UpdateController@alterPass');
     Route::post('/resetPass',      'UpdateController@resetPass');

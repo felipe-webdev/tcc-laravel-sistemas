@@ -139,8 +139,8 @@
     watch: {},
 
     created(){
-      this.getUser();
-      setInterval(this.getUser, 300000);
+      this.getUser()
+      setInterval(this.getUser, 300000)
     },
 
     mounted(){},
@@ -157,81 +157,81 @@
           .then((response)=>{
             response.data.session_started?
               this.$emit('setSessionUser', response.data.session_user):
-              window.location.href = `${window.location.origin}/login`;
+              window.location.href = `${window.location.origin}/login`
           })
           .catch((error)=>{
-            console.log(error);
+            console.log(error)
             this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-          });
+          })
       },
 
       openLogoutModal(){
-        bootstrap.Modal.getOrCreateInstance(this.$refs.logoutModal).show();
+        bootstrap.Modal.getOrCreateInstance(this.$refs.logoutModal).show()
       },
 
       logout(){
-        bootstrap.Modal.getOrCreateInstance(this.$refs.logoutModal).hide();
-        this.$emit('isLoading', true);
+        bootstrap.Modal.getOrCreateInstance(this.$refs.logoutModal).hide()
+        this.$emit('isLoading', true)
         api.logout(this.session_user.id_user)
           .then((response)=>{
             if(response.data.session_ended){
-              this.$emit('showAlert', 'success', 'Sessão encerrada com sucesso.');
-              setTimeout(()=>{window.location.href = `${window.location.origin}/login`}, 1000);
+              this.$emit('showAlert', 'success', 'Sessão encerrada com sucesso.')
+              setTimeout(()=>{window.location.href = `${window.location.origin}/login`}, 1000)
             } else {
-              this.$emit('showAlert', 'error', 'Sessão do usuário não encontrada.');
+              this.$emit('showAlert', 'error', 'Sessão do usuário não encontrada.')
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.$emit('isLoading', false);
-          });
+            this.$emit('isLoading', false)
+          })
       },
 
       openAlterPassModal(){
-        bootstrap.Modal.getOrCreateInstance(this.$refs.alterPassModal).show();
+        bootstrap.Modal.getOrCreateInstance(this.$refs.alterPassModal).show()
       },
 
       alterPass(){
         if(this.old_pass == '' || this.new_pass == ''){
-          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova devem ser preenchidas.');
+          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova devem ser preenchidas.')
         }
         if(this.old_pass == this.new_pass){
-          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova não podem ser iguais.');
+          return this.$emit('showAlert', 'warning', 'Senha atual e senha nova não podem ser iguais.')
         }
-        bootstrap.Modal.getOrCreateInstance(this.$refs.alterPassModal).hide();
-        this.$emit('isLoading', true);
+        bootstrap.Modal.getOrCreateInstance(this.$refs.alterPassModal).hide()
+        this.$emit('isLoading', true)
         api.alterPass(this.session_user.id_user, this.old_pass, this.new_pass)
           .then((response)=>{
             if(response.data.success){
-              this.$emit('showAlert', 'success', 'Senha alterada com sucesso.');
+              this.$emit('showAlert', 'success', 'Senha alterada com sucesso.')
             } else {
               switch(response.data.error){
                 case 'old_pass':
-                  this.$emit('showAlert', 'error', 'Senha atual inválida.');
-                  break;
+                  this.$emit('showAlert', 'error', 'Senha atual inválida.')
+                  break
                 case 'new_pass':
-                  this.$emit('showAlert', 'error', 'Senha nova é igual a senha atual.');
-                  break;
+                  this.$emit('showAlert', 'error', 'Senha nova é igual a senha atual.')
+                  break
                 case 'sql':
-                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.');
-                  break;
-              };
+                  this.$emit('showAlert', 'error', 'SQL inválido, informe o suporte.')
+                  break
+              }
             }
           })
           .catch((error)=>{
-            console.log(error);
-            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`);
+            console.log(error)
+            this.$emit('showAlert', 'error', `Ocorreu um erro no processo: ${error}`)
           })
           .finally(()=>{
-            this.old_pass = '';
-            this.new_pass = '';
-            this.$emit('isLoading', false);
-          });
+            this.old_pass = ''
+            this.new_pass = ''
+            this.$emit('isLoading', false)
+          })
       },
     },
   }
