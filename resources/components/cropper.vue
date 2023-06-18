@@ -50,7 +50,7 @@
           type="file"
           id="uploads"
           style="position:absolute;clip:rect(0 0 0 0);"
-          accept="image/png, image/jpeg, image/gif, image/jpg"
+          accept="image/png, image/jpeg, image/jpg, image/webp, image/bmp, image/gif"
           @change="uploadImg($event, 1)"
         />
 
@@ -237,8 +237,8 @@
       uploadImg(e, num) {
         // UPLOAD IMAGE
         var file = e.target.files[0]
-        if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/.test(e.target.value)) {
-          alert('O formato da imagem deve ser um dos seguintes: .gif, .jpeg, .jpg, .png, or .bmp')
+        if (!/\.(png|PNG|jpeg|JPEG|jpg|JPG|webp|WEBP|bmp|BMP|gif|GIF)$/.test(e.target.value)) {
+          this.$emit('wrongFormat')
           return false
         }
         var reader = new FileReader()

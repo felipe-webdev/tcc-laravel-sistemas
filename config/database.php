@@ -58,12 +58,12 @@ return [
             'prefix_indexes' => true,
             'strict' => true, // VALOR ORIGINAL true
             'modes' => [
-                //'ONLY_FULL_GROUP_BY', // Disable this to allow grouping by one column
+                //'ONLY_FULL_GROUP_BY', // DESATIVA PARA PERMITIR GROUP BY COM APENAS UMA COLUNA
                 'STRICT_TRANS_TABLES',
                 'NO_ZERO_IN_DATE',
                 'NO_ZERO_DATE',
                 'ERROR_FOR_DIVISION_BY_ZERO',
-                'NO_AUTO_CREATE_USER',
+                // 'NO_AUTO_CREATE_USER', // DESATIVA PARA RESOLVER ERRO NO PDO NAS NOVAS VERSÕES DO MYSQL
                 'NO_ENGINE_SUBSTITUTION'
             ],
             'engine' => null,
