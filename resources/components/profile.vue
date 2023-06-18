@@ -62,7 +62,7 @@
                   </div>
                   <div class="modal-body vstack p-0">
                     <div class="bd-callout bd-callout-info">
-                      <cropper v-if="editing.image" @blob="insertImage" />
+                      <cropper v-if="editing.image" @blob="insertImage" @wrongFormat="$emit('showAlert', 'warning', 'O formato da imagem deve ser um dos seguintes: .png, .jpeg, .jpg, .webp, .bmp ou .gif')" />
                     </div>
                   </div>
                 </div>
